@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    <div className="h-screen flex flex-col justify-center items-center py-2  bg-gradient-to-tr from-blue-200 via-gray-50 to-blue-200">
+    <div className="h-screen flex flex-col justify-center items-center py-2  bg-gradient-to-tr from-indigo-200 via-gray-50 to-blue-200">
       <SignIn
         routing="hash"
         appearance={{
@@ -12,9 +12,9 @@ export default function Page() {
               fontSize: 14,
               textTransform: "none",
               border: "none",
-              backgroundColor: "#103FEF",
+              backgroundColor: "#4f46e5",
               "&:hover, &:focus, &:active": {
-                backgroundColor: "#2563eb",
+                backgroundColor: "#4338ca ",
               },
             },
             footer: {
