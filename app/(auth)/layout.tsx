@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-import { ThemeProvider } from "next-themes";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -29,20 +29,11 @@ export default function RootLayout({
         appearance={{
           layout: {
             socialButtonsPlacement: "bottom",
-            termsPageUrl: "https://clerk.com/terms",
           },
         }}>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased scroll-smooth`}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange>
-            <main className="h-screen flex justify-center items-center ">
-              {children}
-            </main>
-          </ThemeProvider>
+          <main>{children}</main>
         </body>
       </ClerkProvider>
     </html>
