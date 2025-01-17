@@ -141,7 +141,7 @@ export default async function Navbar() {
                     </li>
                     <li>
                       <a
-                        href="/me/profile"
+                        href="/profile"
                         className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md">
                         My Account
                       </a>
@@ -155,7 +155,7 @@ export default async function Navbar() {
                     </li>
                     <li>
                       <a
-                        href="/me/settings"
+                        href="/profile"
                         className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md">
                         Settings
                       </a>
