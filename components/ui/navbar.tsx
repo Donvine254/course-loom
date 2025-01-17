@@ -10,7 +10,7 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 
-export default function Navbar() {
+export default async function Navbar() {
   return (
     <menu className="w-full py-2">
       <Script
@@ -60,28 +60,35 @@ export default function Navbar() {
           </svg>
         </button>
         {/* trial */}
-        <div className="hidden md:block w-full md:w-auto " id="mobile-menu">
-          <ul className="flex-col md:flex-row flex items-center md:space-x-8 mt-4 md:mt-0 md:text-lg md:font-medium">
+        <div className="hidden md:block w-full md:w-auto" id="mobile-menu">
+          <ul className="flex-col md:flex-row flex md:items-center md:space-x-8 mt-4 md:mt-0 md:text-lg md:font-medium xsm:text-sm">
             <li>
               <Link
                 href="/dashboard"
-                className="hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0">
+                className="hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 xsm:px-2 xsm:rounded-md">
                 Dashboard
               </Link>
             </li>
             <li>
               <Link
                 href="/courses"
-                className="hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0">
+                className="hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 xsm:px-2 xsm:rounded-md">
                 Courses
               </Link>
             </li>
             <li>
               <Link
                 href="/testimonials"
-                className="hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0">
+                className="hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 xsm:px-2 xsm:rounded-md">
                 Testimonials
               </Link>
+            </li>
+            <li className="md:hidden">
+              <SignInButton>
+                <button className="hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 xsm:px-2 xsm:rounded-md">
+                  Get Started
+                </button>
+              </SignInButton>
             </li>
             <li className="hidden md:block">
               <SignedOut>
@@ -101,48 +108,50 @@ export default function Navbar() {
                 <button
                   id="dropdownNavbarLink"
                   data-dropdown-toggle="dropdownNavbar"
-                  className="hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:p-0 font-medium flex items-center justify-between w-full md:w-auto hover:underline underline-offset-2">
+                  className="hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:p-0 md:font-medium flex items-center justify-between w-full md:w-auto hover:underline underline-offset-2 xsm:hover:bg-indigo-100 xsm:px-2 xsm:rounded-md">
                   {/* Render user image */}
                   Account
                 </button>
                 {/* Dropdown menu */}
                 <div
                   id="dropdownNavbar"
-                  className="hidden bg-white text-base z-10 list-none divide-y divide-gray-200 rounded shadow my-4 w-[84%] md:w-44">
-                  <ul className="py-1" aria-labelledby="dropdownLargeButton">
+                  className="hidden text-base z-10 list-none divide-y divide-gray-200 rounded shadow my-4 w-[84%] md:w-44 ">
+                  <ul
+                    className="py-1 px-2"
+                    aria-labelledby="dropdownLargeButton">
                     <li>
                       <a
                         href="/dashboard"
-                        className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
+                        className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md">
                         Dashboard
                       </a>
                     </li>
                     <li>
                       <a
                         href="/me/profile"
-                        className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
+                        className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md">
                         My Account
                       </a>
                     </li>
                     <li>
                       <a
                         href="/dashboard/courses"
-                        className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
+                        className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md">
                         My Courses
                       </a>
                     </li>
                     <li>
                       <a
                         href="/me/settings"
-                        className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
+                        className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md">
                         Settings
                       </a>
                     </li>
-                    <li>
-                      <SignedIn>
-                        <SignOutButton />
-                      </SignedIn>
-                    </li>
+                    <SignedIn>
+                      <li className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md">
+                        <SignOutButton>Sign Out</SignOutButton>
+                      </li>
+                    </SignedIn>
                   </ul>
                 </div>
               </li>
