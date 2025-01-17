@@ -2,6 +2,7 @@ import {
   ArrowRight,
   GraduationCap,
   LibraryBig,
+  Sparkle,
   TrophyIcon,
   UserRound,
   Users,
@@ -22,7 +23,7 @@ export default function Page() {
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 md:mb-8 md:leading-loose tracking-tight">
             Unlock Your Potential with
-            <span className="text-indigo-600 block md:inline">
+            <span className="text-indigo-600 block md:inline-block md:mt-6">
               {" "}
               Expert-Led Courses
             </span>
@@ -33,16 +34,18 @@ export default function Page() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 px-4">
             <Link
-              className="w-full sm:w-auto flex items-center justify-center bg-indigo-600 text-white px-8 py-3 rounded-full hover:bg-indigo-700 transition-colors"
+              className="w-full sm:w-auto flex items-center justify-center bg-indigo-600 text-white px-8 py-3 rounded-full hover:bg-indigo-700 transition-colors h-12 relative group"
               href="/dashboard"
               prefetch={null}>
               Start Learning Now
               <ArrowRight className="ml-2 h-5 w-5 animate-move-arrow" />
+              <Sparkle className="h-6 w-6  text-indigo-500 absolute -top-4 -right-2 hidden group-hover:block delay-150 ease-in-out" />
+              <Sparkle className="h-6 w-6  text-indigo-500 absolute -bottom-4 -left-2 hidden group-hover:block delay-150 ease-in-out" />
             </Link>
             <Link
               href="/courses"
               prefetch={null}
-              className="w-full sm:w-auto flex items-center justify-center border-2 border-indigo-600 text-indigo-600 px-8 py-3 rounded-full hover:bg-indigo-50 transition-colors">
+              className="w-full sm:w-auto flex items-center justify-center border-2 border-emerald-600 text-emerald-600 px-8 py-3 rounded-full hover:bg-emerald-600 hover:text-white transition-colors h-12">
               View Courses
             </Link>
           </div>
@@ -109,32 +112,32 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="absolute right-3/4 bottom-28 hidden lg:block">
+        <div className="absolute -left-4 bottom-28 hidden lg:block rotate-90">
           <div className={`grid grid-cols-5 gap-2`}>
-            {[...Array(25)].map((_, i) => (
+            {[...Array(50)].map((_, i) => (
               <div
                 key={i}
-                className="w-1.5 h-1.5 rounded-full bg-orange-400/60"
+                className="w-1.5 h-1.5 rounded-full bg-indigo-400/60"
               />
             ))}
           </div>
         </div>
-        <div className="absolute left-1/4 top-28 hidden lg:block">
+        <div className="absolute left-1/4 -top-2 hidden lg:block">
           <div className={`grid grid-cols-5 gap-2`}>
-            {[...Array(25)].map((_, i) => (
+            {[...Array(50)].map((_, i) => (
               <div
                 key={i}
-                className="w-1.5 h-1.5 rounded-full bg-orange-400/60"
+                className="w-1.5 h-1.5 rounded-full bg-indigo-400/60"
               />
             ))}
           </div>
         </div>
-        <div className="absolute right-1/4 bottom-28 hidden lg:block">
+        <div className="absolute -right-4 top-48 hidden lg:block rotate-90">
           <div className={`grid grid-cols-5 gap-2`}>
-            {[...Array(25)].map((_, i) => (
+            {[...Array(50)].map((_, i) => (
               <div
                 key={i}
-                className="w-1.5 h-1.5 rounded-full bg-orange-400/60"
+                className="w-1.5 h-1.5 rounded-full bg-indigo-400/60"
               />
             ))}
           </div>

@@ -39,7 +39,7 @@ export default async function Navbar() {
               type="search"
               name="query"
               required
-              className="rounded-full px-3 py-2 border border-indigo-500 hover:outline-none bg-input focus:outline-none flex-1 w-full placeholder:text-muted-foreground focus:bg-card pr-12"
+              className="rounded-full px-3 py-2 border border-indigo-500 hover:outline-none bg-indigo-50 focus:outline-none flex-1 w-full placeholder:text-muted-foreground focus:bg-card pr-12"
               placeholder="What are you looking for?"
             />
             <button
