@@ -216,14 +216,12 @@ export default function Page() {
               your goals.
             </p>
           </div>
-          <Button
-            className="w-full sm:w-auto bg-white text-indigo-600  hover:bg-gray-100 transition-colors justify-start"
-            asChild>
-            <Link href="/dashboard" prefetch={null}>
-              {" "}
+
+          <Link href="/dashboard" prefetch={null} passHref>
+            <Button className="w-full sm:w-auto bg-white text-indigo-600  hover:bg-gray-100 transition-colors justify-start">
               <GraduationCap className="w-6 h-6 mr-2" /> Get Started Today
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         </div>
       </section>
     </section>
