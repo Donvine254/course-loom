@@ -7,10 +7,12 @@ import {
   SignedOut,
   SignInButton,
   SignOutButton,
-  UserButton,
 } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 
 export default async function Navbar() {
+  const user = await currentUser();
+  console.log(user);
   return (
     <menu className="w-full py-2">
       <Script
@@ -38,26 +40,30 @@ export default async function Navbar() {
           aria-controls="mobile-menu-2"
           aria-expanded="false">
           <span className="sr-only">Open main menu</span>
-          <svg
-            className="w-6 h-6"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg">
-            <path
-              fillRule="evenodd"
-              d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-              clipRule="evenodd"></path>
-          </svg>
-          <svg
-            className="hidden w-6 h-6"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg">
-            <path
-              fillRule="evenodd"
-              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-              clipRule="evenodd"></path>
-          </svg>
+          {user ? (
+            <Image
+              src={
+                user?.imageUrl ??
+                `https://ui-avatars.com/api/?background=007bff&color=fff&name=${user?.firstName}+${user?.lastName}`
+              }
+              width={32}
+              height={32}
+              alt="avatar"
+              title="open menu"
+              className="w-8 h-8 xsm:w-6 xsm:h-6 rounded-full focus:outline-none focus-within:outline-none ring-offset-2 ring-2 ring-blue-600 ring-offset-white"
+            />
+          ) : (
+            <svg
+              className="w-6 h-6"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                fillRule="evenodd"
+                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                clipRule="evenodd"></path>
+            </svg>
+          )}
         </button>
         {/* trial */}
         <div className="hidden md:block w-full md:w-auto" id="mobile-menu">
@@ -98,9 +104,6 @@ export default async function Navbar() {
                   </button>
                 </SignInButton>
               </SignedOut>
-              <SignedIn>
-                <UserButton />
-              </SignedIn>
             </li>
             {/* Dropdown for account */}
             <SignedIn>
@@ -110,16 +113,26 @@ export default async function Navbar() {
                   data-dropdown-toggle="dropdownNavbar"
                   className="hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:p-0 md:font-medium flex items-center justify-between w-full md:w-auto hover:underline underline-offset-2 xsm:hover:bg-indigo-100 xsm:px-2 xsm:rounded-md">
                   {/* Render user image */}
-                  Account
+                  <Image
+                    src={
+                      user?.imageUrl ??
+                      `https://ui-avatars.com/api/?background=007bff&color=fff&name=${user?.firstName}+${user?.lastName}`
+                    }
+                    width={32}
+                    height={32}
+                    alt="avatar"
+                    title="open menu"
+                    className="w-8 h-8 rounded-full focus:outline-none focus-within:outline-none ring-offset-2 ring-2 ring-blue-600 ring-offset-white"
+                  />
                 </button>
                 {/* Dropdown menu */}
                 <div
                   id="dropdownNavbar"
-                  className="hidden text-base z-10 list-none divide-y divide-gray-200 rounded shadow my-4 w-[84%] md:w-44 ">
+                  className="hidden text-base z-10 list-none divide-y divide-gray-200 rounded shadow my-4 w-[84%] md:w-44 shadow-indigo-600 ">
                   <ul
                     className="py-1 px-2"
                     aria-labelledby="dropdownLargeButton">
-                    <li>
+                    <li className="md:hidden">
                       <a
                         href="/dashboard"
                         className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md">
@@ -148,7 +161,7 @@ export default async function Navbar() {
                       </a>
                     </li>
                     <SignedIn>
-                      <li className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md">
+                      <li className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md md:hover:bg-destructive md:hover:text-destructive-foreground">
                         <SignOutButton>Sign Out</SignOutButton>
                       </li>
                     </SignedIn>
