@@ -1,9 +1,11 @@
 import {
   ArrowRight,
+  GraduationCap,
   LibraryBig,
   TrophyIcon,
   UserRound,
   Users,
+  VideoIcon,
 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -107,7 +109,95 @@ export default function Page() {
             </div>
           </div>
         </div>
+        <div className="absolute right-3/4 bottom-28 hidden lg:block">
+          <div className={`grid grid-cols-5 gap-2`}>
+            {[...Array(25)].map((_, i) => (
+              <div
+                key={i}
+                className="w-1.5 h-1.5 rounded-full bg-orange-400/60"
+              />
+            ))}
+          </div>
+        </div>
+        <div className="absolute left-1/4 top-28 hidden lg:block">
+          <div className={`grid grid-cols-5 gap-2`}>
+            {[...Array(25)].map((_, i) => (
+              <div
+                key={i}
+                className="w-1.5 h-1.5 rounded-full bg-orange-400/60"
+              />
+            ))}
+          </div>
+        </div>
+        <div className="absolute right-1/4 bottom-28 hidden lg:block">
+          <div className={`grid grid-cols-5 gap-2`}>
+            {[...Array(25)].map((_, i) => (
+              <div
+                key={i}
+                className="w-1.5 h-1.5 rounded-full bg-orange-400/60"
+              />
+            ))}
+          </div>
+        </div>
       </div>
+      <section className="py-16 px-4 bg-gray-50">
+        <div className="container mx-auto">
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Library Card */}
+            <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex items-center gap-4">
+                <div className="p-3 bg-indigo-50 rounded-lg">
+                  <VideoIcon className="w-6 h-6 text-indigo-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-lg">150+ Free Videos</h3>
+                  <Link
+                    href="/courses"
+                    className="text-sm text-indigo-600 hover:underline">
+                    View More →
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Courses Card */}
+            <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex items-center gap-4">
+                <div className="p-3 bg-indigo-50 rounded-lg">
+                  <GraduationCap className="w-6 h-6 text-indigo-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-lg">10K+ Online Courses</h3>
+                  <Link
+                    href="/courses"
+                    className="text-sm text-indigo-600 hover:underline">
+                    View More →
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Expert Card */}
+            <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex items-center gap-4">
+                <div className="p-3 bg-indigo-50 rounded-lg">
+                  <Users className="w-6 h-6 text-indigo-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-lg">
+                    50+ Expert Instructors
+                  </h3>
+                  <Link
+                    href="/courses"
+                    className="text-sm text-indigo-600 hover:underline">
+                    View More →
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </section>
   );
 }
