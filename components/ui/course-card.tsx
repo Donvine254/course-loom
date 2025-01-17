@@ -23,12 +23,12 @@ export default function CourseCard({ course }: { course: CourseCardProps }) {
           height={300}
           placeholder="blur"
           blurDataURL="/placeholder.jpg"
-          className="rounded-md hover:scale-y-105 cursor-pointer"
+          className="rounded-md  cursor-pointer"
           style={{ width: "auto", height: "auto" }}
           priority
         />
       </div>
-      <div className="p-6 max-w-full">
+      <div className="py-6 px-3">
         <div className="flex items-center justify-between mb-2">
           <span className="text-sm font-medium text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg">
             {category}
@@ -43,9 +43,15 @@ export default function CourseCard({ course }: { course: CourseCardProps }) {
           {title}
         </h3>
         <div className="flex items-center justify-between">
-          <span className="text-2xl font-bold text-gray-900">${price}</span>
-          <button className="text-indigo-600 hover:text-indigo-700 font-medium flex items-center">
-            Learn More
+          <span className="font-medium">
+            {new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "KSH",
+              maximumFractionDigits: 0,
+            }).format(price * 120)}
+          </span>
+          <button className="text-indigo-600 hover:text-indigo-700 font-medium flex items-center border py-0.5 px-2 rounded-md">
+            Explore
             <ArrowRight className="h-4 w-4 ml-1" />
           </button>
         </div>
