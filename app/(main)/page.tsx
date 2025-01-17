@@ -1,5 +1,6 @@
 import {
   ArrowRight,
+  CornerRightUp,
   GraduationCap,
   LibraryBig,
   Sparkle,
@@ -204,6 +205,20 @@ export default function Page() {
         </div>
       </section>
       {/* section for featured courses */}
+      <section className="py-16 px-4 bg-green-200">
+        <div className="container mx-auto">
+          <div className="flex items-center justify-between gap-2 py-2">
+            <h2 className="text-lg sm:text-2xl md:text-3xl font-bold">
+              Featured Courses
+            </h2>
+            <Link href="/courses" passHref>
+              <Button className="justify-start gap-1" variant="ghost">
+                View All <CornerRightUp className="h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
       {/* CTA Section */}
       <section className="bg-indigo-600 text-white py-8 md:py-12">
         <div className="container mx-auto px-6 text-center">
