@@ -2,7 +2,13 @@ import Script from "next/script";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignOutButton,
+  UserButton,
+} from "@clerk/nextjs";
 
 export default function Navbar() {
   return (
@@ -24,18 +30,7 @@ export default function Navbar() {
           <h1 className="text-2xl xsm:text-lg font-bold">CourseLoom</h1>
         </Link>
         {/* only show in large devices */}
-        <div className="hidden md:block">
-          <SignedOut>
-            <SignInButton>
-              <button className="bg-indigo-600 text-white px-6 py-2 rounded-full hover:bg-indigo-700 transition-colors">
-                Get Started
-              </button>
-            </SignInButton>
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
-        </div>
+
         <button
           data-collapse-toggle="mobile-menu"
           type="button"
@@ -64,6 +59,99 @@ export default function Navbar() {
               clipRule="evenodd"></path>
           </svg>
         </button>
+        {/* trial */}
+        <div className="hidden md:block w-full md:w-auto " id="mobile-menu">
+          <ul className="flex-col md:flex-row flex items-center md:space-x-8 mt-4 md:mt-0 md:text-lg md:font-medium">
+            <li>
+              <Link
+                href="/dashboard"
+                className="hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0">
+                Dashboard
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/courses"
+                className="hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0">
+                Courses
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/testimonials"
+                className="hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0">
+                Testimonials
+              </Link>
+            </li>
+            <li className="hidden md:block">
+              <SignedOut>
+                <SignInButton>
+                  <button className="bg-indigo-600 text-white px-6 py-2 rounded-full hover:bg-indigo-700 transition-colors">
+                    Get Started
+                  </button>
+                </SignInButton>
+              </SignedOut>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
+            </li>
+            {/* Dropdown for account */}
+            <SignedIn>
+              <li className="relative">
+                <button
+                  id="dropdownNavbarLink"
+                  data-dropdown-toggle="dropdownNavbar"
+                  className="hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:p-0 font-medium flex items-center justify-between w-full md:w-auto hover:underline underline-offset-2">
+                  {/* Render user image */}
+                  Account
+                </button>
+                {/* Dropdown menu */}
+                <div
+                  id="dropdownNavbar"
+                  className="hidden bg-white text-base z-10 list-none divide-y divide-gray-200 rounded shadow my-4 w-[84%] md:w-44">
+                  <ul className="py-1" aria-labelledby="dropdownLargeButton">
+                    <li>
+                      <a
+                        href="/dashboard"
+                        className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
+                        Dashboard
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="/me/profile"
+                        className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
+                        My Account
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="/dashboard/courses"
+                        className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
+                        My Courses
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="/me/settings"
+                        className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
+                        Settings
+                      </a>
+                    </li>
+                    <li>
+                      <SignedIn>
+                        <SignOutButton />
+                      </SignedIn>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </SignedIn>
+            {/* end of dropdown */}
+          </ul>
+        </div>
+
+        {/* end of trial */}
       </div>
     </menu>
   );
