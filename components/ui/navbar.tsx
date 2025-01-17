@@ -23,12 +23,15 @@ export default function Navbar() {
           />
           <h1 className="text-2xl xsm:text-lg font-bold">CourseLoom</h1>
         </Link>
-        <SignedOut>
-          <SignInButton />
-        </SignedOut>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
+        {/* only show in large devices */}
+        <div className="hidden md:block">
+          <SignedOut>
+            <SignInButton  />
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+        </div>
         <button
           data-collapse-toggle="mobile-menu"
           type="button"
