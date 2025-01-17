@@ -68,11 +68,20 @@ export default async function Navbar() {
         {/* trial */}
         <div className="hidden md:block w-full md:w-auto" id="mobile-menu">
           <ul className="flex-col md:flex-row flex md:items-center md:space-x-8 mt-4 md:mt-0 md:text-lg md:font-medium xsm:text-sm">
+            <SignedIn>
+              <li>
+                <Link
+                  href="/dashboard"
+                  className="hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 xsm:px-2 xsm:rounded-md">
+                  Dashboard
+                </Link>
+              </li>
+            </SignedIn>
             <li>
               <Link
                 href="/dashboard"
                 className="hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 xsm:px-2 xsm:rounded-md">
-                Dashboard
+                Contact
               </Link>
             </li>
             <li>
@@ -122,8 +131,9 @@ export default async function Navbar() {
                     height={32}
                     alt="avatar"
                     title="open menu"
-                    className="w-8 h-8 rounded-full focus:outline-none focus-within:outline-none ring-offset-2 ring-2 ring-blue-600 ring-offset-white"
+                    className="w-8 h-8 rounded-full focus:outline-none focus-within:outline-none ring-offset-2 ring-2 ring-blue-600 ring-offset-white hidden md:block"
                   />
+                  <p className="md:hidden">My Account</p>
                 </button>
                 {/* Dropdown menu */}
                 <div
