@@ -63,6 +63,15 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
     },
+    keyframes: {
+      move: {
+        "0%, 100%": { transform: "translateX(0)" },
+        "50%": { transform: "translateX(0.5rem)" },
+      },
+    },
+    animation: {
+      "move-arrow": "move 1s ease-in-out infinite",
+    },
   },
   plugins: [tailwindcssAnimate],
 } satisfies Config;
