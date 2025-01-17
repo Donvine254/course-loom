@@ -4,6 +4,7 @@ import "../globals.css";
 import { ClerkProvider, GoogleOneTap } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/sonner";
 import Navbar from "@/components/ui/navbar";
+import Footer from "@/components/ui/footer";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -34,6 +35,7 @@ export default function RootLayout({
           <Navbar />
           <main>{children}</main>
         </ClerkProvider>
+        <Footer />
       </body>
     </html>
   );

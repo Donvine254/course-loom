@@ -124,7 +124,7 @@ export default async function Navbar() {
             <li className="hidden md:block">
               <SignedOut>
                 <SignInButton>
-                  <button className="bg-indigo-600 text-white px-6 py-2 rounded-full hover:bg-indigo-700 transition-colors">
+                  <button className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
                     Get Started
                   </button>
                 </SignInButton>

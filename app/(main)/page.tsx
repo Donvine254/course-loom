@@ -11,6 +11,7 @@ import {
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 export default function Page() {
   return (
     <section className="bg-gradient-to-tr from-indigo-200 via-gray-100 to-indigo-200 ">
@@ -34,9 +35,10 @@ export default function Page() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 px-4">
             <Link
-              className="w-full sm:w-auto flex items-center justify-center bg-indigo-600 text-white px-8 py-3 rounded-full hover:bg-indigo-700 transition-colors h-12 relative group"
+              className="w-full sm:w-auto flex items-center justify-center bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition-colors h-12 relative group"
               href="/dashboard"
               prefetch={null}>
+              <GraduationCap className="w-6 h-6 mr-2" />
               Start Learning Now
               <ArrowRight className="ml-2 h-5 w-5 animate-move-arrow" />
               <Sparkle className="h-6 w-6  text-indigo-500 absolute -top-4 -right-2 hidden group-hover:block delay-150 ease-in-out" />
@@ -45,12 +47,12 @@ export default function Page() {
             <Link
               href="/courses"
               prefetch={null}
-              className="w-full sm:w-auto flex items-center justify-center border-2 border-emerald-600 text-emerald-600 px-8 py-3 rounded-full hover:bg-emerald-600 hover:text-white transition-colors h-12">
-              View Courses
+              className="w-full sm:w-auto flex items-center justify-center border-2 border-indigo-600 text-indigo-600 px-8 py-3 rounded-lg hover:bg-indigo-200 transition-colors h-12">
+              <LibraryBig className="w-5 h-5 text-indigo-600" /> Browse Courses
             </Link>
           </div>
         </div>
-        <div className="absolute -right-2 bottom-1/4 bg-white rounded-lg shadow-lg p-4 hidden lg:block">
+        <div className="absolute -right-2 bottom-1/4 bg-card rounded-lg shadow-lg p-4 hidden lg:block">
           <div className="flex items-center gap-2">
             <Users className="w-5 h-5 text-indigo-600" />
             <div>
@@ -58,7 +60,7 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="absolute right-32 top-20 bg-white rounded-lg shadow-lg p-4 hidden lg:block">
+        <div className="absolute right-32 top-20 bg-card rounded-lg shadow-lg p-4 hidden lg:block">
           <div className="flex items-center gap-2">
             <LibraryBig className="w-5 h-5 text-indigo-600" />
             <div>
@@ -66,7 +68,7 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="absolute -left-2 top-1/4 bg-white rounded-lg shadow-lg p-4 hidden lg:block">
+        <div className="absolute -left-2 top-1/4 bg-card rounded-lg shadow-lg p-4 hidden lg:block">
           <div className="text-center">
             <div className="w-fit p-1 rounded-full text-white mx-auto bg-indigo-700">
               <UserRound className="h-6 w-6" />
@@ -199,6 +201,29 @@ export default function Page() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+      {/* section for featured courses */}
+      {/* CTA Section */}
+      <section className="bg-indigo-600 text-white py-8 md:py-12">
+        <div className="container mx-auto px-6 text-center">
+          <div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 md:mb-8">
+              Ready to Start Your Learning Journey?
+            </h2>
+            <p className="text-lg md:text-xl mb-8 md:mb-10 max-w-2xl mx-auto px-4">
+              Join our community of learners and take the first step towards
+              your goals.
+            </p>
+          </div>
+          <Button
+            className="w-full sm:w-auto bg-white text-indigo-600  hover:bg-gray-100 transition-colors justify-start"
+            asChild>
+            <Link href="/dashboard" prefetch={null}>
+              {" "}
+              <GraduationCap className="w-6 h-6 mr-2" /> Get Started Today
+            </Link>
+          </Button>
         </div>
       </section>
     </section>
