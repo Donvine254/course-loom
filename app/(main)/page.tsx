@@ -13,6 +13,9 @@ import Link from "next/link";
 import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import CourseCard from "@/components/ui/course-card";
+import { sampleCourses } from "@/constants";
+
 export default function Page() {
   return (
     <section className="bg-gradient-to-tr from-indigo-200 via-gray-100 to-indigo-200 ">
@@ -205,7 +208,7 @@ export default function Page() {
         </div>
       </section>
       {/* section for featured courses */}
-      <section className="py-16 px-4 bg-green-200">
+      <section className="py-6 px-4 bg-gradient-to-tr from-indigo-200 via-gray-100 to-indigo-200">
         <div className="container mx-auto">
           <div className="flex items-center justify-between gap-2 py-2">
             <h2 className="text-lg sm:text-2xl md:text-3xl font-bold">
@@ -216,6 +219,15 @@ export default function Page() {
                 View All <CornerRightUp className="h-4 w-4" />
               </Button>
             </Link>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            Explore our most popular courses and start your learning journey
+            today
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {sampleCourses.map((course, index) => (
+              <CourseCard key={index} course={course} />
+            ))}
           </div>
         </div>
       </section>
