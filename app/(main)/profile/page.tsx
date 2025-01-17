@@ -3,7 +3,7 @@ import React from "react";
 
 export default function Profile() {
   return (
-    <section className="bg-gradient-to-tr from-indigo-200 via-gray-50 to-blue-200 min-h-screen">
+    <section className="bg-gradient-to-tr from-indigo-200 via-gray-50 to-blue-200 min-h-screen pt-12">
       <div className="py-2 md:pt-8 flex flex-col items-center justify-center h-fit">
         <UserProfile
           routing="hash"

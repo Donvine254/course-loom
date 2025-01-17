@@ -9,17 +9,18 @@ import {
   SignOutButton,
 } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
+import { Search } from "lucide-react";
 
 export default async function Navbar() {
   const user = await currentUser();
   console.log(user);
   return (
-    <menu className="w-full py-2">
+    <menu className="w-full relative">
       <Script
         async
         defer
         src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js"></Script>
-      <div className="flex flex-wrap items-center justify-between  px-4 w-full">
+      <div className="flex flex-wrap items-center justify-between py-2 px-4 w-full  shadow z-20 fixed top-0 bg-white">
         <Link href="/" className="flex items-center gap-1 text-indigo-600">
           <Image
             src="https://res.cloudinary.com/dipkbpinx/image/upload/v1737068784/logos/uxdt5wtwbk0qctgm5qbe.png"
@@ -32,7 +33,22 @@ export default async function Navbar() {
           <h1 className="text-2xl xsm:text-lg font-bold">CourseLoom</h1>
         </Link>
         {/* only show in large devices */}
-
+        <form action="/courses" className="md:max-w-sm hidden flex-1 md:block">
+          <search className="relative block">
+            <input
+              type="search"
+              name="query"
+              required
+              className="rounded-full px-3 py-2 border border-indigo-500 hover:outline-none bg-input focus:outline-none flex-1 w-full placeholder:text-muted-foreground focus:bg-card pr-12"
+              placeholder="What are you looking for?"
+            />
+            <button
+              type="submit"
+              className="p-2 rounded-full bg-indigo-500 text-white flex items-center justify-center hover:bg-indigo-600 focus:outline-none absolute right-1 top-1/2 transform -translate-y-1/2 disabled:opacity-50">
+              <Search className="w-4 h-4" />
+            </button>
+          </search>
+        </form>
         <button
           data-collapse-toggle="mobile-menu"
           type="button"
@@ -79,7 +95,7 @@ export default async function Navbar() {
             </SignedIn>
             <li>
               <Link
-                href="/dashboard"
+                href="/contact"
                 className="hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 xsm:px-2 xsm:rounded-md">
                 Contact
               </Link>
@@ -138,7 +154,7 @@ export default async function Navbar() {
                 {/* Dropdown menu */}
                 <div
                   id="dropdownNavbar"
-                  className="hidden text-base z-10 list-none divide-y divide-gray-200 rounded shadow my-4 w-[84%] md:w-44 shadow-indigo-600 ">
+                  className="hidden text-base list-none divide-y divide-gray-200 rounded shadow my-4 w-[84%] md:w-44 shadow-indigo-600 z-20 bg-white ">
                   <ul
                     className="py-1 px-2"
                     aria-labelledby="dropdownLargeButton">
