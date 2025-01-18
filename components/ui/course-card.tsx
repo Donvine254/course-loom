@@ -12,7 +12,7 @@ type CourseCardProps = {
 };
 
 export default function CourseCard({ course }: { course: CourseCardProps }) {
-  const { title, category, image, price, chapters } = course;
+  const { title, category, image, price, chapters, description } = course;
   return (
     <div className="w-fit border shadow bg-card rounded-md max-w-sm">
       <div className="aspect-video w-full overflow-hidden">
@@ -23,25 +23,27 @@ export default function CourseCard({ course }: { course: CourseCardProps }) {
           height={300}
           placeholder="blur"
           blurDataURL="/placeholder.jpg"
-          className="rounded-md  cursor-pointer"
+          className="rounded-md object-contain  cursor-pointer"
           style={{ width: "auto", height: "auto" }}
           priority
         />
       </div>
-      <div className="py-6 px-3">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-medium text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg">
+      <div className="py-6 px-3 space-y-2">
+        <div className="flex items-center justify-between">
+          <span className="text-sm font-medium text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg truncate">
             {category}
           </span>
           <div className="flex items-center text-muted-foreground">
-            <BookOpen className="h-4 w-4 mr-1" />
+            <span className="bg-indigo-50 text-indigo-600 p-1 rounded-full flex items-center justify-center mr-1">
+              <BookOpen className="h-4 w-4" />
+            </span>
             <span className="text-sm">{chapters} chapters</span>
           </div>
         </div>
-        <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-4 hover:text-indigo-600 transition-colors truncate">
-          {/* how do i prevent the title from overflowing and increasing the width of its parent? */}
+        <h3 className="md:text-lg font-semibold  mb-4 hover:text-indigo-600 transition-colors truncate ">
           {title}
         </h3>
+        <p className="text-sm text-muted-foreground">{description}</p>
         <div className="flex items-center justify-between">
           <span className="font-medium">
             {new Intl.NumberFormat("en-US", {

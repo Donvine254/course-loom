@@ -13,8 +13,7 @@ import Link from "next/link";
 import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import CourseCard from "@/components/ui/course-card";
-import { sampleCourses } from "@/constants";
+import { CourseShowCase } from "@/components/ui/course-carousel";
 
 export default function Page() {
   return (
@@ -220,11 +219,7 @@ export default function Page() {
               </Button>
             </Link>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 ">
-            {sampleCourses.map((course, index) => (
-              <CourseCard key={index} course={course} />
-            ))}
-          </div>
+          <CourseShowCase />
         </div>
       </section>
       {/* CTA Section */}
