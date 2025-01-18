@@ -209,17 +209,26 @@ export default function Page() {
       {/* section for featured courses */}
       <section className="py-6 px-4 bg-gradient-to-tr from-indigo-200 via-gray-100 to-indigo-200">
         <div className="container mx-auto">
-          <div className="flex items-center justify-between gap-2 py-2">
-            <h2 className="text-lg sm:text-2xl md:text-3xl font-bold">
+          <div className="flex flex-col items-center justify-center py-1">
+            <h2 className="text-lg sm:text-2xl md:text-3xl font-bold w-fit bg-gray-100 text-indigo-600 px-3 py-1">
               Featured Courses
             </h2>
+            <p className="text-center">
+              Explore our most popular courses and start your learning journey
+              today
+            </p>
+          </div>
+
+          <CourseShowCase />
+          <div className="flex items-center justify-center">
             <Link href="/courses" passHref>
-              <Button className="justify-start gap-1" variant="ghost">
+              <Button
+                className="justify-start gap-1 bg-gray-100 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-colors"
+                variant="outline">
                 View All <CornerRightUp className="h-4 w-4" />
               </Button>
             </Link>
           </div>
-          <CourseShowCase />
         </div>
       </section>
       {/* CTA Section */}

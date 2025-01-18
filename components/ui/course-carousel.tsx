@@ -13,17 +13,17 @@ export function CourseShowCase() {
   return (
     <section className="w-full py-4 p-2 overflow-x-hidden">
       <Carousel
-        className="md:max-w-[75%] mx-auto my-4 h-fit "
+        className="md:max-w-[75%] lg:max-w-[80%] mx-auto h-fit "
         opts={{
           align: "start",
           loop: true,
         }}
         plugins={[
           Autoplay({
-            delay: 8000,
+            delay: 5000,
           }),
         ]}>
-        <CarouselContent>
+        <CarouselContent className="-ml-2 md:-ml-4">
           {sampleCourses.map((course, index) => (
             <CarouselItem
               key={index}
