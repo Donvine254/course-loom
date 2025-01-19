@@ -2,9 +2,10 @@ import Link from "next/link";
 import React from "react";
 import Image from "next/image";
 import { Separator } from "./separator";
+import { ThemeToggleButton } from "./theme-toggle";
 export default function Footer() {
   return (
-    <footer className="bg-gray-50 pt-12 pb-4">
+    <footer className="bg-gray-50 dark:bg-gray-950 dark:text-white pt-12 pb-4 ">
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-center mb-4">
           <Link
@@ -44,8 +45,11 @@ export default function Footer() {
           </div>
         </div>
         <Separator />
-        <div className="text-center text-sm">
-          &copy; {new Date().getFullYear()} CourseLoom. All rights reserved.
+        <div className="flex items-center justify-center gap-x-4 gap-y-2 py-1 flex-wrap">
+          <div className="text-sm">
+            &copy; {new Date().getFullYear()} CourseLoom. All rights reserved.
+          </div>
+          <ThemeToggleButton />
         </div>
       </div>
     </footer>

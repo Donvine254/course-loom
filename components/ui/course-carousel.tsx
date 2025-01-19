@@ -12,6 +12,7 @@ import Autoplay from "embla-carousel-autoplay";
 export function CourseShowCase() {
   return (
     <section className="w-full py-4 p-2 overflow-x-hidden">
+      {/* TODO:fix this to ensure it looks nice in sm devices */}
       <Carousel
         className="md:max-w-[75%] lg:max-w-[80%] mx-auto h-fit "
         opts={{

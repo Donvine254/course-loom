@@ -15,17 +15,15 @@ type CourseCardProps = {
 export default function CourseCard({ course }: { course: CourseCardProps }) {
   const { title, category, image, price, chapters, description } = course;
   return (
-    <div className="w-fit border shadow bg-card rounded-md max-w-sm">
-      <div className="aspect-video w-full overflow-hidden">
+    <div className="w-fit border dark:border-gray-900 shadow bg-card dark:bg-gray-950 dark:text-white rounded-md">
+      <div className="aspect-video w-full relative overflow-hidden">
         <Image
           alt={title}
           src={image}
-          width={300}
-          height={300}
+          fill
           placeholder="blur"
           blurDataURL="/placeholder.jpg"
-          className="rounded-md object-contain  cursor-pointer"
-          style={{ width: "auto", height: "auto" }}
+          className="rounded-md object-cover  cursor-pointer"
           priority
         />
       </div>
@@ -58,7 +56,7 @@ export default function CourseCard({ course }: { course: CourseCardProps }) {
             }).format(price * 120)}
           </span>
           <Link href="/courses" prefetch={false} passHref>
-            <button className="text-indigo-600 hover:text-indigo-700 font-medium flex items-center border py-0.5 px-2 rounded-md group">
+            <button className="text-indigo-600 hover:text-indigo-700 font-medium flex items-center border dark:border-indigo-600 py-0.5 px-2 rounded-md group">
               Explore
               <ArrowRight className="h-4 w-4 ml-1 group-hover:animate-move-arrow" />
             </button>
