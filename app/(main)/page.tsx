@@ -17,7 +17,7 @@ import { CourseShowCase } from "@/components/ui/course-carousel";
 
 export default function Page() {
   return (
-    <section className="bg-gradient-to-tr from-indigo-200 via-gray-100 to-indigo-200 dark:bg-none">
+    <section className="bg-gradient-to-tr from-indigo-200 via-gray-100 to-indigo-200 dark:bg-gradient-to-tr dark:from-indigo-900 dark:via-gray-900 dark:to-indigo-900">
       <div className="pt-12 bg-grid-indigo-100 dark:bg-none bg-opacity-20  min-h-screen  overflow-hidden py-2 md:pt-8 flex items-center justify-center relative">
         <div className="container mx-auto px-6 pt-12 md:pt-20 pb-16 md:pb-24 text-center max-w-4xl">
           <div className="inline-block">
@@ -25,7 +25,7 @@ export default function Page() {
               <TrophyIcon className="h-4 w-4 mr-2" /> Best E-Learning Services
             </span>
           </div>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 md:mb-8 md:leading-loose tracking-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-primary mb-6 md:mb-8 md:leading-loose tracking-tight">
             Unlock Your Potential with
             <span className="text-indigo-600 block md:inline-block md:mt-6">
               {" "}
