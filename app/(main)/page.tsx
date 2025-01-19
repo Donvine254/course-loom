@@ -17,7 +17,7 @@ import { CourseShowCase } from "@/components/ui/course-carousel";
 
 export default function Page() {
   return (
-    <section className="bg-gradient-to-tr from-indigo-200 via-gray-100 to-indigo-200 dark:bg-gradient-to-tr dark:from-indigo-900 dark:via-gray-900 dark:to-indigo-900">
+    <section className="bg-gradient-to-tr from-indigo-200 via-gray-100 to-indigo-200 dark:bg-gradient-to-tr dark:from-indigo-950 dark:via-gray-950 dark:to-indigo-950">
       <div className="pt-12 bg-grid-indigo-100 dark:bg-grid-indigo-800 bg-opacity-20  min-h-screen  overflow-hidden py-2 md:pt-8 flex items-center justify-center relative">
         <div className="container mx-auto px-6 pt-12 md:pt-20 pb-16 md:pb-24 text-center max-w-4xl">
           <div className="inline-block">
@@ -55,7 +55,7 @@ export default function Page() {
             </Link>
           </div>
         </div>
-        <div className="absolute -right-2 bottom-1/4 bg-card rounded-lg shadow-lg p-4 hidden lg:block">
+        <div className="absolute -right-2 bottom-1/4 bg-card rounded-lg shadow-lg p-4 hidden lg:block border border-input dark:shadow dark:shadow-indigo-600">
           <div className="flex items-center gap-2">
             <Users className="w-5 h-5 text-indigo-600" />
             <div>
@@ -63,7 +63,7 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="absolute right-32 top-20 bg-card rounded-lg shadow-lg p-4 hidden lg:block">
+        <div className="absolute right-32 top-20 bg-card rounded-lg shadow-lg p-4 hidden lg:block border border-input dark:shadow dark:shadow-indigo-600">
           <div className="flex items-center gap-2">
             <LibraryBig className="w-5 h-5 text-indigo-600" />
             <div>
@@ -71,7 +71,7 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="absolute -left-2 top-1/4 bg-card rounded-lg shadow-lg p-4 hidden lg:block">
+        <div className="absolute -left-2 top-1/4 bg-card rounded-lg shadow-lg p-4 hidden lg:block border border-input dark:shadow dark:shadow-indigo-600">
           <div className="text-center">
             <div className="w-fit p-1 rounded-full text-white mx-auto bg-indigo-700">
               <UserRound className="h-6 w-6" />
@@ -148,14 +148,14 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <section className="py-16 px-4 bg-gray-50">
+      <section className="py-16 px-4 bg-gray-50 dark:bg-transparent dark:border-t dark:border-t-input">
         <div className="container mx-auto">
           <div className="grid md:grid-cols-3 gap-8">
             {/* Library Card */}
-            <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+            <div className="bg-card p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-input">
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-indigo-50 rounded-lg">
-                  <VideoIcon className="w-6 h-6 text-indigo-600" />
+                <div className="p-3 bg-indigo-50 dark:bg-indigo-600 rounded-lg">
+                  <VideoIcon className="w-6 h-6 text-indigo-600 dark:text-primary" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg">150+ Free Videos</h3>
@@ -169,10 +169,10 @@ export default function Page() {
             </div>
 
             {/* Courses Card */}
-            <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+            <div className="bg-card p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-input">
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-indigo-50 rounded-lg">
-                  <GraduationCap className="w-6 h-6 text-indigo-600" />
+                <div className="p-3 bg-indigo-50 rounded-lg dark:bg-indigo-600">
+                  <GraduationCap className="w-6 h-6 text-indigo-600 dark:text-primary" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg">10K+ Online Courses</h3>
@@ -186,10 +186,10 @@ export default function Page() {
             </div>
 
             {/* Expert Card */}
-            <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+            <div className="bg-card border border-input p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-indigo-50 rounded-lg">
-                  <Users className="w-6 h-6 text-indigo-600" />
+                <div className="p-3 bg-indigo-50 dark:bg-indigo-600 rounded-lg">
+                  <Users className="w-6 h-6 text-indigo-600 dark:text-primary" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg">
@@ -207,7 +207,9 @@ export default function Page() {
         </div>
       </section>
       {/* section for featured courses */}
-      <section className="py-6 px-4 bg-gradient-to-tr from-indigo-200 via-gray-100 to-indigo-200">
+      <section
+        className="py-6 px-4 bg-gradient-to-tr from-indigo-200 via-gray-100 to-indigo-200 dark:bg-gradient-to-tr dark:from-indigo-800 dark:via-gray-900 dark:to-indigo-800
+">
         <div className="container mx-auto">
           <div className="flex flex-col items-center justify-center py-1">
             <h2 className="text-lg sm:text-2xl md:text-3xl font-bold w-fit bg-gray-100 text-indigo-600 px-3 py-1">
