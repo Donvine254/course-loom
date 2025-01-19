@@ -68,9 +68,18 @@ export default {
         "0%, 100%": { transform: "translateX(0)" },
         "50%": { transform: "translateX(0.5rem)" },
       },
+      spin: {
+        from: {
+          transform: "rotate(0deg)",
+        },
+        to: {
+          transform: "rotate(360deg)",
+        },
+      },
     },
     animation: {
       "move-arrow": "move 1s ease-in-out infinite",
+      spin: "spin 1s linear infinite",
     },
   },
   plugins: [tailwindcssAnimate],
