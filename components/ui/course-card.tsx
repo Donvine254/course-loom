@@ -16,16 +16,14 @@ export default function CourseCard({ course }: { course: CourseCardProps }) {
   const { title, category, image, price, chapters, description } = course;
   return (
     <div className="w-fit border dark:border-gray-900 shadow bg-card dark:bg-gray-950 dark:text-white rounded-md max-w-sm">
-      <div className="aspect-video w-full overflow-hidden">
+      <div className="aspect-video w-full relative overflow-hidden">
         <Image
           alt={title}
           src={image}
-          width={300}
-          height={300}
+          fill
           placeholder="blur"
           blurDataURL="/placeholder.jpg"
-          className="rounded-md object-contain  cursor-pointer"
-          style={{ width: "auto", height: "auto" }}
+          className="rounded-md object-cover  cursor-pointer"
           priority
         />
       </div>
