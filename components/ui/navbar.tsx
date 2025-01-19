@@ -20,7 +20,7 @@ export default async function Navbar() {
         async
         defer
         src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js"></Script>
-      <div className="flex flex-wrap items-center justify-between py-2 px-4 w-full  shadow z-20 fixed top-0 bg-white dark:bg-gray-950 dark:shadow-gray-600">
+      <div className="flex flex-wrap items-center justify-between py-2 px-4 w-full  shadow z-20 fixed top-0 bg-white dark:bg-gray-950 dark:shadow-gray-600 dark:text-white">
         <Link href="/" className="flex items-center gap-1 text-indigo-600">
           <Image
             src="https://res.cloudinary.com/dipkbpinx/image/upload/v1737068784/logos/uxdt5wtwbk0qctgm5qbe.png"
@@ -39,7 +39,7 @@ export default async function Navbar() {
               type="search"
               name="query"
               required
-              className="rounded-full px-3 py-2 border border-indigo-500 hover:outline-none bg-indigo-50 dark:bg-input focus:outline-none flex-1 w-full placeholder:text-muted-foreground focus:bg-card pr-12"
+              className="rounded-full px-3 py-2 border border-indigo-500 hover:outline-none bg-indigo-50 dark:bg-gray-800 focus:outline-none flex-1 w-full placeholder:text-muted-foreground focus:bg-card pr-12"
               placeholder="What are you looking for?"
             />
             <button
@@ -87,7 +87,7 @@ export default async function Navbar() {
               <li>
                 <Link
                   href="/dashboard"
-                  className="hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 xsm:px-2 xsm:rounded-md">
+                  className="hover:bg-gray-50 dark:hover:bg-gray-900 border-b border-input md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 dark:xsm:hover:bg-indigo-900 xsm:px-2 xsm:rounded-md">
                   Dashboard
                 </Link>
               </li>
@@ -95,27 +95,27 @@ export default async function Navbar() {
             <li>
               <Link
                 href="/contact"
-                className="hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 xsm:px-2 xsm:rounded-md">
+                className="hover:bg-gray-50 dark:hover:bg-gray-900 border-b border-input md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 dark:xsm:hover:bg-indigo-900 xsm:px-2 xsm:rounded-md">
                 Contact
               </Link>
             </li>
             <li>
               <Link
                 href="/courses"
-                className="hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 xsm:px-2 xsm:rounded-md">
+                className="hover:bg-gray-50 dark:hover:bg-gray-900 border-b border-input md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 dark:xsm:hover:bg-indigo-900 xsm:px-2 xsm:rounded-md">
                 Courses
               </Link>
             </li>
             <li>
               <Link
                 href="/testimonials"
-                className="hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 xsm:px-2 xsm:rounded-md">
+                className="hover:bg-gray-50 dark:hover:bg-gray-900 border-b border-input md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 dark:xsm:hover:bg-indigo-900 xsm:px-2 xsm:rounded-md">
                 Testimonials
               </Link>
             </li>
             <li className="md:hidden">
               <SignInButton>
-                <button className="hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 xsm:px-2 xsm:rounded-md">
+                <button className="hover:bg-gray-50 dark:hover:bg-gray-900 border-b border-input md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 dark:xsm:hover:bg-indigo-900 xsm:px-2 xsm:rounded-md xsm:w-full xsm:text-start">
                   Get Started
                 </button>
               </SignInButton>

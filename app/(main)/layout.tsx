@@ -35,7 +35,7 @@ export default async function RootLayout({
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange>
-          {/* TODO: fix hydration errors */}
+          {/* TODO: fix why this is misbehaving on system */}
           <ClerkProvider afterSignOutUrl="/">
             <GoogleOneTap />
             <Toaster richColors closeButton />
