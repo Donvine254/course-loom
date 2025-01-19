@@ -148,7 +148,7 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <section className="py-16 px-4 bg-gray-50 dark:bg-transparent dark:border-t dark:border-t-input">
+      <section className="py-16 px-4 bg-gray-50 dark:bg-black dark:border-y dark:border-y-input">
         <div className="container mx-auto">
           <div className="grid md:grid-cols-3 gap-8">
             {/* Library Card */}

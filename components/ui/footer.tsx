@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Separator } from "./separator";
 export default function Footer() {
   return (
-    <footer className="bg-gray-50 pt-12 pb-4">
+    <footer className="bg-gray-50 dark:bg-gray-950 dark:text-white pt-12 pb-4">
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-center mb-4">
           <Link

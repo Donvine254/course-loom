@@ -20,7 +20,7 @@ export default async function Navbar() {
         async
         defer
         src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js"></Script>
-      <div className="flex flex-wrap items-center justify-between py-2 px-4 w-full  shadow z-20 fixed top-0 bg-white dark:bg-gray-950">
+      <div className="flex flex-wrap items-center justify-between py-2 px-4 w-full  shadow z-20 fixed top-0 bg-white dark:bg-gray-950 dark:shadow-gray-600">
         <Link href="/" className="flex items-center gap-1 text-indigo-600">
           <Image
             src="https://res.cloudinary.com/dipkbpinx/image/upload/v1737068784/logos/uxdt5wtwbk0qctgm5qbe.png"
