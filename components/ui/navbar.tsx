@@ -15,12 +15,12 @@ export default async function Navbar() {
   const user = await currentUser();
   console.log(user);
   return (
-    <menu className="w-full relative">
+    <menu className="w-full relative ">
       <Script
         async
         defer
         src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js"></Script>
-      <div className="flex flex-wrap items-center justify-between py-2 px-4 w-full  shadow z-20 fixed top-0 bg-white">
+      <div className="flex flex-wrap items-center justify-between py-2 px-4 w-full  shadow z-20 fixed top-0 bg-white dark:bg-gray-950">
         <Link href="/" className="flex items-center gap-1 text-indigo-600">
           <Image
             src="https://res.cloudinary.com/dipkbpinx/image/upload/v1737068784/logos/uxdt5wtwbk0qctgm5qbe.png"
@@ -39,7 +39,7 @@ export default async function Navbar() {
               type="search"
               name="query"
               required
-              className="rounded-full px-3 py-2 border border-indigo-500 hover:outline-none bg-indigo-50 focus:outline-none flex-1 w-full placeholder:text-muted-foreground focus:bg-card pr-12"
+              className="rounded-full px-3 py-2 border border-indigo-500 hover:outline-none bg-indigo-50 dark:bg-input focus:outline-none flex-1 w-full placeholder:text-muted-foreground focus:bg-card pr-12"
               placeholder="What are you looking for?"
             />
             <button
@@ -81,7 +81,6 @@ export default async function Navbar() {
             </svg>
           )}
         </button>
-        {/* trial */}
         <div className="hidden md:block w-full md:w-auto" id="mobile-menu">
           <ul className="flex-col md:flex-row flex md:items-center md:space-x-8 mt-4 md:mt-0 md:text-lg md:font-medium xsm:text-sm">
             <SignedIn>
@@ -198,8 +197,6 @@ export default async function Navbar() {
             {/* end of dropdown */}
           </ul>
         </div>
-
-        {/* end of trial */}
       </div>
     </menu>
   );

@@ -5,6 +5,7 @@ import { ClerkProvider, GoogleOneTap } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/sonner";
 import Navbar from "@/components/ui/navbar";
 import Footer from "@/components/ui/footer";
+import { ThemeProvider } from "next-themes";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
   description: "An LMS platform that powers the modern mind!",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -28,14 +29,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased `}>
-        <ClerkProvider afterSignOutUrl="/">
-          <GoogleOneTap />
-          <Toaster richColors closeButton />
-          <Navbar />
-          <main>{children}</main>
-        </ClerkProvider>
-        <Footer />
+        className={`${geistSans.variable} ${geistMono.variable} antialiased transition-colors`}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ClerkProvider afterSignOutUrl="/">
+            <GoogleOneTap />
+            <Toaster richColors closeButton />
+            <Navbar />
+            <main>{children}</main>
+          </ClerkProvider>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );
