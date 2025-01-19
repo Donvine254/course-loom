@@ -11,6 +11,19 @@
       linear-gradient(to bottom, rgba(205, 196, 211, 0.5) 1px, transparent 1px);
     background-size: 60px 60px; /* Increase spacing here */
   }
+  .bg-grid-indigo-800 {
+    background-image: linear-gradient(
+        to right,
+        rgba(75, 85, 99, 0.5) 1px,
+        /* Darker indigo shade */ transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        rgba(75, 85, 99, 0.5) 1px,
+        /* Darker indigo shade */ transparent 1px
+      );
+    background-size: 60px 60px; /* Maintain the same spacing */
+  }
 }
 
 @layer base {
