@@ -15,7 +15,7 @@ type CourseCardProps = {
 export default function CourseCard({ course }: { course: CourseCardProps }) {
   const { title, category, image, price, chapters, description } = course;
   return (
-    <div className="w-fit border dark:border-gray-900 shadow bg-card dark:bg-gray-950 dark:text-white rounded-md max-w-sm">
+    <div className="w-fit border dark:border-gray-900 shadow bg-card dark:bg-gray-950 dark:text-white rounded-md">
       <div className="aspect-video w-full relative overflow-hidden">
         <Image
           alt={title}
