@@ -13,7 +13,6 @@ import { Search } from "lucide-react";
 
 export default async function Navbar() {
   const user = await currentUser();
-  console.log(user);
   return (
     <menu className="w-full relative ">
       <Script
