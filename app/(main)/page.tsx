@@ -77,40 +77,40 @@ export default function Page() {
               <UserRound className="h-6 w-6" />
             </div>
             <p className="font-bold text-xl">15K+</p>
-            <p className="text-sm text-gray-600">Students Enrolled</p>
+            <p className="text-sm text-gray-600 my-1">Students Enrolled</p>
             <div className="flex items-center -space-x-4">
               <Image
                 alt="user 1"
                 src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1480&amp;q=80"
-                className="relative inline-block h-12 w-12 rounded-full border-2 border-white object-cover object-center hover:z-10 focus:z-10"
+                className="relative inline-block h-12 w-12 rounded-full border-2 border-white dark:border-indigo-600 object-cover object-center hover:z-10 focus:z-10"
                 height={48}
                 width={48}
               />
               <Image
                 alt="user 2"
                 src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1061&amp;q=80"
-                className="relative inline-block h-12 w-12 rounded-full border-2 border-white object-cover object-center hover:z-10 focus:z-10"
+                className="relative inline-block h-12 w-12 rounded-full border-2 border-white dark:border-orange-800  object-cover object-center hover:z-10 focus:z-10"
                 height={48}
                 width={48}
               />
               <Image
                 alt="user 3"
                 src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1288&amp;q=80"
-                className="relative inline-block h-12 w-12 rounded-full border-2 border-white object-cover object-center hover:z-10 focus:z-10"
+                className="relative inline-block h-12 w-12 rounded-full border-2 border-white dark:border-blue-800  object-cover object-center hover:z-10 focus:z-10"
                 height={48}
                 width={48}
               />
               <Image
                 alt="user 4"
                 src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1287&amp;q=80"
-                className="relative inline-block h-12 w-12 rounded-full border-2 border-white object-cover object-center hover:z-10 focus:z-10"
+                className="relative inline-block h-12 w-12 rounded-full border-2 border-white dark:border-green-800  object-cover object-center hover:z-10 focus:z-10"
                 height={48}
                 width={48}
               />
               <Image
                 alt="user 5"
                 src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1760&amp;q=80"
-                className="relative inline-block h-12 w-12 rounded-full border-2 border-white object-cover object-center hover:z-10 focus:z-10"
+                className="relative inline-block h-12 w-12 rounded-full border-2 border-white dark:border-indigo-600  object-cover object-center hover:z-10 focus:z-10"
                 height={48}
                 width={48}
               />
@@ -148,7 +148,7 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <section className="py-16 px-4 bg-gray-50 dark:bg-black dark:border-y dark:border-y-input">
+      <section className="py-16 px-4 bg-gray-50 dark:bg-black dark:border-y dark:border-y-indigo-900">
         <div className="container mx-auto">
           <div className="grid md:grid-cols-3 gap-8">
             {/* Library Card */}
@@ -234,7 +234,7 @@ export default function Page() {
         </div>
       </section>
       {/* CTA Section */}
-      <section className="bg-indigo-600 text-white py-8 md:py-12">
+      <section className="bg-indigo-600 dark:bg-indigo-800 text-white py-8 md:py-12">
         <div className="container mx-auto px-6 text-center">
           <div>
             <h2 className="text-3xl md:text-4xl font-bold mb-6 md:mb-8">

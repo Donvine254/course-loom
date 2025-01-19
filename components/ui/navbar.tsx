@@ -39,7 +39,8 @@ export default async function Navbar() {
               type="search"
               name="query"
               required
-              className="rounded-full px-3 py-2 border border-indigo-500 hover:outline-none bg-indigo-50 dark:bg-gray-800 focus:outline-none flex-1 w-full placeholder:text-muted-foreground focus:bg-card pr-12"
+              className="rounded-full px-3 py-2 border border-indigo-500 hover:outline-none bg-indigo-50 dark:bg-gray-800 focus:outline-none flex-1 w-full placeholder:text-muted-foreground focus:bg-card dark:focus:bg-gray-700 pr-12 dark:focus:placeholder-gray-200 focus:transition-colors"
+              autoComplete="false"
               placeholder="What are you looking for?"
             />
             <button
@@ -70,7 +71,7 @@ export default async function Navbar() {
             />
           ) : (
             <svg
-              className="w-6 h-6"
+              className="w-6 h-6 dark:text-gray-200"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg">
@@ -87,7 +88,7 @@ export default async function Navbar() {
               <li>
                 <Link
                   href="/dashboard"
-                  className="hover:bg-gray-50 dark:hover:bg-gray-900 border-b border-input md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 dark:xsm:hover:bg-indigo-900 xsm:px-2 xsm:rounded-md">
+                  className="hover:bg-gray-50 dark:hover:bg-gray-900 border-b border-input dark:border-gray-800 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 dark:xsm:hover:bg-indigo-900 xsm:px-2 xsm:rounded-md">
                   Dashboard
                 </Link>
               </li>
@@ -95,27 +96,27 @@ export default async function Navbar() {
             <li>
               <Link
                 href="/contact"
-                className="hover:bg-gray-50 dark:hover:bg-gray-900 border-b border-input md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 dark:xsm:hover:bg-indigo-900 xsm:px-2 xsm:rounded-md">
+                className="hover:bg-gray-50 dark:hover:bg-gray-900 border-b border-input dark:border-gray-800 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 dark:xsm:hover:bg-indigo-900 xsm:px-2 xsm:rounded-md">
                 Contact
               </Link>
             </li>
             <li>
               <Link
                 href="/courses"
-                className="hover:bg-gray-50 dark:hover:bg-gray-900 border-b border-input md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 dark:xsm:hover:bg-indigo-900 xsm:px-2 xsm:rounded-md">
+                className="hover:bg-gray-50 dark:hover:bg-gray-900 border-b border-input dark:border-gray-800 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 dark:xsm:hover:bg-indigo-900 xsm:px-2 xsm:rounded-md">
                 Courses
               </Link>
             </li>
             <li>
               <Link
                 href="/testimonials"
-                className="hover:bg-gray-50 dark:hover:bg-gray-900 border-b border-input md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 dark:xsm:hover:bg-indigo-900 xsm:px-2 xsm:rounded-md">
+                className="hover:bg-gray-50 dark:hover:bg-gray-900 border-b border-input dark:border-gray-800 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 dark:xsm:hover:bg-indigo-900 xsm:px-2 xsm:rounded-md">
                 Testimonials
               </Link>
             </li>
             <li className="md:hidden">
               <SignInButton>
-                <button className="hover:bg-gray-50 dark:hover:bg-gray-900 border-b border-input md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 dark:xsm:hover:bg-indigo-900 xsm:px-2 xsm:rounded-md xsm:w-full xsm:text-start">
+                <button className="hover:bg-gray-50 dark:hover:bg-gray-900 border-b border-input dark:border-gray-800 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 dark:xsm:hover:bg-indigo-900 xsm:px-2 xsm:rounded-md w-full text-start">
                   Get Started
                 </button>
               </SignInButton>
