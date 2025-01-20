@@ -17,36 +17,47 @@ export const Contact = () => {
         </div>
       </div>
       {/* section for cards */}
-      <div className="flex flex-wrap sm:justify-between  gap-2 sm:gap-6 p-2 max-w-5xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-2 sm:gap-6 xsm:p-2 max-w-5xl mx-auto overflow-x-clip">
         {/* first card */}
-        <div className="flex items-start gap-2 p-6">
-          <MapPin className="text-indigo-500 h-10 w-10" />
+        <div className="flex items-start gap-2 p-6 md:p-2 lg:p-6">
+          <button className="bg-indigo-500 dark:bg-indigo-950 rounded-full p-2 flex items-center justify-center h-10 w-10">
+            <MapPin className="text-white dark:text-indigo-500" />
+          </button>
+
           <div className="space-y-4">
-            <h2 className="font-bold text-2xl md:text-2xl">Address</h2>
-            <p className="text-muted-foreground">123 Main Street,</p>
-            <p className="text-muted-foreground">Nairobi, Kenya.</p>
+            <h2 className="font-bold text-base sm:text-xl lg:text-2xl">
+              Address
+            </h2>
+            <p className="text-muted-foreground xsm:text-xs">
+              123 Main Street,
+            </p>
+            <p className="text-muted-foreground xsm:text-xs">Nairobi, Kenya.</p>
           </div>
         </div>
         {/* second card */}
-        <div className="flex items-start gap-2 p-6">
-          <Phone className="text-indigo-500 h-10 w-10" />
+        <div className="flex items-start gap-2 p-6 md:p-2 lg:p-6">
+          <button className="bg-indigo-500 dark:bg-indigo-950 rounded-full p-2 flex items-center justify-center h-10 w-10">
+            <Phone className="text-white dark:text-indigo-500" />
+          </button>
           <div className="space-y-4">
-            <h2 className="font-bold text-2xl md:text-2xl">Contact</h2>
-            <p className="text-muted-foreground">
+            <h2 className="font-bold text-base sm:text-xl lg:text-2xl">
+              Contact
+            </h2>
+            <p className="text-muted-foreground xsm:text-xs whitespace-nowrap">
               Mobile/SMS: {""}
               <a
                 href="tel:+254712345678"
                 target="_blank"
                 referrerPolicy="no-referrer"
-                className="font-semibold hover:underline hover:text-indigo-500">
+                className="font-semibold hover:underline hover:text-indigo-500 ">
                 +254712345678
               </a>
             </p>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground xsm:text-xs whitespace-nowrap">
               Hotline: {""}
               <span className="font-semibold">1800 - 1102</span>
             </p>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground xsm:text-xs whitespace-nowrap">
               Email: {""}
               <a
                 href="mailto:info@courseloom.app"
@@ -59,16 +70,18 @@ export const Contact = () => {
           </div>
         </div>
         {/* third card */}
-        <div className="flex items-start gap-2 p-6">
-          <Clock className="text-indigo-500 h-10 w-10" />
+        <div className="flex items-start gap-2 p-6 md:p-2 lg:p-6">
+          <button className="bg-indigo-500 dark:bg-indigo-950 rounded-full p-2 flex items-center justify-center h-10 w-10">
+            <Clock className="text-white dark:text-indigo-500" />
+          </button>
           <div className="space-y-4">
-            <h2 className="font-bold text-2xl md:text-2xl whitespace-nowrap">
+            <h2 className="font-bold text-base sm:text-xl lg:text-2xl whitespace-nowrap ">
               Hours of Operation
             </h2>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground xsm:text-xs">
               Monday - Friday: 09:00 - 20:00
             </p>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground xsm:text-xs">
               Sunday & Saturday: 10:30 - 22:00
             </p>
           </div>
