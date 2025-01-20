@@ -87,6 +87,7 @@ export default async function Navbar() {
               <li>
                 <Link
                   href="/dashboard"
+                  prefetch={false}
                   className="hover:bg-gray-50 dark:hover:bg-gray-900 border-b border-input dark:border-gray-800 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 dark:xsm:hover:bg-indigo-900 xsm:px-2 xsm:rounded-md">
                   Dashboard
                 </Link>
@@ -95,6 +96,7 @@ export default async function Navbar() {
             <li>
               <Link
                 href="/contact"
+                prefetch={false}
                 className="hover:bg-gray-50 dark:hover:bg-gray-900 border-b border-input dark:border-gray-800 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 dark:xsm:hover:bg-indigo-900 xsm:px-2 xsm:rounded-md">
                 Contact
               </Link>
