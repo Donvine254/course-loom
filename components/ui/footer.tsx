@@ -10,6 +10,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center mb-4">
           <Link
             href="/"
+            prefetch={false}
             className="flex items-center gap-1 text-indigo-600 space-x-2 mb-8 md:mb-0">
             <Image
               src="https://res.cloudinary.com/dipkbpinx/image/upload/v1737068784/logos/uxdt5wtwbk0qctgm5qbe.png"
@@ -24,21 +25,25 @@ export default function Footer() {
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 text-center sm:text-left">
             <Link
               href="/instructor"
+              prefetch={false}
               className="hover:text-blue-600 hover:underline">
               Become an Instructor
             </Link>
             <Link
               href="/courses"
+              prefetch={false}
               className="hover:text-blue-600 hover:underline">
               Courses
             </Link>
             <Link
               href="/contact"
+              prefetch={false}
               className="hover:text-blue-600 hover:underline">
               Contact
             </Link>
             <Link
               href="/privacy"
+              prefetch={false}
               className="hover:text-blue-600 hover:underline">
               Privacy
             </Link>
