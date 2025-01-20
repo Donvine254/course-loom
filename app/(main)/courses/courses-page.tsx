@@ -211,7 +211,7 @@ export default function CoursesPage() {
             />
           </div>
           {isMobile && (
-            <Drawer>
+            <Drawer modal>
               <DrawerTrigger asChild>
                 <Button variant="outline" size="icon">
                   <Filter className="h-4 w-4" />
