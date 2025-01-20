@@ -160,32 +160,36 @@ export default async function Navbar() {
                     className="py-1 px-2"
                     aria-labelledby="dropdownLargeButton">
                     <li className="md:hidden">
-                      <a
+                      <Link
+                        prefetch={false}
                         href="/dashboard"
                         className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md">
                         Dashboard
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
+                        prefetch={false}
                         href="/profile"
                         className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md">
                         My Account
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
+                        prefetch={false}
                         href="/dashboard/courses"
                         className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md">
                         My Courses
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         href="/profile"
+                        prefetch={false}
                         className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md">
                         Settings
-                      </a>
+                      </Link>
                     </li>
                     <SignedIn>
                       <li className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md md:hover:bg-destructive md:hover:text-destructive-foreground">
