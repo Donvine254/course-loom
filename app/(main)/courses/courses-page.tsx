@@ -254,7 +254,7 @@ export default function CoursesPage() {
         {/* Filters Sidebar - Desktop */}
         {!isMobile && (
           <div className="space-y-6 ">
-            <div className="lg:sticky lg:top-4 p-4 bg-card dark:bg-gray-950 border rounded-lg shadow dark:shadow-indigo-600">
+            <div className="lg:sticky lg:top-16 p-4 bg-card dark:bg-gray-950 border rounded-lg shadow dark:shadow-indigo-600">
               <FilterContent />
             </div>
           </div>
