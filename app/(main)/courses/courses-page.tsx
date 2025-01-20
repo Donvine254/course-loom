@@ -3,8 +3,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
 import { useSearchParams } from "next/navigation";
 import {
   Drawer,
@@ -26,15 +24,11 @@ import {
   GraduationCap,
   DollarSign,
   Filter,
-  SortAsc,
-  SortDesc,
-  Calendar,
-  BookOpen,
   FlaskConical,
 } from "lucide-react";
 import { sampleCourses } from "@/constants";
 import CourseCard from "@/components/ui/course-card";
-import FilterSlider from "@/components/ui/filter-sidebar";
+import { FilterContent } from "@/components/ui/courses-filter";
 
 const categories = [
   { name: "All", icon: LayoutGrid, color: "text-gray-500" },
@@ -64,7 +58,7 @@ export default function CoursesPage() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([
     "All",
   ]);
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 100]);
+  const [priceRange, setPriceRange] = useState([0, 100]);
   const [sortBy, setSortBy] = useState<SortOption>("default");
   const [isMobile, setIsMobile] = useState(false);
 
@@ -124,59 +118,6 @@ export default function CoursesPage() {
     })
   );
 
-  const FilterContent = () => (
-    <div className="space-y-6">
-      <FilterSlider
-        priceRange={priceRange}
-        onPriceRangeChange={setPriceRange}
-      />
-
-      <div>
-        <h3 className="text-lg font-semibold mb-4">Sort By</h3>
-        <RadioGroup
-          value={sortBy}
-          onValueChange={(value) => setSortBy(value as SortOption)}>
-          <div className="space-y-3">
-            <Label className="flex items-center space-x-3 cursor-pointer">
-              <RadioGroupItem value="default" />
-              <span>Default</span>
-            </Label>
-            <Label className="flex items-center space-x-3 cursor-pointer">
-              <RadioGroupItem value="title-asc" />
-              <SortAsc className="h-4 w-4 mr-2" />
-              <span>Title A-Z</span>
-            </Label>
-            <Label className="flex items-center space-x-3 cursor-pointer">
-              <RadioGroupItem value="title-desc" />
-              <SortDesc className="h-4 w-4 mr-2" />
-              <span>Title Z-A</span>
-            </Label>
-            <Label className="flex items-center space-x-3 cursor-pointer">
-              <RadioGroupItem value="latest" />
-              <Calendar className="h-4 w-4 mr-2" />
-              <span>Latest</span>
-            </Label>
-            <Label className="flex items-center space-x-3 cursor-pointer">
-              <RadioGroupItem value="oldest" />
-              <Calendar className="h-4 w-4 mr-2" />
-              <span>Oldest</span>
-            </Label>
-            <Label className="flex items-center space-x-3 cursor-pointer">
-              <RadioGroupItem value="chapters-asc" />
-              <BookOpen className="h-4 w-4 mr-2" />
-              <span>Chapters (Low to High)</span>
-            </Label>
-            <Label className="flex items-center space-x-3 cursor-pointer">
-              <RadioGroupItem value="chapters-desc" />
-              <BookOpen className="h-4 w-4 mr-2" />
-              <span>Chapters (High to Low)</span>
-            </Label>
-          </div>
-        </RadioGroup>
-      </div>
-    </div>
-  );
-
   return (
     <section>
       <div className="bg-opacity-20 bg-inherit hidden lg:block border-b">
@@ -213,7 +154,12 @@ export default function CoursesPage() {
                   <DrawerTitle>Filters</DrawerTitle>
                 </DrawerHeader>
                 <div className="p-4">
-                  <FilterContent />
+                  <FilterContent
+                    priceRange={priceRange}
+                    setPriceRange={setPriceRange}
+                    sortBy={sortBy}
+                    setSortBy={setSortBy}
+                  />
                 </div>
               </DrawerContent>
             </Drawer>
@@ -250,7 +196,12 @@ export default function CoursesPage() {
           {!isMobile && (
             <div className="space-y-6 ">
               <div className="lg:sticky lg:top-16 p-4 bg-card dark:bg-gray-950 border rounded-lg shadow dark:shadow-indigo-600">
-                <FilterContent />
+                <FilterContent
+                  priceRange={priceRange}
+                  setPriceRange={setPriceRange}
+                  sortBy={sortBy}
+                  setSortBy={setSortBy}
+                />
               </div>
             </div>
           )}
