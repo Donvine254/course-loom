@@ -1,5 +1,6 @@
 "use client";
 import { Input } from "@/components/ui/input";
+import { Delete, Send } from "lucide-react";
 import React, { FormEvent, useState } from "react";
 import { toast } from "sonner";
 
@@ -40,8 +41,8 @@ export default function ContactForm() {
         name,
         email,
         message,
-        from_name: "Sendit Kenya",
-        subject: "You have a new message at senditkenya.vercel.app.",
+        from_name: "Course Loom",
+        subject: "You have a new message at courseloom.vercel.app.",
       }),
     });
     toast.dismiss(toastId);
@@ -60,7 +61,7 @@ export default function ContactForm() {
     <form
       id="form"
       onSubmit={handleSubmit}
-      className="bg-white dark:bg-inherit p-6 col-span-full md:col-span-2  rounded-lg shadow mb-12">
+      className="bg-card p-6 col-span-full md:col-span-2  rounded-lg shadow mb-12">
       <h2 className="text-xl md:text-2xl font-bold text-start md:text-center my-2">
         Need More information?
       </h2>
@@ -69,46 +70,47 @@ export default function ContactForm() {
         soon as possible.
       </p>
       <input type="checkbox" name="botcheck" id="" className="hidden" />
-      <div className="space-y-2">
-        <label htmlFor="name">
-          Name <span className="text-red-600 font-bold">*</span>
-        </label>
-        <Input
-          id="name"
-          type="text"
-          name="fullname"
-          placeholder="John Doe"
-          autoComplete="name"
-          pattern="^[a-zA-Z\s]*$"
-          title="Numbers and special characters are not allowed"
-          maxLength={20}
-          minLength={3}
-          required
-        />
-      </div>
-      <div className="space-y-2">
-        <label htmlFor="email">
-          Email <span className="text-red-600 font-bold">*</span>
-        </label>
-        <Input
-          className="h-10 bg-white text-base focus:outline-none  disabled:cursor-not-allowed disabled:opacity-50 w-full px-3 py-2 border border-gray-300 rounded-md z-50"
-          id="email"
-          type="email"
-          name="email"
-          placeholder="you@example.com"
-          autoComplete="email"
-          onInput={handleInput}
-          title="Enter a valid email address"
-          maxLength={60}
-          minLength={3}
-          required
-        />
-        <p
-          className={`text-red-500 text-sm  ${
-            error ? "visible opacity-100" : "invisible opacity-0"
-          }`}>
-          {error}
-        </p>
+      <div className="flex flex-col md:flex-row justify-between gap-x-4">
+        <div className="space-y-2 w-full">
+          <label htmlFor="name">
+            Name <span className="text-red-600 font-bold">*</span>
+          </label>
+          <Input
+            id="name"
+            type="text"
+            name="fullname"
+            placeholder="John Doe"
+            autoComplete="name"
+            pattern="^[a-zA-Z\s]*$"
+            title="Numbers and special characters are not allowed"
+            maxLength={20}
+            minLength={3}
+            required
+          />
+        </div>
+        <div className="space-y-2 w-full">
+          <label htmlFor="email">
+            Email <span className="text-red-600 font-bold">*</span>
+          </label>
+          <Input
+            id="email"
+            type="email"
+            name="email"
+            placeholder="you@example.com"
+            autoComplete="email"
+            onInput={handleInput}
+            title="Enter a valid email address"
+            maxLength={60}
+            minLength={3}
+            required
+          />
+          <p
+            className={`text-red-500 text-sm  ${
+              error ? "visible opacity-100" : "invisible opacity-0"
+            }`}>
+            {error}
+          </p>
+        </div>
       </div>
 
       <div className="space-y-2">
@@ -116,7 +118,7 @@ export default function ContactForm() {
           Your Message<span className="text-red-600 font-bold">*</span>
         </label>
         <textarea
-          className="bg-white text-base focus:outline-none  disabled:cursor-not-allowed disabled:opacity-50 w-full px-3 py-2 border border-gray-300 rounded-md z-50"
+          className="flex min-h-[80px] w-full rounded-md border border-input bg-gray-100 dark:bg-input focus-visible:bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500  disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
           rows={4}
           id="message"
           name="message"
@@ -125,16 +127,16 @@ export default function ContactForm() {
           required
           placeholder="Type your message here..."></textarea>
       </div>
-      <div className="flex items-center justify-end gap-4 py-2">
+      <div className="flex items-center justify-end gap-4 py-2 md:py-4">
         <button
           type="reset"
-          className="border-blue-500 hover:border-red-500 border px-4 py-1 rounded-lg focus:outline-none focus:ring-2 transition-colors">
-          Clear
+          className="border-indigo-500 hover:border-red-500 border px-4 py-1 rounded-lg focus:outline-none focus:ring-2 transition-colors flex items-center justify-start gap-2">
+          <Delete className="h-4 w-4" /> Clear
         </button>
         <button
           type="submit"
-          className="bg-indigo-600 text-white px-4 py-1 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">
-          Send
+          className="bg-indigo-600 text-white px-4 py-1 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors flex items-center justify-start gap-2">
+          <Send className="h-4 w-4" /> Send
         </button>
       </div>
     </form>
