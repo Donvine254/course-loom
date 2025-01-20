@@ -32,7 +32,7 @@ export default async function Navbar() {
           <h1 className="text-2xl xsm:text-lg font-bold">CourseLoom</h1>
         </Link>
         {/* only show in large devices */}
-        <form action="/courses" className="md:max-w-sm hidden flex-1 md:block">
+        <form action="/courses" className="max-w-sm hidden flex-1 lg:block">
           <search className="relative block">
             <input
               type="search"

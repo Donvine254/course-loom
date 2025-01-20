@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { useSearchParams } from "next/navigation";
 import {
   Drawer,
   DrawerContent,
@@ -58,6 +58,8 @@ type SortOption =
 
 export default function CoursesPage() {
   const [searchQuery, setSearchQuery] = useState("");
+  const searchParams = useSearchParams();
+  const query = searchParams.get("query") || "";
   const [selectedCategories, setSelectedCategories] = useState<string[]>([
     "All",
   ]);
@@ -67,10 +69,11 @@ export default function CoursesPage() {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024);
+      setIsMobile(window.innerWidth < 1080);
     };
     checkMobile();
     window.addEventListener("resize", checkMobile);
+    setSearchQuery(query);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
@@ -193,12 +196,12 @@ export default function CoursesPage() {
     <div className="container mx-auto px-4 py-8">
       {/* Search Bar and Filter Toggle */}
       <div className="relative mb-6 flex items-center gap-2">
-        <div className="relative flex-grow">
+        <div className="relative flex-grow lg:hidden">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-          <Input
+          <input
             type="search"
             placeholder="Search courses..."
-            className="pl-10"
+            className="pl-10 border px-3 py-2 rounded-md border-indigo-500 hover:outline-none bg-indigo-50 dark:bg-gray-800 focus:outline-none flex-1 w-full placeholder:text-muted-foreground focus:bg-card dark:focus:bg-gray-700 pr-12 dark:focus:placeholder-gray-200 focus:transition-colors"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
