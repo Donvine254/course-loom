@@ -23,7 +23,7 @@ export default function CourseCard({ course }: { course: CourseCardProps }) {
           fill
           placeholder="blur"
           blurDataURL="/placeholder.jpg"
-          className="rounded-md object-cover  cursor-pointer"
+          className="rounded-t-md object-cover  cursor-pointer"
           priority
         />
       </div>

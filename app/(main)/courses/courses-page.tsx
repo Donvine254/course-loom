@@ -197,7 +197,7 @@ export default function CoursesPage() {
           </h1>
         </div>
       </div>
-      <div className="container mx-auto px-4 py-8 lg:pt-2">
+      <div className="mx-auto px-4 py-8 lg:pt-2">
         {/* Search Bar and Filter Toggle */}
         <div className="relative mb-6 flex items-center gap-2">
           <div className="relative flex-grow lg:hidden">
