@@ -3,7 +3,7 @@ import {
   CornerRightUp,
   GraduationCap,
   LibraryBig,
-  Sparkle,
+  Sparkles,
   TrophyIcon,
   UserRound,
   Users,
@@ -49,8 +49,8 @@ export default async function Page() {
               <GraduationCap className="w-6 h-6 mr-2" />
               Start Learning Now
               <ArrowRight className="ml-2 h-5 w-5 animate-move-arrow" />
-              <Sparkle className="h-6 w-6  text-indigo-500 absolute -top-4 -right-2 hidden group-hover:block delay-150 ease-in-out" />
-              <Sparkle className="h-6 w-6  text-indigo-500 absolute -bottom-4 -left-2 hidden group-hover:block delay-150 ease-in-out" />
+              <Sparkles className="h-6 w-6  text-indigo-500 absolute -top-8 -right-2 hidden md:block animate-pulse delay-150 ease-in-out" />
+              <Sparkles className="h-6 w-6  text-indigo-500 absolute -bottom-8 -left-2 hidden md:block animate-pulse delay-100 ease-in-out" />
             </Link>
             <Link
               href="/courses"

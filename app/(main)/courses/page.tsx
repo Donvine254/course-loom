@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import CoursesPage from "./courses-page";
-
 export const metadata: Metadata = {
   title: "Course Loom | Explore our courses",
   description: "An LMS platform that powers the modern mind!",
