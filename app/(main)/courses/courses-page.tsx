@@ -75,7 +75,7 @@ export default function CoursesPage() {
     window.addEventListener("resize", checkMobile);
     setSearchQuery(query);
     return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+  }, [query]);
 
   const handleCategoryClick = (categoryName: string) => {
     setSelectedCategories((prev) => {
