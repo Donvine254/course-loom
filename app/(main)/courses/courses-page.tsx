@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Slider } from "@/components/ui/slider";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
@@ -35,6 +34,7 @@ import {
 } from "lucide-react";
 import { sampleCourses } from "@/constants";
 import CourseCard from "@/components/ui/course-card";
+import FilterSlider from "@/components/ui/filter-sidebar";
 
 const categories = [
   { name: "All", icon: LayoutGrid, color: "text-gray-500" },
@@ -64,7 +64,7 @@ export default function CoursesPage() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([
     "All",
   ]);
-  const [priceRange, setPriceRange] = useState([0, 100]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 100]);
   const [sortBy, setSortBy] = useState<SortOption>("default");
   const [isMobile, setIsMobile] = useState(false);
 
@@ -126,20 +126,10 @@ export default function CoursesPage() {
 
   const FilterContent = () => (
     <div className="space-y-6">
-      <div>
-        <h3 className="text-lg font-semibold mb-4">Price Range</h3>
-        <Slider
-          defaultValue={[priceRange[0], priceRange[1]]}
-          max={100}
-          step={1}
-          onValueChange={setPriceRange}
-          className="py-4"
-        />
-        <div className="flex justify-between text-sm text-muted-foreground">
-          <span>KSH {priceRange[0] * 120}</span>
-          <span>KSH {priceRange[1] * 120}</span>
-        </div>
-      </div>
+      <FilterSlider
+        priceRange={priceRange}
+        onPriceRangeChange={setPriceRange}
+      />
 
       <div>
         <h3 className="text-lg font-semibold mb-4">Sort By</h3>
