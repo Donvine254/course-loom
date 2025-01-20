@@ -131,12 +131,12 @@ export default function CoursesPage() {
       <div className="mx-auto px-4 py-8 lg:pt-2">
         {/* Search Bar and Filter Toggle */}
         <div className="relative mb-6 flex items-center gap-2">
-          <div className="relative flex-grow lg:hidden">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+          <div className="relative flex-grow lg:hidden group">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4 dark:peer-hover:text-white" />
             <input
               type="search"
               placeholder="Search courses..."
-              className="pl-10 border px-3 py-2 rounded-md border-indigo-500 hover:outline-none bg-indigo-50 dark:bg-gray-800 focus:outline-none flex-1 w-full placeholder:text-muted-foreground focus:bg-card dark:focus:bg-gray-700 pr-12 dark:focus:placeholder-gray-200 focus:transition-colors"
+              className="pl-10 border px-3 py-2 rounded-md border-indigo-500 hover:outline-none bg-indigo-50 dark:bg-gray-800 focus:outline-none flex-1 w-full peer placeholder:text-muted-foreground focus:bg-card dark:focus:bg-gray-700 dark:focus:placeholder-gray-200 focus:transition-colors"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
