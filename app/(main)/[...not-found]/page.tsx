@@ -1,7 +1,11 @@
 import { ArrowLeft } from "lucide-react";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-
+export const metadata: Metadata = {
+  title: "Course Loom | Not Found",
+  description: "An LMS platform that powers the modern mind!",
+};
 export default function NotFound() {
   return (
     <section className="h-screen py-2 pt-8 md:pt-10 flex items-center justify-center bg-indigo-100 dark:bg-indigo-950 bg-blend-darken">
