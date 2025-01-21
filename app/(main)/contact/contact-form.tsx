@@ -132,13 +132,13 @@ export default function ContactForm() {
           type="reset"
           className="border-indigo-500 hover:border-red-500 border px-4 py-1 rounded-lg focus:outline-none focus:ring-2 transition-colors flex items-center justify-start gap-2"
           title="clear form inputs">
-          <Delete className="h-4 w-4" /> Clear
+          Clear <Delete className="h-4 w-4" />
         </button>
         <button
           type="submit"
           title="submit form"
           className="bg-indigo-600 text-white px-4 py-1 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors flex items-center justify-start gap-2">
-          <Send className="h-4 w-4" /> Send
+          Send <Send className="h-4 w-4" />
         </button>
       </div>
     </form>

@@ -45,7 +45,7 @@ export default function NotFound() {
               <span>Return Home</span>
             </Link>
           </div>
-          <div className="absolute inset-0 -z-10 animate-fade-in [animation-delay:600ms]">
+          <div className="absolute inset-0 -z-10 ">
             <div className="absolute inset-0 bg-gradient-to-r from-gray-400/50 to-gray-500/50 backdrop-blur-3xl rounded-3xl transform -rotate-2" />
             <div className="absolute inset-0 bg-gradient-to-l from-gray-50/50 to-gray-100/50 backdrop-blur-3xl rounded-3xl transform rotate-2 shadow" />
           </div>
