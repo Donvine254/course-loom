@@ -39,11 +39,11 @@ export default function Pricing() {
       </div>
 
       {/* Pricing Cards */}
-      <div className="flex items-start gap-8 max-w-7xl mx-auto overflow-x-auto">
+      <div className="flex items-start gap-8 max-w-7xl mx-auto overflow-x-auto snap-x">
         {pricingPlans[billingPeriod].map((plan) => (
           <div
             key={plan.name}
-            className={`relative bg-card border rounded-2xl shadow-sm dark:shadow-indigo-500 backdrop-blur-sm hover:shadow-xl min-w-fit lg:min-w-min ${
+            className={`relative bg-card border rounded-2xl shadow-sm dark:shadow-indigo-500 backdrop-blur-sm hover:shadow-xl min-w-fit xsm:w-full lg:min-w-min h-[680px] mb-2 snap-center ${
               plan.badge === "💪 Most popular"
                 ? "border-2 border-indigo-500"
                 : plan.name === "Lifetime"
