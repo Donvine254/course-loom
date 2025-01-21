@@ -1,5 +1,6 @@
 import React from "react";
 import Testimonials from "./testimonials";
+import CTA from "@/components/ui/call-to-action";
 
 export default function TestimonialsPage() {
   return (
@@ -16,6 +17,7 @@ export default function TestimonialsPage() {
         </div>
       </div>
       <Testimonials />
+      <CTA />
     </section>
   );
 }
