@@ -3,7 +3,7 @@ export const pricingPlans = {
     {
       name: "Free",
       description: "Access free courses and explore our learning platform",
-      price: "0",
+      price: 0,
       billing: "Always free, no commitment",
       badge: "😍 No credit card required",
       features: [
@@ -18,8 +18,8 @@ export const pricingPlans = {
     {
       name: "Pro",
       description: "Full access to all courses and premium features",
-      price: "29.99",
-      billing: "$359.88 billed annually",
+      price: 24.99,
+      billing: "billed annually",
       badge: "💪 Most popular",
       features: [
         "Access to all courses",
@@ -35,7 +35,7 @@ export const pricingPlans = {
     {
       name: "Lifetime",
       description: "One-time payment for unlimited lifetime access",
-      price: "999",
+      price: 399,
       billing: "One-time payment",
       badge: "🔥Best Value",
       features: [
@@ -54,7 +54,7 @@ export const pricingPlans = {
     {
       name: "Free",
       description: "Access free courses and explore our learning platform",
-      price: "0",
+      price: 0,
       billing: "Always free, no commitment",
       badge: "😍 No credit card required",
       features: [
@@ -69,8 +69,8 @@ export const pricingPlans = {
     {
       name: "Pro",
       description: "Full access to all courses and premium features",
-      price: "24.99",
-      billing: "$299.88 billed annually",
+      price: 20,
+      billing: "billed annually",
       badge: "💪 Most popular",
       features: [
         "Access to all courses",
@@ -86,7 +86,7 @@ export const pricingPlans = {
     {
       name: "Lifetime",
       description: "One-time payment for unlimited lifetime access",
-      price: "999",
+      price: 399,
       billing: "One-time payment",
       badge: "🔥Best Value",
       features: [

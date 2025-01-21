@@ -39,7 +39,7 @@ export default function Pricing() {
       </div>
 
       {/* Pricing Cards */}
-      <div className="flex items-start gap-8 max-w-7xl mx-auto overflow-x-auto snap-x">
+      <div className="flex items-start gap-8 max-w-7xl mx-auto overflow-x-auto snap-x pb-2">
         {pricingPlans[billingPeriod].map((plan) => (
           <div
             key={plan.name}
@@ -72,13 +72,31 @@ export default function Pricing() {
               {/* Price */}
               <div className="mb-6">
                 <div className="flex items-baseline">
-                  <span className="text-4xl font-bold">$</span>
-                  <span className="text-6xl font-bold">{plan.price}</span>
+                  <span className="text-4xl font-bold">
+                    {" "}
+                    {new Intl.NumberFormat("en-US", {
+                      style: "currency",
+                      currency: "KSH",
+                      maximumFractionDigits: 0,
+                    }).format(plan.price * 120)}
+                  </span>
+
                   {plan.name !== "Lifetime" && (
                     <span className="text-muted-foreground ml-2">/ month</span>
                   )}
                 </div>
-                <p className="text-muted-foreground mt-2">{plan.billing}</p>
+                {plan.name !== "Pro" ? (
+                  <p className="text-muted-foreground mt-2">{plan.billing}</p>
+                ) : (
+                  <p className="text-muted-foreground mt-2">
+                    {new Intl.NumberFormat("en-US", {
+                      style: "currency",
+                      currency: "KSH",
+                      maximumFractionDigits: 2,
+                    }).format(plan.price * 120 * 12)}{" "}
+                    {plan.billing}
+                  </p>
+                )}
               </div>
 
               {/* CTA Button */}
