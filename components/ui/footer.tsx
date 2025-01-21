@@ -42,6 +42,12 @@ export default function Footer() {
               Contact
             </Link>
             <Link
+              href="/pricing"
+              prefetch={false}
+              className="hover:text-blue-600 hover:underline">
+              Pricing
+            </Link>
+            <Link
               href="/faqs"
               prefetch={false}
               className="hover:text-blue-600 hover:underline">
