@@ -7,6 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { GraduationCap, Users } from "lucide-react";
 
 const FAQ = () => {
   const [activeTab, setActiveTab] = useState<"students" | "instructors">(
@@ -20,21 +21,21 @@ const FAQ = () => {
         <div className="flex mb-8 border-b">
           <button
             onClick={() => setActiveTab("students")}
-            className={`px-6 py-3 text-lg font-medium transition-colors ${
+            className={`px-6 py-3 text-lg font-medium transition-colors flex items-center justify-center gap-2  ${
               activeTab === "students"
                 ? "border-b-2 border-primary text-primary"
                 : "text-muted-foreground hover:text-foreground"
             }`}>
-            For Students
+            <Users className="h-4 w-4" /> For Students
           </button>
           <button
             onClick={() => setActiveTab("instructors")}
-            className={`px-6 py-3 text-lg font-medium transition-colors ${
+            className={`px-6 py-3 text-lg font-medium transition-colors flex items-center justify-center gap-2  ${
               activeTab === "instructors"
                 ? "border-b-2 border-primary text-primary"
                 : "text-muted-foreground hover:text-foreground"
             }`}>
-            For Instructors
+            <GraduationCap className="h-4 w-4" /> For Instructors
           </button>
         </div>
 
