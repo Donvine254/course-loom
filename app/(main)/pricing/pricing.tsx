@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { pricingPlans } from "@/constants/pricing";
 import { CheckCircle, InfoIcon } from "lucide-react";
-import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
+import { SubscriptionButton } from "./subscription-button";
 
 export default function Pricing() {
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">(
@@ -102,17 +102,15 @@ export default function Pricing() {
 
               {/* CTA Button */}
               <SignedIn>
-                <Link href="/courses">
-                  <button
-                    className={`w-full py-3 px-6 rounded-lg font-medium mb-4
-                    ${
-                      plan.badge !== "😍 No credit card required"
-                        ? "bg-indigo-600 hover:bg-indigo-700 text-white"
-                        : "bg-gray-100 hover:bg-gray-200 text-gray-900"
-                    }`}>
-                    Get Started
-                  </button>
-                </Link>
+                <SubscriptionButton
+                  plan={plan.name}
+                  amount={plan.price}
+                  className={`${
+                    plan.badge !== "😍 No credit card required"
+                      ? "bg-indigo-600 hover:bg-indigo-700 text-white"
+                      : "bg-gray-100 hover:bg-gray-200 text-gray-900"
+                  }`}
+                />
               </SignedIn>
               <SignedOut>
                 <SignInButton>
