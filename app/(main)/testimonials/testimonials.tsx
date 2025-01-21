@@ -4,7 +4,7 @@ import { testimonials } from "@/constants/testimonials";
 
 import { TestimonialCard } from "./testimonial-card";
 
-type SortOption = "latest" | "oldest" | "rating" | "name";
+type SortOption = "latest" | "oldest" | "highest" | "lowest";
 
 const Testimonials = () => {
   const [sortBy, setSortBy] = useState<SortOption>("latest");
@@ -15,10 +15,10 @@ const Testimonials = () => {
         return new Date(b.date).getTime() - new Date(a.date).getTime();
       case "oldest":
         return new Date(a.date).getTime() - new Date(b.date).getTime();
-      case "rating":
+      case "highest":
         return b.rating - a.rating;
-      case "name":
-        return a.name.localeCompare(b.name);
+      case "lowest":
+        return a.rating - b.rating;
       default:
         return 0;
     }
@@ -37,14 +37,22 @@ const Testimonials = () => {
             </option>
             <option value="latest">Latest First</option>
             <option value="oldest">Oldest First</option>
-            <option value="rating">Highest Rating</option>
-            <option value="name">Name</option>
+            <option value="highest">Highest Rating</option>
+            <option value="lowest">Lowest Rating</option>
           </select>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {sortedTestimonials.map((testimonial) => (
-            <TestimonialCard key={testimonial.id} testimonial={testimonial} />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[minmax(200px,auto)]">
+          {sortedTestimonials.map((testimonial, index) => (
+            <div
+              key={testimonial.id}
+              className={`${
+                index % 3 === 1
+                  ? "lg:translate-y-12 lg:my-2 animate-fade-in delay-150"
+                  : ""
+              } ${testimonial.description.length > 200 ? "row-span-2" : ""}`}>
+              <TestimonialCard testimonial={testimonial} />
+            </div>
           ))}
         </div>
       </div>

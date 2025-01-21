@@ -7,7 +7,7 @@ interface TestimonialCardProps {
 
 export const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
   return (
-    <div className="bg-card backdrop-blur-sm rounded-xl p-6 shadow dark:shadow-indigo-500 hover:shadow-xl transition-all duration-300 border border-input animate-fade-in">
+    <div className="bg-card backdrop-blur-sm rounded-xl p-6 shadow dark:shadow-indigo-500 hover:shadow-xl transition-all duration-300 border border-input ">
       <div className="flex items-start gap-4">
         <Image
           width={48}
