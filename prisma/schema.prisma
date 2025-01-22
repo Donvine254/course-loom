@@ -15,6 +15,23 @@ datasource db {
   directUrl = env("DATABASE_DIRECT_URL")
 }
 
+model User {
+  id           String         @id @default(cuid())
+  clerkId      String         @unique
+  role         Role           @default(USER)
+  name         String
+  email        String         @unique
+  profileImage String?
+  courses      Course[]       @relation("CreatedCourses")
+  purchases    Purchase[]
+  progress     UserProgress[]
+  reviews      Review[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@index([clerkId, email])
+}
+
 model Course {
   id                  String       @id @default(cuid())
   short_description   String
@@ -29,25 +46,16 @@ model Course {
   purchases           Purchase[]
   status              CourseStatus @default(DRAFT)
   isPublished         Boolean      @default(false)
-  instructor          Instructor   @relation(fields: [instructorId], references: [id])
+  instructor          User         @relation("CreatedCourses", fields: [instructorId], references: [id]) // Matches `User.courses`
+  instructorId        String
   categoryId          String
   category            Category     @relation(fields: [categoryId], references: [id])
-  instructorId        String
   chapters            Chapter[]
   reviews             Review[]
   createdAt           DateTime     @default(now())
   updatedAt           DateTime     @updatedAt
 
-  @@index([categoryId, slug])
-}
-
-model Instructor {
-  id        String   @id @default(cuid())
-  name      String
-  email     String
-  courses   Course[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  @@index([categoryId, slug, instructorId])
 }
 
 model Category {
@@ -100,6 +108,7 @@ model Purchase {
   course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt()
+  User      User     @relation(fields: [userId], references: [id])
 
   @@unique([userId, courseId])
   @@index([courseId])
@@ -111,18 +120,8 @@ model Review {
   comment   String
   course    Course   @relation(fields: [courseId], references: [id])
   courseId  String
-  studentId String
-  student   Student  @relation(fields: [studentId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Student {
-  id        String   @id @default(cuid())
-  name      String
-  email     String
-  phone     Int?
-  reviews   Review[]
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -143,6 +142,7 @@ model UserProgress {
   isCompleted Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  User        User     @relation(fields: [userId], references: [id])
 
   @@unique([userId, chapterId])
   @@index([chapterId])
@@ -152,4 +152,10 @@ enum CourseStatus {
   DRAFT
   PUBLISHED
   ARCHIVED
+}
+
+enum Role {
+  USER
+  ADMIN
+  INSTRUCTOR
 }
