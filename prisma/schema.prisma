@@ -5,12 +5,14 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearchPostgres", "relationJoins"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_DIRECT_URL")
 }
 
 model Course {
@@ -20,7 +22,7 @@ model Course {
   slug                String       @unique
   title               String
   price               Float
-  banner              String
+  imageUrl            String?
   prerequisites       String
   learning_objectives String
   attachments         Attachment[]
@@ -55,19 +57,34 @@ model Category {
 }
 
 model Chapter {
-  id        String   @id @default(cuid())
-  title     String
-  course    Course   @relation(fields: [courseId], references: [id])
-  courseId  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String         @id @default(cuid())
+  title        String
+  description  String?
+  course       Course         @relation(fields: [courseId], references: [id])
+  courseId     String
+  videoUrl     String?        @db.Text
+  position     Int            @default(autoincrement())
+  isPublished  Boolean        @default(false)
+  UserProgress UserProgress[]
+  MuxData      MuxData?
+  isFree       Boolean        @default(false)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
+
+// TODO: Add quizzes for each chapter (maybe ten questions with possible responses and correct answers)
+model MuxData {
+  id         String  @id @default(uuid())
+  assetId    String
+  playbackId String?
+  chapterId  String  @unique
+  chapter    Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
 }
 
 model Attachment {
-  id   String @id @default(uuid())
-  name String
-  url  String @db.Text
-
+  id        String   @id @default(uuid())
+  name      String
+  url       String   @unique
   courseId  String
   course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
@@ -116,6 +133,19 @@ model StripeCustomer {
   stripeCustomerId String   @unique
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+}
+
+model UserProgress {
+  id          String   @id @default(uuid())
+  userId      String
+  chapterId   String
+  chapter     Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  isCompleted Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, chapterId])
+  @@index([chapterId])
 }
 
 enum CourseStatus {
