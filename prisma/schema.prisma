@@ -16,20 +16,33 @@ datasource db {
 }
 
 model User {
-  id           String         @id @default(cuid())
-  clerkId      String         @unique
-  role         Role           @default(USER)
-  name         String
-  email        String         @unique
-  profileImage String?
-  courses      Course[]       @relation("CreatedCourses")
-  purchases    Purchase[]
-  progress     UserProgress[]
-  reviews      Review[]
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  id                String              @id @default(cuid())
+  clerkId           String              @unique
+  role              Role                @default(USER)
+  name              String
+  email             String              @unique
+  profileImage      String?
+  purchases         Purchase[]
+  progress          UserProgress[]
+  reviews           Review[]
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  Instructor        Instructor?
+  InstructorReviews InstructorReviews[]
 
   @@index([clerkId, email])
+}
+
+model Instructor {
+  id           String              @id @default(cuid())
+  userId       String              @unique
+  user         User                @relation(fields: [userId], references: [id])
+  bio          String?
+  courses      Course[]
+  reviews      InstructorReviews[]
+  studentCount Int                 @default(0)
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
 }
 
 model Course {
@@ -46,7 +59,6 @@ model Course {
   purchases           Purchase[]
   status              CourseStatus @default(DRAFT)
   isPublished         Boolean      @default(false)
-  instructor          User         @relation("CreatedCourses", fields: [instructorId], references: [id]) // Matches `User.courses`
   instructorId        String
   categoryId          String
   category            Category     @relation(fields: [categoryId], references: [id])
@@ -54,6 +66,7 @@ model Course {
   reviews             Review[]
   createdAt           DateTime     @default(now())
   updatedAt           DateTime     @updatedAt
+  Instructor          Instructor   @relation(fields: [instructorId], references: [id])
 
   @@index([categoryId, slug, instructorId])
 }
@@ -124,6 +137,18 @@ model Review {
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model InstructorReviews {
+  id           String     @id @default(cuid())
+  rating       Int
+  comment      String
+  instructor   Instructor @relation(fields: [instructorId], references: [id])
+  instructorId String
+  userId       String
+  user         User       @relation(fields: [userId], references: [id])
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
 }
 
 model StripeCustomer {
