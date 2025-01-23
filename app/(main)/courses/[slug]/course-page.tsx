@@ -15,8 +15,6 @@ import {
   EyeIcon,
   Check,
   EllipsisVertical,
-  ThumbsUp,
-  ThumbsDown,
   BadgeInfo,
 } from "lucide-react";
 import Image from "next/image";
@@ -356,11 +354,11 @@ export default function CoursePage({ course }: Props) {
                             <p className="text-muted-foreground">
                               {review.comment}
                             </p>
-                            <div className="flex items-center justify-start gap-2 mt-2 text-muted-foreground text-sm">
+                            {/* <div className="flex items-center justify-start gap-2 mt-2 text-muted-foreground text-sm">
                               <p>Helpful? </p>
                               <ThumbsUp className="h-4 w-4 cursor-pointer hover:text-green-500" />
                               <ThumbsDown className="h-4 w-4 cursor-pointer hover:text-destructive" />
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                         <button
