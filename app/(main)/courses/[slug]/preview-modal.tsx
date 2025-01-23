@@ -16,7 +16,7 @@ interface VideoPreviewModalProps {
 
 export function VideoPreviewModal({ videoUrl, title }: VideoPreviewModalProps) {
   return (
-    <Dialog>
+    <Dialog modal>
       <DialogTrigger asChild>
         <Button className="border border-gray-200 hover:border-background justify-start gap-2">
           <Play className="h-4 w-4" />

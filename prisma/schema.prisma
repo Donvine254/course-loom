@@ -59,6 +59,7 @@ model Course {
   purchases           Purchase[]
   status              CourseStatus @default(DRAFT)
   isPublished         Boolean      @default(false)
+  isFree              Boolean      @default(false)
   instructorId        String
   categoryId          String
   category            Category     @relation(fields: [categoryId], references: [id])

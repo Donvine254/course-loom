@@ -112,11 +112,11 @@ export const course = {
   reviews: 3,
   students: 1205,
   category: "Web Development",
-  lastUpdated: "1st March 2024",
+  lastUpdated: "20th Jan 2025",
   price: 89.99,
   coverImage:
     "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
-  duration: "24 hours",
+  duration: "20 hours",
   totalChapters: 12,
   prerequisites: [
     "Basic JavaScript knowledge",
@@ -145,9 +145,45 @@ export const course = {
     {
       title: "Advanced Component Patterns",
       lessons: 5,
-      duration: "2h 45m",
+      duration: "2h 30m",
+    },
+    {
+      title: "State Management with Redux and Context API",
+      lessons: 7,
+      duration: "3h 45m",
+    },
+    {
+      title: "React Query and Data Fetching Techniques",
+      lessons: 5,
+      duration: "2h 20m",
+    },
+    {
+      title: "Building Accessible React Applications",
+      lessons: 4,
+      duration: "1h 50m",
+    },
+    {
+      title: "Optimizing React Performance",
+      lessons: 6,
+      duration: "3h 10m",
+    },
+    {
+      title: "Routing with React Router",
+      lessons: 5,
+      duration: "2h 10m",
+    },
+    {
+      title: "Testing React Components with Jest and React Testing Library",
+      lessons: 6,
+      duration: "3h",
+    },
+    {
+      title: "Deploying React Applications",
+      lessons: 3,
+      duration: "1h 30m",
     },
   ],
+
   studentReviews: [
     {
       name: "Michael Chen",
@@ -168,20 +204,46 @@ export const course = {
         "Great course content and structure. The practical examples really helped solidify the concepts.",
     },
     {
+      name: "Ana Martinez",
+      rating: 5,
+      date: "March 5, 2024",
+      image:
+        "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+      comment:
+        "Excellent deep dive into TypeScript and React. The section on advanced patterns was particularly helpful.",
+    },
+    {
+      name: "Sofia Patel",
+      rating: 5,
+      date: "Jan 18, 2025",
+      image:
+        "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=300&h=300",
+      comment:
+        "After completing this course I already feel like a senior developer. A lot of best practices on react and typescript.",
+    },
+    {
       name: "David Kim",
       rating: 5,
       date: "March 5, 2024",
       image:
         "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&q=80",
+      comment: "My favorite typescript type is no longer 'any'. Lol.",
+    },
+    {
+      name: "Lisa Thompson",
+      rating: 5,
+      date: "March 5, 2024",
+      image:
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
       comment:
-        "Excellent deep dive into TypeScript and React. The section on advanced patterns was particularly helpful.",
+        "Before this course, I did not see typescript as useful as it seemed and thought it was overhyped. This course has been an eye opener.",
     },
   ],
   ratingBreakdown: {
-    5: 75,
-    4: 13,
+    5: 83,
+    4: 17,
     3: 0,
     2: 0,
-    1: 12,
+    1: 0,
   },
 };

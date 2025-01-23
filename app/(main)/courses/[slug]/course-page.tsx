@@ -1,5 +1,3 @@
-"use client";
-import React from "react";
 import {
   BookOpen,
   Users,
@@ -9,10 +7,8 @@ import {
   Share2,
   BookmarkPlus,
   Globe,
-  PlayIcon,
   CirclePlay,
   Check,
-  EllipsisVertical,
   BadgeInfo,
   GraduationCap,
 } from "lucide-react";
@@ -22,42 +18,29 @@ import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import { SubscriptionButton } from "@/components/ui/subscription-button";
 import { VideoPreviewModal } from "./preview-modal";
+import { slugify } from "@/lib/utils";
+
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
+import StudentFeedback from "./review-items";
+import { renderStars } from "@/lib/render-stars";
 type Props = {
   // eslint-disable-next-line
   course: {} | any;
 };
 type Chapter = { title: string; lessons: number; duration: string };
-type Review = {
-  name: string;
-  rating: number;
-  date: string;
-  image: string;
-  comment: string;
-};
+
 export default function CoursePage({ course }: Props) {
-  const renderStars = (rating: number) => {
-    return [...Array(5)].map((_, index) => (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        width="1.5em"
-        height="1.5em"
-        key={index}
-        className={`w-5 h-5 ${
-          index < rating ? "text-yellow-400 fill-yellow-400" : "text-gray-300"
-        }`}>
-        <path
-          fill="currentColor"
-          d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2L9.19 8.63L2 9.24l5.46 4.73L5.82 21z"></path>
-      </svg>
-    ));
-  };
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-indigo-600 to-indigo-800 text-white min-h-screen">
         <div className="container mx-auto px-4 py-12">
-          <div className="grid md:grid-cols-2 gap-6 xsm:gap-2 md:gap-8 items-center ">
+          <div className="grid lg:grid-cols-2 gap-6 xsm:gap-2 md:gap-8 items-center ">
             <div>
               <div className="flex items-center gap-2 my-2 lg:mb-4">
                 <span className="text-sm font-medium text-indigo-600 bg-indigo-50 px-3 py-1 rounded-sm  ">
@@ -87,13 +70,15 @@ export default function CoursePage({ course }: Props) {
                     {Number(course.students).toLocaleString()} students
                   </span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <BadgeInfo className="w-4 h-4 rotate-180" />
-                  <span>Last updated on {course.lastUpdated}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Globe className="w-4 h-4" />
-                  <span>English</span>
+                <div className="flex items-center flex-wrap gap-4 mb-2 text-sm md:text-base">
+                  <div className="flex items-center gap-1">
+                    <BadgeInfo className="w-4 h-4 rotate-180" />
+                    <span>Last updated on {course.lastUpdated}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Globe className="w-4 h-4" />
+                    <span>English</span>
+                  </div>
                 </div>
               </div>
               <div className="flex items-center gap-2 mb-6">
@@ -112,9 +97,11 @@ export default function CoursePage({ course }: Props) {
                 </div>
               </div>
               <div className="flex gap-4">
-                <Button variant="secondary" className="justify-start gap-2">
-                  <GraduationCap className="h-5 w-5" /> Enroll Now
-                </Button>
+                <Link href="#enroll" passHref scroll>
+                  <Button variant="secondary" className="justify-start gap-2">
+                    <GraduationCap className="h-5 w-5" /> Enroll Now
+                  </Button>
+                </Link>
                 <VideoPreviewModal
                   title={course.title}
                   videoUrl="https://www.youtube.com/embed/FJDVKeh7RJI"
@@ -208,22 +195,55 @@ export default function CoursePage({ course }: Props) {
               <div className="bg-inherit my-2">
                 <h2 className="text-2xl font-bold mb-4">Course Content</h2>
                 <div className="space-y-4">
-                  {course.chapters.map((chapter: Chapter, index: number) => (
-                    <div
-                      key={index}
-                      className="border border-indigo-500 rounded-lg p-4">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h3 className="font-semibold">{chapter.title}</h3>
-                          <div className="text-sm text-muted-foreground mt-1">
-                            {chapter.lessons} lessons • {chapter.duration}
+                  {course.chapters
+                    .slice(0, 2)
+                    .map((chapter: Chapter, index: number) => (
+                      <div
+                        key={index}
+                        className="border border-indigo-500 rounded-lg p-4">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h3 className="font-semibold">{chapter.title}</h3>
+                            <div className="text-sm text-muted-foreground mt-1">
+                              {chapter.lessons} lessons • {chapter.duration}
+                            </div>
                           </div>
+                          <Lock className="w-4 h-4 text-indigo-600" />
                         </div>
-                        <Lock className="w-4 h-4 text-indigo-600" />
                       </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
+                <Accordion type="single" collapsible className="space-y-4">
+                  <AccordionItem value="all-chapters">
+                    <AccordionTrigger className="font-semibold text-indigo-600">
+                      Show all chapters
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <div className="space-y-4">
+                        {course.chapters
+                          .slice(2)
+                          .map((chapter: Chapter, index: number) => (
+                            <div
+                              key={index}
+                              className="border border-indigo-500 rounded-lg p-4">
+                              <div className="flex items-center justify-between">
+                                <div>
+                                  <h3 className="font-semibold">
+                                    {chapter.title}
+                                  </h3>
+                                  <div className="text-sm text-muted-foreground mt-1">
+                                    {chapter.lessons} lessons •{" "}
+                                    {chapter.duration}
+                                  </div>
+                                </div>
+                                <Lock className="w-4 h-4 text-indigo-600" />
+                              </div>
+                            </div>
+                          ))}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
               </div>
             </div>
             <Separator className="my-2 bg-gray-400" />
@@ -252,7 +272,7 @@ export default function CoursePage({ course }: Props) {
                     {course.instructor.email}
                   </a>
                   <p className="text-sm text-muted-foreground">
-                    {course.instructor.courses.length} Courses
+                    {course.instructor.courses.length + 1} Courses
                   </p>
                 </div>
               </div>
@@ -284,8 +304,12 @@ export default function CoursePage({ course }: Props) {
                       <li
                         key={index}
                         className="flex items-center text-muted-foreground">
-                        <CirclePlay className="w-4 h-4 text-indigo-600 mr-2" />
-                        {otherCourse}
+                        <CirclePlay className="w-4 h-4 text-blue-600 mr-2" />
+                        <Link
+                          href={`/courses/${slugify(otherCourse)}`}
+                          className="underline text-blue-500">
+                          {otherCourse}
+                        </Link>
                       </li>
                     )
                   )}
@@ -295,92 +319,12 @@ export default function CoursePage({ course }: Props) {
 
             {/* Student Reviews */}
             <Separator className="my-2 bg-gray-400" />
-            <div className="p-2 sm:p-4 bg-card dark:bg-inherit rounded-xl shadow">
-              <h2 className="text-2xl font-bold mb-6">Student Feedback</h2>
-              <div className="space-y-2">
-                <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6 mb-4">
-                  <div className="bg-gray-50 rounded-sm dark:bg-indigo-950 space-y-2 p-6 border shadow">
-                    <h2 className="text-5xl font-bold text-center">
-                      {course.rating}
-                    </h2>
-                    <div className="flex justify-center">
-                      {renderStars(Math.floor(course.rating))}
-                    </div>
-                    <p className="text-center text-muted-foreground">
-                      {course.studentReviews.length} Reviews
-                    </p>
-                  </div>
-                  <div className="space-y-2 flex-1 xsm:w-full xsm:px-2">
-                    {Object.entries(course.ratingBreakdown)
-                      .reverse()
-                      .map(([rating, percentage]) => (
-                        <div key={rating} className="flex items-center gap-2">
-                          <div className="flex items-center w-[20%]">
-                            {renderStars(parseInt(rating))}
-                          </div>
-                          <div className="w-[70%] h-2 bg-gray-200 rounded-full overflow-hidden">
-                            <div
-                              className="h-full bg-blue-600 rounded-full"
-                              style={{ width: `${percentage}%` }}></div>
-                          </div>
-                          <div className="w-[10%] text-right text-muted-foreground">
-                            {percentage as number}%
-                          </div>
-                        </div>
-                      ))}
-                  </div>
-                </div>
-                <h2 className="text-lg font-semibold my-6">
-                  Reviews ({course.studentReviews.length})
-                </h2>
-                <div className="space-y-6 xsm:p-2">
-                  {course.studentReviews.map(
-                    (review: Review, index: number) => (
-                      <div
-                        key={index}
-                        className="border-b border-input dark:border-b-gray-500 pb-4 last:border-0 relative">
-                        <div className="flex items-start gap-4">
-                          <Image
-                            width={48}
-                            height={48}
-                            src={review.image}
-                            alt={review.name}
-                            className="w-12 h-12 rounded-full object-cover"
-                          />
-                          <div className="flex-1">
-                            <h4 className="font-semibold">{review.name}</h4>
-                            <span className="text-muted-foreground text-sm">
-                              {review.date}
-                            </span>
-                            <div className="flex my-2">
-                              {renderStars(review.rating)}
-                            </div>
-                            <p className="text-muted-foreground">
-                              {review.comment}
-                            </p>
-                            {/* <div className="flex items-center justify-start gap-2 mt-2 text-muted-foreground text-sm">
-                              <p>Helpful? </p>
-                              <ThumbsUp className="h-4 w-4 cursor-pointer hover:text-green-500" />
-                              <ThumbsDown className="h-4 w-4 cursor-pointer hover:text-destructive" />
-                            </div> */}
-                          </div>
-                        </div>
-                        <button
-                          className="h-6 w-6 p-1 rounded-md hover:bg-indigo-100 hover:text-gray-950 absolute right-2 top-2 flex items-center justify-center"
-                          title="report"
-                          aria-label="report"
-                          type="button">
-                          <EllipsisVertical className="h-5 w-5" />
-                        </button>
-                      </div>
-                    )
-                  )}
-                </div>
-              </div>
-            </div>
+            <StudentFeedback course={course} />
           </div>
           {/* Sidebar */}
-          <div className="md:col-span-1">
+          <div
+            className="md:col-span-1 xsm:w-full sm:max-w-sm sm:mx-auto"
+            id="enroll">
             <div className="bg-card border shadow dark:shadow-indigo-500 rounded-xl p-6 md:sticky top-8 md:top-16">
               <p className="text-lg font-medium">
                 Subscribe to Courseloom pro membership plan
@@ -395,8 +339,9 @@ export default function CoursePage({ course }: Props) {
               <SubscriptionButton
                 className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2"
                 plan="Pro"
+                variant="subscription"
                 amount={24.99}
-                text="Try Pro for Now"
+                text="Try Pro Now"
               />
               <p className="text-xs text-center w-full text-muted-foreground mb-1">
                 Starting at KSH 2,999 per month
@@ -416,16 +361,13 @@ export default function CoursePage({ course }: Props) {
                   maximumFractionDigits: 0,
                 }).format(course.price * 120)}
               </div>
-              <Button
-                variant="outline"
-                className="bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors w-full  hover:text-white ">
-                <PlayIcon className="h-4 w-4" /> Enroll Now
-              </Button>
-              {/* <Button
-                variant="outline"
-                className="rounded-lg font-semibold w-full my-2 ">
-                Try free preview
-              </Button> */}
+              <SubscriptionButton
+                className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2"
+                variant="payment"
+                title={course.title}
+                amount={course.price}
+                text="Buy this Course"
+              />
               <div className="text-muted-foreground text-xs w-full my-2 inline-flex items-center gap-1 justify-center">
                 <Lock className="h-3 w-3" />{" "}
                 <span>30-Day Money-Back Guarantee</span>
