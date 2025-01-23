@@ -114,7 +114,7 @@ export default function CoursePage({ course }: Props) {
               </div>
               <div className="flex gap-4">
                 <Button variant="secondary" className="justify-start gap-2">
-                  <GraduationCap className="h-4 w-4" /> Enroll Now
+                  <GraduationCap className="h-5 w-5" /> Enroll Now
                 </Button>
                 <VideoPreviewModal
                   title={course.title}
