@@ -3,7 +3,6 @@ import React from "react";
 import {
   BookOpen,
   Users,
-  Award,
   Clock,
   Lock,
   Download,
@@ -22,7 +21,6 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 type Props = {
   // eslint-disable-next-line
@@ -395,7 +393,7 @@ export default function CoursePage({ course }: Props) {
               <Button
                 variant="outline"
                 asChild
-                className="bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors w-full my-2 ">
+                className="bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors w-full my-2 ">
                 <Link href="/pricing">Try Pro for free</Link>
               </Button>
               <p className="text-xs text-center w-full text-muted-foreground mb-1">
@@ -418,15 +416,22 @@ export default function CoursePage({ course }: Props) {
               </div>
               <Button
                 variant="outline"
-                className="bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors w-full ">
+                className="bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors w-full  hover:text-white ">
                 <PlayIcon className="h-4 w-4" /> Enroll Now
               </Button>
-              <div className="text-muted-foreground text-sm w-full my-2 inline-flex items-center gap-1 justify-center">
-                <Lock className="h-4 w-4" />{" "}
+              {/* <Button
+                variant="outline"
+                className="rounded-lg font-semibold w-full my-2 ">
+                Try free preview
+              </Button> */}
+              <div className="text-muted-foreground text-xs w-full my-2 inline-flex items-center gap-1 justify-center">
+                <Lock className="h-3 w-3" />{" "}
                 <span>30-Day Money-Back Guarantee</span>
               </div>
-              <p className="text-muted-foreground text-sm text-center">Full Lifetime Access</p>
-              <Separator className="mb-2" />
+              <p className="text-muted-foreground text-xs text-center">
+                Full Lifetime Access
+              </p>
+              {/* <Separator className="mb-2" />
               <div className="space-y-4 text-muted-foreground">
                 <div className="flex items-center">
                   <Clock className="w-5 h-5 mr-3" />
@@ -444,7 +449,7 @@ export default function CoursePage({ course }: Props) {
                   <Award className="w-5 h-5 mr-3" />
                   <span>Certificate of completion</span>
                 </div>
-              </div>
+              </div> */}
               <div className="flex gap-2 mt-6">
                 <Button
                   variant="outline"
@@ -452,8 +457,8 @@ export default function CoursePage({ course }: Props) {
                   <Share2 className="w-5 h-5 mx-auto" />
                 </Button>
                 <Button
-                  variant="secondary"
-                  className="flex-1 border  rounded-lg transition-colors">
+                  variant="outline"
+                  className="flex-1 border bg-gray-100 dark:bg-indigo-950 rounded-lg hover:bg-indigo-200 dark:hover:bg-indigo-700 transition-colors">
                   <BookmarkPlus className="w-5 h-5 mx-auto" />
                 </Button>
               </div>
