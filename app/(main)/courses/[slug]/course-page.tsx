@@ -9,7 +9,6 @@ import {
   Share2,
   BookmarkPlus,
   Mail,
-  Info,
   Globe,
   PlayIcon,
   CirclePlay,
@@ -18,6 +17,7 @@ import {
   EllipsisVertical,
   ThumbsUp,
   ThumbsDown,
+  BadgeInfo,
 } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -57,9 +57,17 @@ export default function CoursePage({ course }: Props) {
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-indigo-600 to-indigo-800 text-white">
         <div className="mx-auto px-4 py-12">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
+          <div className="grid md:grid-cols-2 gap-8 items-center ">
             <div>
-              <h1 className="xsm:text-xl sm:text-2xl md:text-4xl lg:text-6xl font-bold mb-4 leading-relaxed tracking-tight">
+              <div className="flex items-center gap-2 my-2 lg:mb-4">
+                <span className="text-sm font-medium text-indigo-600 bg-indigo-50 px-3 py-1 rounded-sm  ">
+                  40% Off
+                </span>
+                <span className="text-sm font-medium truncate">
+                  {course.category}
+                </span>
+              </div>
+              <h1 className="xsm:text-xl sm:text-2xl md:text-4xl font-bold mb-4 leading-loose tracking-tight">
                 {course.title}
               </h1>
               <p className="text-sm text-gray-200 my-2">
@@ -74,15 +82,15 @@ export default function CoursePage({ course }: Props) {
                   <span className="ml-1">({course.reviews} ratings)</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Users className="w-5 h-5" />
+                  <Users className="w-4 h-4" />
                   <span>{course.students} students</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Info className="w-5 h-5" />
+                  <BadgeInfo className="w-4 h-4 rotate-180" />
                   <span>Last updated on {course.lastUpdated}</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Globe className="w-5 h-5" />
+                  <Globe className="w-4 h-4" />
                   <span>English</span>
                 </div>
               </div>
@@ -105,7 +113,9 @@ export default function CoursePage({ course }: Props) {
                 <Button variant="secondary" className="justify-start gap-2">
                   <PlayIcon className="h-4 w-4" /> Enroll Now
                 </Button>
-                <Button variant="ghost" className="border justify-start gap-2">
+                <Button
+                  variant="ghost"
+                  className="border border-gray-200 hover:border-background justify-start gap-2">
                   <EyeIcon className="h-4 w-4" /> Preview Course
                 </Button>
               </div>
@@ -131,21 +141,28 @@ export default function CoursePage({ course }: Props) {
             <div className="p-8">
               <h2 className="text-2xl font-bold mb-6">Course Overview</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-                <div className="flex flex-col items-center p-4 bg-card rounded-lg shadow">
+                <div className="flex flex-col items-center p-4 bg-card rounded-lg shadow border">
                   <Clock className="w-6 h-6 text-indigo-600 mb-2" />
                   <span className="text-sm text-muted-foreground">
                     Duration
                   </span>
                   <span className="font-semibold">{course.duration}</span>
                 </div>
-                <div className="flex flex-col items-center p-4 bg-card shadow rounded-lg">
+                <div className="flex flex-col items-center p-4 bg-card border shadow rounded-lg">
                   <BookOpen className="w-6 h-6 text-indigo-600 mb-2" />
                   <span className="text-sm text-muted-foreground">
                     Chapters
                   </span>
                   <span className="font-semibold">{course.totalChapters}</span>
                 </div>
-                <div className="flex flex-col items-center p-4 bg-card shadow rounded-lg">
+                <div className="flex flex-col items-center p-4 bg-card border shadow rounded-lg">
+                  <Globe className="w-6 h-6 text-indigo-600 mb-2" />
+                  <span className="text-sm text-muted-foreground">
+                    Language
+                  </span>
+                  <span className="font-semibold">English</span>
+                </div>
+                <div className="flex flex-col items-center p-4 bg-card shadow rounded-lg border">
                   <Download className="w-6 h-6 text-indigo-600 mb-2" />
                   <span className="text-sm text-muted-foreground">
                     Resources
@@ -210,7 +227,12 @@ export default function CoursePage({ course }: Props) {
                   </p>
                   <div className="inline-flex items-center">
                     <Mail className="w-5 h-5 mr-2 text-indigo-500" />
-                   <a href={`mailto:${course.instructor.email}`} target="_blank" className="hover:underline hover:text-blue-500">{course.instructor.email}</a>
+                    <a
+                      href={`mailto:${course.instructor.email}`}
+                      target="_blank"
+                      className="hover:underline hover:text-blue-500">
+                      {course.instructor.email}
+                    </a>
                   </div>
                 </div>
               </div>
@@ -254,7 +276,7 @@ export default function CoursePage({ course }: Props) {
                 {course.chapters.map((chapter: Chapter, index: number) => (
                   <div
                     key={index}
-                    className="border bg-card border-indigo-500 rounded-lg p-4">
+                    className="border border-indigo-500 rounded-lg p-4">
                     <div className="flex items-center justify-between">
                       <div>
                         <h3 className="font-semibold">{chapter.title}</h3>
@@ -271,7 +293,7 @@ export default function CoursePage({ course }: Props) {
 
             {/* Student Reviews */}
             <hr className="my-2" />
-            <div className="p-2 sm:p-4 bg-card rounded-xl shadow">
+            <div className="p-2 sm:p-4 bg-card dark:bg-inherit rounded-xl shadow">
               <h2 className="text-2xl font-bold mb-6">Student Feedback</h2>
               <div className="space-y-2">
                 <div className="flex items-center gap-2 md:gap-6 mb-4">
@@ -314,7 +336,7 @@ export default function CoursePage({ course }: Props) {
                     (review: Review, index: number) => (
                       <div
                         key={index}
-                        className="border-b border-input pb-4 last:border-0 relative">
+                        className="border-b border-input dark:border-b-gray-500 pb-4 last:border-0 relative">
                         <div className="flex items-start gap-4">
                           <Image
                             width={48}
@@ -342,7 +364,7 @@ export default function CoursePage({ course }: Props) {
                           </div>
                         </div>
                         <button
-                          className="h-6 w-6 p-1 rounded-md hover:bg-indigo-100 absolute right-2 top-2 flex items-center justify-center"
+                          className="h-6 w-6 p-1 rounded-md hover:bg-indigo-100 hover:text-gray-950 absolute right-2 top-2 flex items-center justify-center"
                           title="report"
                           aria-label="report"
                           type="button">
@@ -358,7 +380,13 @@ export default function CoursePage({ course }: Props) {
           {/* Sidebar */}
           <div className="md:col-span-1">
             <div className="bg-card border shadow dark:shadow-indigo-500 rounded-xl p-6 md:sticky top-8 md:top-16">
-              <div className="text-3xl font-bold mb-4">${course.price}</div>
+              <div className="text-3xl font-bold mb-4">
+                {new Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: "KSH",
+                  maximumFractionDigits: 0,
+                }).format(course.price * 120)}
+              </div>
               <Button
                 variant="outline"
                 className="bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors w-full ">

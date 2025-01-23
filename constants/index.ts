@@ -111,6 +111,7 @@ export const course = {
   rating: 4.8,
   reviews: 3,
   students: 1205,
+  category: "Web Development",
   lastUpdated: "1st March 2024",
   price: 89.99,
   coverImage:
