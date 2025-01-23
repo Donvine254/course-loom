@@ -395,7 +395,7 @@ export default function CoursePage({ course }: Props) {
                 <Link href="/pricing">Try Pro for free</Link>
               </Button>
               <p className="text-xs text-center w-full text-muted-foreground mb-1">
-                Starting from KSH 2,999 per month after trial
+                Starting at KSH 2,999 per month after trial
               </p>
               <p className="text-xs text-center w-full text-muted-foreground">
                 Cancel anytime
@@ -427,7 +427,7 @@ export default function CoursePage({ course }: Props) {
                 <span>30-Day Money-Back Guarantee</span>
               </div>
               <p className="text-muted-foreground text-xs text-center">
-                Full Lifetime Access
+                Full Lifetime Access & Offline download
               </p>
               {/* <Separator className="mb-2" />
               <div className="space-y-4 text-muted-foreground">
