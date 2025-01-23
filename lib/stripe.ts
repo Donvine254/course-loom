@@ -32,7 +32,7 @@ export async function createSubscriptionSession(amount: number, plan: string) {
     success_url: `${baseUrl}/courses`,
     cancel_url: `${baseUrl}/pricing`,
   });
-
+  // TODO: redirect to a success page and update client details to the subscription model
   if (!session.url) {
     throw new Error("Failed to create checkout session");
   }

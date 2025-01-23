@@ -4,7 +4,7 @@ import { useState } from "react";
 import { pricingPlans } from "@/constants/pricing";
 import { CheckCircle, InfoIcon } from "lucide-react";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
-import { SubscriptionButton } from "./subscription-button";
+import { SubscriptionButton } from "@/components/ui/subscription-button";
 
 export default function Pricing() {
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">(
@@ -105,7 +105,8 @@ export default function Pricing() {
                 <SubscriptionButton
                   plan={plan.name}
                   amount={plan.price}
-                  className={`${
+                  text="Get Started"
+                  className={`font-medium mb-4 rounded-lg ${
                     plan.badge !== "😍 No credit card required"
                       ? "bg-indigo-600 hover:bg-indigo-700 text-white"
                       : "bg-gray-100 hover:bg-gray-200 text-gray-900"

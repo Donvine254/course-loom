@@ -5,10 +5,182 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearchPostgres", "relationJoins"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_DIRECT_URL")
+}
+
+model User {
+  id                String              @id @default(cuid())
+  clerkId           String              @unique
+  role              Role                @default(USER)
+  name              String
+  email             String              @unique
+  profileImage      String?
+  purchases         Purchase[]
+  progress          UserProgress[]
+  reviews           Review[]
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  Instructor        Instructor?
+  InstructorReviews InstructorReviews[]
+
+  @@index([clerkId, email])
+}
+
+model Instructor {
+  id           String              @id @default(cuid())
+  userId       String              @unique
+  user         User                @relation(fields: [userId], references: [id])
+  bio          String?
+  courses      Course[]
+  reviews      InstructorReviews[]
+  studentCount Int                 @default(0)
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+}
+
+model Course {
+  id                  String       @id @default(cuid())
+  short_description   String
+  long_description    String
+  slug                String       @unique
+  title               String
+  price               Float
+  imageUrl            String?
+  prerequisites       String
+  learning_objectives String
+  attachments         Attachment[]
+  purchases           Purchase[]
+  status              CourseStatus @default(DRAFT)
+  isPublished         Boolean      @default(false)
+  instructorId        String
+  categoryId          String
+  category            Category     @relation(fields: [categoryId], references: [id])
+  chapters            Chapter[]
+  reviews             Review[]
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+  Instructor          Instructor   @relation(fields: [instructorId], references: [id])
+
+  @@index([categoryId, slug, instructorId])
+}
+
+model Category {
+  id      String   @id @default(uuid())
+  name    String   @unique
+  courses Course[]
+}
+
+model Chapter {
+  id           String         @id @default(cuid())
+  title        String
+  description  String?
+  course       Course         @relation(fields: [courseId], references: [id])
+  courseId     String
+  videoUrl     String?        @db.Text
+  position     Int            @default(autoincrement())
+  isPublished  Boolean        @default(false)
+  UserProgress UserProgress[]
+  MuxData      MuxData?
+  isFree       Boolean        @default(false)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
+
+// TODO: Add quizzes for each chapter (maybe ten questions with possible responses and correct answers)
+model MuxData {
+  id         String  @id @default(uuid())
+  assetId    String
+  playbackId String?
+  chapterId  String  @unique
+  chapter    Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+}
+
+model Attachment {
+  id        String   @id @default(uuid())
+  name      String
+  url       String   @unique
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([courseId])
+}
+
+model Purchase {
+  id        String   @id @default(uuid())
+  userId    String
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+  User      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, courseId])
+  @@index([courseId])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int
+  comment   String
+  course    Course   @relation(fields: [courseId], references: [id])
+  courseId  String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model InstructorReviews {
+  id           String     @id @default(cuid())
+  rating       Int
+  comment      String
+  instructor   Instructor @relation(fields: [instructorId], references: [id])
+  instructorId String
+  userId       String
+  user         User       @relation(fields: [userId], references: [id])
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model StripeCustomer {
+  id               String   @id @default(uuid())
+  userId           String   @unique
+  stripeCustomerId String   @unique
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model UserProgress {
+  id          String   @id @default(uuid())
+  userId      String
+  chapterId   String
+  chapter     Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  isCompleted Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  User        User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, chapterId])
+  @@index([chapterId])
+}
+
+enum CourseStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum Role {
+  USER
+  ADMIN
+  INSTRUCTOR
 }
