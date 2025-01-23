@@ -20,6 +20,12 @@ import { SubscriptionButton } from "@/components/ui/subscription-button";
 import { VideoPreviewModal } from "./preview-modal";
 import { slugify } from "@/lib/utils";
 import { ReviewActions } from "./review-actions";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
 type Props = {
   // eslint-disable-next-line
   course: {} | any;
@@ -208,22 +214,55 @@ export default function CoursePage({ course }: Props) {
               <div className="bg-inherit my-2">
                 <h2 className="text-2xl font-bold mb-4">Course Content</h2>
                 <div className="space-y-4">
-                  {course.chapters.map((chapter: Chapter, index: number) => (
-                    <div
-                      key={index}
-                      className="border border-indigo-500 rounded-lg p-4">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h3 className="font-semibold">{chapter.title}</h3>
-                          <div className="text-sm text-muted-foreground mt-1">
-                            {chapter.lessons} lessons • {chapter.duration}
+                  {course.chapters
+                    .slice(0, 2)
+                    .map((chapter: Chapter, index: number) => (
+                      <div
+                        key={index}
+                        className="border border-indigo-500 rounded-lg p-4">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h3 className="font-semibold">{chapter.title}</h3>
+                            <div className="text-sm text-muted-foreground mt-1">
+                              {chapter.lessons} lessons • {chapter.duration}
+                            </div>
                           </div>
+                          <Lock className="w-4 h-4 text-indigo-600" />
                         </div>
-                        <Lock className="w-4 h-4 text-indigo-600" />
                       </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
+                <Accordion type="single" collapsible className="space-y-4">
+                  <AccordionItem value="all-chapters">
+                    <AccordionTrigger className="font-semibold text-indigo-600">
+                      Show all chapters
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <div className="space-y-4">
+                        {course.chapters
+                          .slice(2)
+                          .map((chapter: Chapter, index: number) => (
+                            <div
+                              key={index}
+                              className="border border-indigo-500 rounded-lg p-4">
+                              <div className="flex items-center justify-between">
+                                <div>
+                                  <h3 className="font-semibold">
+                                    {chapter.title}
+                                  </h3>
+                                  <div className="text-sm text-muted-foreground mt-1">
+                                    {chapter.lessons} lessons •{" "}
+                                    {chapter.duration}
+                                  </div>
+                                </div>
+                                <Lock className="w-4 h-4 text-indigo-600" />
+                              </div>
+                            </div>
+                          ))}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
               </div>
             </div>
             <Separator className="my-2 bg-gray-400" />
@@ -287,7 +326,7 @@ export default function CoursePage({ course }: Props) {
                         <CirclePlay className="w-4 h-4 text-blue-600 mr-2" />
                         <Link
                           href={`/courses/${slugify(otherCourse)}`}
-                          className="hover:underline text-blue-500">
+                          className="underline text-blue-500">
                           {otherCourse}
                         </Link>
                       </li>
