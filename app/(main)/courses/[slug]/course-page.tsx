@@ -238,28 +238,29 @@ export default function CoursePage({ course }: Props) {
                   alt={course.instructor.name}
                   className="h-24 w-24 rounded-lg object-cover"
                 />
-                <div>
+                <div className="flex-1">
                   <h3 className="text-xl font-semibold capitalize">
                     {course.instructor.name}
                   </h3>
-                  <p className="text-muted-foreground text-sm text-indigo-500">
+                  <p className="text-sm text-indigo-500">
                     {course.instructor.role}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    {course.instructor.courses.length} Courses
                   </p>
                   <a
                     href={`mailto:${course.instructor.email}`}
                     target="_blank"
-                    className="hover:underline text-blue-500 truncate break-words text-sm text-muted-foreground">
+                    className="hover:underline text-blue-500 truncate break-words text-sm">
                     {course.instructor.email}
                   </a>
+                  <p className="text-sm text-muted-foreground">
+                    {course.instructor.courses.length} Courses
+                  </p>
                 </div>
               </div>
-              <p className="text-muted-foreground my-2 leading-relaxed">
+              <p className="text-muted-foreground text-sm my-2 leading-relaxed">
                 {course.instructor.bio}
               </p>
-              <div className="mt-6">
+
+              <div className="mt-3">
                 <h4 className="font-semibold mb-3">Areas of Expertise</h4>
                 <div className="flex flex-wrap gap-2 xsm:gap-x-4 xsm:text-xs text-sm">
                   {course.instructor.expertise.map(
