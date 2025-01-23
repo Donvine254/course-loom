@@ -208,15 +208,15 @@ export default function CoursePage({ course }: Props) {
                   <p className="text-muted-foreground">
                     {course.instructor.bio}
                   </p>
-                  <div className="inline-flex items-center text-muted-foreground">
+                  <div className="inline-flex items-center">
                     <Mail className="w-5 h-5 mr-2 text-indigo-500" />
-                    {course.instructor.email}
+                   <a href={`mailto:${course.instructor.email}`} target="_blank" className="hover:underline hover:text-blue-500">{course.instructor.email}</a>
                   </div>
                 </div>
               </div>
               <div className="mt-6">
                 <h4 className="font-semibold mb-3">Areas of Expertise</h4>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 xsm:gap-x-4">
                   {course.instructor.expertise.map(
                     (skill: string, index: number) => (
                       <span
@@ -275,7 +275,7 @@ export default function CoursePage({ course }: Props) {
               <h2 className="text-2xl font-bold mb-6">Student Feedback</h2>
               <div className="space-y-2">
                 <div className="flex items-center gap-2 md:gap-6 mb-4">
-                  <div className="bg-gray-100 dark:bg-indigo-950 space-y-2 p-6 border shadow">
+                  <div className="bg-gray-50 rounded-sm dark:bg-indigo-950 space-y-2 p-6 border shadow">
                     <h2 className="text-5xl font-bold text-center">
                       {course.rating}
                     </h2>
@@ -334,15 +334,19 @@ export default function CoursePage({ course }: Props) {
                             <p className="text-muted-foreground">
                               {review.comment}
                             </p>
-                            <div className="flex items-center justify-start gap-2">
-                                <p>Helpful? </p>
-                                <ThumbsUp className="h-4 w-4"/>
-                                <ThumbsDown className="h-4 w-4"/>
+                            <div className="flex items-center justify-start gap-2 mt-2 text-muted-foreground text-sm">
+                              <p>Helpful? </p>
+                              <ThumbsUp className="h-4 w-4 cursor-pointer hover:text-green-500" />
+                              <ThumbsDown className="h-4 w-4 cursor-pointer hover:text-destructive" />
                             </div>
                           </div>
                         </div>
-                        <button className="h-6 w-6 p-1 rounded-md hover:bg-indigo-100 absolute right-2 top-2 flex items-center justify-center" title="report" aria-label="report" type="button">
-                          <EllipsisVertical className="h-5 w-5"/>
+                        <button
+                          className="h-6 w-6 p-1 rounded-md hover:bg-indigo-100 absolute right-2 top-2 flex items-center justify-center"
+                          title="report"
+                          aria-label="report"
+                          type="button">
+                          <EllipsisVertical className="h-5 w-5" />
                         </button>
                       </div>
                     )
