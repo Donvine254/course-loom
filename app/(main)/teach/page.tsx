@@ -6,18 +6,21 @@ export default function Page() {
     <section className="py-2 pt-8 md:pt-10 bg-gradient-to-tr from-indigo-200 via-gray-100 to-indigo-200 dark:bg-gradient-to-tr dark:from-indigo-950 dark:via-gray-950 dark:to-indigo-950">
       <div className="min-h-screen">
         <div className="md:hidden flex flex-col">
-          <div className="relative w-full h-[300px]">
+          <div className="relative w-full h-[300px] sm:h-[400px]">
             <Image
-              src="https://res.cloudinary.com/dipkbpinx/image/upload/v1737669436/illustrations/ojlwjx3ickpbptlxg2ws.webp"
+              src="https://res.cloudinary.com/dipkbpinx/image/upload/t_hiring-banner/v1737669436/illustrations/ojlwjx3ickpbptlxg2ws.webp"
               alt="Instructor teaching"
               fill
-              className="object-cover"
+              quality={100}
+              className="object-cover object-top"
               priority
             />
           </div>
           <div className="px-6 py-8 flex flex-col items-center text-center">
-            <h1 className="text-4xl font-bold mb-4">Become an Instructor</h1>
-            <p className="text-lg text-gray-600 mb-8 max-w-md">
+            <h1 className="text-4xl font-bold mb-4 text-center">
+              Become an Instructor
+            </h1>
+            <p className="text-lg text-muted-foreground mb-8 max-w-md">
               Join our community of educators and share your expertise with
               learners worldwide. Transform your knowledge into impact.
             </p>
@@ -34,6 +37,7 @@ export default function Page() {
               src="https://res.cloudinary.com/dipkbpinx/image/upload/t_hiring-banner/v1737669437/illustrations/szwddtkog39ndiqnoxap.webp"
               alt="Teaching background"
               fill
+              quality={100}
               className="object-cover"
               priority
             />
