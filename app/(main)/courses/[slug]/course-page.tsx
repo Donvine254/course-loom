@@ -15,6 +15,9 @@ import {
   CirclePlay,
   EyeIcon,
   Check,
+  EllipsisVertical,
+  ThumbsUp,
+  ThumbsDown,
 } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -311,7 +314,7 @@ export default function CoursePage({ course }: Props) {
                     (review: Review, index: number) => (
                       <div
                         key={index}
-                        className="border-b border-input pb-4 last:border-0">
+                        className="border-b border-input pb-4 last:border-0 relative">
                         <div className="flex items-start gap-4">
                           <Image
                             width={48}
@@ -331,8 +334,16 @@ export default function CoursePage({ course }: Props) {
                             <p className="text-muted-foreground">
                               {review.comment}
                             </p>
+                            <div className="flex items-center justify-start gap-2">
+                                <p>Helpful? </p>
+                                <ThumbsUp className="h-4 w-4"/>
+                                <ThumbsDown className="h-4 w-4"/>
+                            </div>
                           </div>
                         </div>
+                        <button className="h-6 w-6 p-1 rounded-md hover:bg-indigo-100 absolute right-2 top-2 flex items-center justify-center" title="report" aria-label="report" type="button">
+                          <EllipsisVertical className="h-5 w-5"/>
+                        </button>
                       </div>
                     )
                   )}
