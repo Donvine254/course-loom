@@ -395,11 +395,11 @@ export default function CoursePage({ course }: Props) {
               <SubscriptionButton
                 className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2"
                 plan="Pro"
-                amount={0}
-                text="Try Pro for free"
+                amount={24.99}
+                text="Try Pro for Now"
               />
               <p className="text-xs text-center w-full text-muted-foreground mb-1">
-                Starting at KSH 2,999 per month after trial
+                Starting at KSH 2,999 per month
               </p>
               <p className="text-xs text-center w-full text-muted-foreground">
                 Cancel anytime
