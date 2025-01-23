@@ -9,7 +9,10 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2024-12-18.acacia",
 });
 
-export async function createSubscriptionSession(amount: number, plan: string) {
+export async function createSubscriptionSession(
+  amount: number,
+  name: string
+) {
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card", "link"],
     line_items: [
@@ -17,7 +20,7 @@ export async function createSubscriptionSession(amount: number, plan: string) {
         price_data: {
           currency: "kes",
           product_data: {
-            name: `Courseloom ${plan} Subscription`,
+            name: name,
             images: [
               "https://res.cloudinary.com/dipkbpinx/image/upload/v1737502381/illustrations/undraw_learning-sketchingsh_ogwmxu.svg",
             ],

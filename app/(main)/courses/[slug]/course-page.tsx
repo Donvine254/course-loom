@@ -9,7 +9,6 @@ import {
   Share2,
   BookmarkPlus,
   Globe,
-  PlayIcon,
   CirclePlay,
   Check,
   EllipsisVertical,
@@ -395,8 +394,9 @@ export default function CoursePage({ course }: Props) {
               <SubscriptionButton
                 className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2"
                 plan="Pro"
+                variant="subscription"
                 amount={24.99}
-                text="Try Pro for Now"
+                text="Try Pro Now"
               />
               <p className="text-xs text-center w-full text-muted-foreground mb-1">
                 Starting at KSH 2,999 per month
@@ -416,16 +416,13 @@ export default function CoursePage({ course }: Props) {
                   maximumFractionDigits: 0,
                 }).format(course.price * 120)}
               </div>
-              <Button
-                variant="outline"
-                className="bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors w-full  hover:text-white ">
-                <PlayIcon className="h-4 w-4" /> Enroll Now
-              </Button>
-              {/* <Button
-                variant="outline"
-                className="rounded-lg font-semibold w-full my-2 ">
-                Try free preview
-              </Button> */}
+              <SubscriptionButton
+                className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2"
+                variant="payment"
+                title={course.title}
+                amount={course.price}
+                text="Buy this Course"
+              />
               <div className="text-muted-foreground text-xs w-full my-2 inline-flex items-center gap-1 justify-center">
                 <Lock className="h-3 w-3" />{" "}
                 <span>30-Day Money-Back Guarantee</span>
