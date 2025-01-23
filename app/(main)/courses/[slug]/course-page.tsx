@@ -41,7 +41,7 @@ export default function CoursePage({ course }: Props) {
         height="1.5em"
         key={index}
         className={`w-5 h-5 ${
-          index < rating ? "text-yellow-400 fill-yellow-400" : "text-gray-400"
+          index < rating ? "text-yellow-400 fill-yellow-400" : "text-gray-300"
         }`}>
         <path
           fill="currentColor"
@@ -251,7 +251,7 @@ export default function CoursePage({ course }: Props) {
                 {course.chapters.map((chapter: Chapter, index: number) => (
                   <div
                     key={index}
-                    className="border border-indigo-500 rounded-lg p-4">
+                    className="border bg-card border-indigo-500 rounded-lg p-4">
                     <div className="flex items-center justify-between">
                       <div>
                         <h3 className="font-semibold">{chapter.title}</h3>
