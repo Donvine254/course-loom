@@ -111,9 +111,11 @@ export default function CoursePage({ course }: Props) {
                 </div>
               </div>
               <div className="flex gap-4">
-                <Button variant="secondary" className="justify-start gap-2">
-                  <GraduationCap className="h-5 w-5" /> Enroll Now
-                </Button>
+                <Link href="#enroll" passHref scroll>
+                  <Button variant="secondary" className="justify-start gap-2">
+                    <GraduationCap className="h-5 w-5" /> Enroll Now
+                  </Button>
+                </Link>
                 <VideoPreviewModal
                   title={course.title}
                   videoUrl="https://www.youtube.com/embed/FJDVKeh7RJI"
@@ -379,7 +381,7 @@ export default function CoursePage({ course }: Props) {
             </div>
           </div>
           {/* Sidebar */}
-          <div className="md:col-span-1">
+          <div className="md:col-span-1" id="enroll">
             <div className="bg-card border shadow dark:shadow-indigo-500 rounded-xl p-6 md:sticky top-8 md:top-16">
               <p className="text-lg font-medium">
                 Subscribe to Courseloom pro membership plan
