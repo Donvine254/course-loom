@@ -13,6 +13,8 @@ import {
   Mail,
   Info,
   Globe,
+  PlayIcon,
+  EyeIcon,
 } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -49,7 +51,7 @@ export default function CoursePage({ course }: Props) {
               <h1 className="xsm:text-xl sm:text-2xl md:text-4xl lg:text-6xl font-bold mb-4 leading-relaxed tracking-tight">
                 {course.title}
               </h1>
-              <p className="text-sm text-muted-foreground my-2">
+              <p className="text-sm text-gray-200 my-2">
                 {course.short_description}
               </p>
               <div className="flex items-center flex-wrap gap-4 mb-4">
@@ -83,16 +85,17 @@ export default function CoursePage({ course }: Props) {
                 />
                 <div>
                   <p className="font-medium">{course.instructor.name}</p>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-gray-200">
                     {course.instructor.role}
                   </p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <Button variant="secondary" className="justify-start gap-1">
-                    Enroll Now</Button>
-                <Button variant="ghost" className="border justify-start gap-1">
-                  Preview Course
+                <Button variant="secondary" className="justify-start gap-2">
+                  <PlayIcon className="h-4 w-4" /> Enroll Now
+                </Button>
+                <Button variant="ghost" className="border justify-start gap-2">
+                  <EyeIcon className="h-4 w-4" /> Preview Course
                 </Button>
               </div>
             </div>
@@ -173,20 +176,19 @@ export default function CoursePage({ course }: Props) {
                 </ul>
               </div>
             </div>
-
             {/* Instructor Profile */}
-            <div className="bg-white rounded-xl p-8 mb-8 shadow-sm">
-              <h2 className="text-2xl font-bold mb-6">Meet Your Instructor</h2>
+            <div className="bg-inherit rounded-xl p-8 mb-8 shadow-sm">
+              <h2 className="text-2xl font-bold mb-3">Meet Your Instructor</h2>
               <div className="flex gap-6">
                 <Image
-                  height={48}
-                  width={48}
+                  height={96}
+                  width={96}
                   src={course.instructor.image}
                   alt={course.instructor.name}
-                  className="h-12 w-12 rounded-lg object-cover"
+                  className="h-24 w-24 rounded-lg object-cover"
                 />
                 <div className="flex-1 space-y-2">
-                  <h3 className="text-xl font-semibold">
+                  <h3 className="text-xl font-semibold capitalize">
                     {course.instructor.name}
                   </h3>
                   <p className="text-muted-foreground text-sm text-indigo-500">
@@ -329,11 +331,13 @@ export default function CoursePage({ course }: Props) {
 
           {/* Sidebar */}
           <div className="md:col-span-1">
-            <div className="bg-white rounded-xl p-6 shadow-sm sticky top-4">
+            <div className="bg-card border shadow dark:shadow-indigo-500 rounded-xl p-6 sticky top-4">
               <div className="text-3xl font-bold mb-4">${course.price}</div>
-              <button className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold mb-4 hover:bg-indigo-700 transition-colors">
-                Enroll Now
-              </button>
+              <Button
+                variant="outline"
+                className="bg-indigo-600 text-white py-3 rounded-lg font-semibold mb-4 hover:bg-indigo-700 transition-colors w-full ">
+                <PlayIcon className="h-4 w-4" /> Enroll Now
+              </Button>
               <button className="w-full border border-indigo-600 text-indigo-600 py-3 rounded-lg font-semibold mb-6 hover:bg-indigo-50 transition-colors">
                 Try Free Preview
               </button>
@@ -356,12 +360,16 @@ export default function CoursePage({ course }: Props) {
                 </div>
               </div>
               <div className="flex gap-2 mt-6">
-                <button className="flex-1 border border-gray-200 p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                <Button
+                  variant="outline"
+                  className="flex-1 border bg-gray-100 dark:bg-indigo-950 rounded-lg hover:bg-indigo-200 dark:hover:bg-indigo-700 transition-colors">
                   <Share2 className="w-5 h-5 mx-auto" />
-                </button>
-                <button className="flex-1 border border-gray-200 p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                </Button>
+                <Button
+                  variant="secondary"
+                  className="flex-1 border  rounded-lg transition-colors">
                   <BookmarkPlus className="w-5 h-5 mx-auto" />
-                </button>
+                </Button>
               </div>
             </div>
           </div>
