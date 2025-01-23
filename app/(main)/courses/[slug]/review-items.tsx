@@ -27,7 +27,7 @@ const StudentFeedback = ({ course }: Props) => {
       <h2 className="text-2xl font-bold mb-6">Student Feedback</h2>
       <div className="space-y-2">
         <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6 mb-4">
-          <div className="bg-gray-50 rounded-sm dark:bg-indigo-950 space-y-2 p-6 border shadow">
+          <div className="bg-gray-50 rounded-sm dark:bg-gray-950 space-y-2 p-6 border shadow">
             <h2 className="text-5xl font-bold text-center">{course.rating}</h2>
             <div className="flex justify-center">
               {renderStars(Math.floor(course.rating))}
@@ -62,18 +62,34 @@ const StudentFeedback = ({ course }: Props) => {
         <div className="space-y-6 xsm:p-2">
           <ReviewItems reviews={course.studentReviews.slice(0, 3)} />
           <div className="flex justify-end">
-            <Dialog>
+            <Dialog modal>
               <DialogTrigger asChild>
                 <Button>Show all Reviews</Button>
               </DialogTrigger>
-              <DialogContent>
+              <DialogContent className="max-h-[90vh] lg:min-w-[75%] xsm:max-h-[80vh] overflow-hidden">
                 <DialogHeader>
-                  <DialogTitle>All Reviews</DialogTitle>
+                  <DialogTitle className="text-lg sm:text-xl md:text-2xl font-semibold inline-flex items-center text-gray-800 dark:text-gray-200 gap-2 flex-wrap">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      width="1.5em"
+                      height="1.5em"
+                      className="w-6 h-6 text-orange-400 fill-orange-400">
+                      <path
+                        fill="currentColor"
+                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2L9.19 8.63L2 9.24l5.46 4.73L5.82 21z"></path>
+                    </svg>
+                    {course.rating} course rating •{" "}
+                    {course.studentReviews.length} Reviews
+                  </DialogTitle>
                   <DialogDescription>
                     See what all students are saying about this course.
                   </DialogDescription>
                 </DialogHeader>
-                <ReviewItems reviews={course.studentReviews} />
+                {/* i need to scroll in this dialog */}
+                <div className="overflow-y-auto max-h-[70vh] p-2 border rounded-md">
+                  <ReviewItems reviews={course.studentReviews} />
+                </div>
               </DialogContent>
             </Dialog>
           </div>
@@ -91,7 +107,7 @@ const ReviewItems = ({ reviews }: { reviews: Review[] }) => {
       {reviews.map((review: Review, index: number) => (
         <div
           key={index}
-          className="border-b border-input dark:border-b-gray-500 pb-4 last:border-0 relative">
+          className="border-b border-input dark:border-b-gray-500 mb-4 last:border-0 relative pb-2">
           <div className="flex items-start gap-4">
             <Image
               width={48}
@@ -115,5 +131,3 @@ const ReviewItems = ({ reviews }: { reviews: Review[] }) => {
     </>
   );
 };
-
-
