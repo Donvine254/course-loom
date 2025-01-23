@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { ArrowRight, BookOpen } from "lucide-react";
 import Link from "next/link";
+import { slugify } from "@/lib/utils";
 
 type CourseCardProps = {
   title: string;
@@ -39,8 +40,8 @@ export default function CourseCard({ course }: { course: CourseCardProps }) {
             <span className="text-sm">{chapters} chapters</span>
           </div>
         </div>
-        <h3 className="md:text-lg font-semibold  mb-4 hover:text-indigo-600 transition-colors truncate cursor-pointer ">
-          <Link href="/courses" prefetch={false}>
+        <h3 className="md:text-lg font-semibold  mb-4 hover:text-indigo-600 transition-colors truncate cursor-pointer hover:underline ">
+          <Link href={`/courses/${slugify(title)}`} prefetch={false}>
             {title}
           </Link>
         </h3>
@@ -55,7 +56,7 @@ export default function CourseCard({ course }: { course: CourseCardProps }) {
               maximumFractionDigits: 0,
             }).format(price * 120)}
           </span>
-          <Link href="/courses" prefetch={false} passHref>
+          <Link href={`/courses/${slugify(title)}`} prefetch={false} passHref>
             <button className="text-indigo-600 hover:text-indigo-700 font-medium flex items-center border dark:border-indigo-600 py-0.5 px-2 rounded-md group">
               Explore
               <ArrowRight className="h-4 w-4 ml-1 group-hover:animate-move-arrow" />
