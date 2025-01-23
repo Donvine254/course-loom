@@ -20,6 +20,8 @@ import {
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Separator } from "@/components/ui/separator";
+import { SubscriptionButton } from "@/components/ui/subscription-button";
 type Props = {
   // eslint-disable-next-line
   course: {} | any;
@@ -81,7 +83,9 @@ export default function CoursePage({ course }: Props) {
                 </div>
                 <div className="flex items-center gap-1">
                   <Users className="w-4 h-4" />
-                  <span>{course.students} students</span>
+                  <span>
+                    {Number(course.students).toLocaleString()} students
+                  </span>
                 </div>
                 <div className="flex items-center gap-1">
                   <BadgeInfo className="w-4 h-4 rotate-180" />
@@ -136,7 +140,7 @@ export default function CoursePage({ course }: Props) {
           {/* Main Content */}
           <div className="md:col-span-2">
             {/* Course Overview */}
-            <div className="p-8">
+            <div className="p-4">
               <h2 className="text-2xl font-bold mb-6">Course Overview</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
                 <div className="flex flex-col items-center p-4 bg-card rounded-lg shadow border">
@@ -171,14 +175,14 @@ export default function CoursePage({ course }: Props) {
               <p className="text-muted-foreground leading-relaxed mb-8">
                 {course.long_description}
               </p>
-              <div className="mb-8">
+              <div className="mb-4">
                 <h3 className="text-xl font-semibold mb-4">Prerequisites</h3>
-                <ul className="space-y-2">
+                <ul className="space-y-2 md:grid md:grid-cols-2">
                   {course.prerequisites.map((pre: string, index: number) => (
                     <li
                       key={index}
                       className="flex items-center text-muted-foreground">
-                      <Check className="w-5 h-5 text-indigo-500 mr-2" />
+                      <Check className="w-5 h-5 text-indigo-600 mr-2" />
                       {pre}
                     </li>
                   ))}
@@ -188,20 +192,42 @@ export default function CoursePage({ course }: Props) {
                 <h3 className="text-xl font-semibold mb-4">
                   What You&apos;ll Learn
                 </h3>
-                <ul className="space-y-2">
+                <ul className="space-y-2 md:grid md:grid-cols-2">
                   {course.learningObjectives.map(
                     (objective: string, index: number) => (
                       <li
                         key={index}
                         className="flex items-center text-muted-foreground">
-                        <Check className="w-5 h-5 text-indigo-500 mr-2" />
+                        <Check className="w-5 h-5 text-indigo-600 mr-2" />
                         {objective}
                       </li>
                     )
                   )}
                 </ul>
               </div>
+              {/* Course Content */}
+              <div className="bg-inherit my-2">
+                <h2 className="text-2xl font-bold mb-4">Course Content</h2>
+                <div className="space-y-4">
+                  {course.chapters.map((chapter: Chapter, index: number) => (
+                    <div
+                      key={index}
+                      className="border border-indigo-500 rounded-lg p-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h3 className="font-semibold">{chapter.title}</h3>
+                          <div className="text-sm text-muted-foreground mt-1">
+                            {chapter.lessons} lessons • {chapter.duration}
+                          </div>
+                        </div>
+                        <Lock className="w-4 h-4 text-indigo-600" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
+            <Separator className="my-2 bg-gray-400" />
             {/* Instructor Profile */}
             <div className="bg-inherit p-2 sm:p-4">
               <h2 className="text-2xl font-bold mb-3">Meet Your Instructor</h2>
@@ -267,30 +293,8 @@ export default function CoursePage({ course }: Props) {
               </div>
             </div>
 
-            {/* Course Content */}
-            <div className="bg-inherit p-2 sm:p-4">
-              <h2 className="text-2xl font-bold mb-4">Course Content</h2>
-              <div className="space-y-4">
-                {course.chapters.map((chapter: Chapter, index: number) => (
-                  <div
-                    key={index}
-                    className="border border-indigo-500 rounded-lg p-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h3 className="font-semibold">{chapter.title}</h3>
-                        <div className="text-sm text-muted-foreground mt-1">
-                          {chapter.lessons} lessons • {chapter.duration}
-                        </div>
-                      </div>
-                      <Lock className="w-4 h-4 text-indigo-600" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
             {/* Student Reviews */}
-            <hr className="my-2" />
+            <Separator className="my-2 bg-gray-400" />
             <div className="p-2 sm:p-4 bg-card dark:bg-inherit rounded-xl shadow">
               <h2 className="text-2xl font-bold mb-6">Student Feedback</h2>
               <div className="space-y-2">
@@ -388,12 +392,12 @@ export default function CoursePage({ course }: Props) {
                   Learn More
                 </Link>
               </p>{" "}
-              <Button
-                variant="outline"
-                asChild
-                className="bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors w-full my-2 ">
-                <Link href="/pricing">Try Pro for free</Link>
-              </Button>
+              <SubscriptionButton
+                className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2"
+                plan="Pro"
+                amount={0}
+                text="Try Pro for free"
+              />
               <p className="text-xs text-center w-full text-muted-foreground mb-1">
                 Starting at KSH 2,999 per month after trial
               </p>

@@ -8,10 +8,12 @@ export const SubscriptionButton = ({
   className,
   amount,
   plan,
+  text,
 }: {
   className?: string;
   amount: number;
   plan: string;
+  text: string;
 }) => {
   const paymentAmount = Number(amount * 120 * 100);
   const handlePayment = async () => {
@@ -39,10 +41,10 @@ export const SubscriptionButton = ({
   };
   return (
     <button
-      className={cn(className, "w-full py-3 px-6 rounded-lg font-medium mb-4")}
+      className={cn(className, "w-full py-3 px-6 font-medium")}
       title="subscribe"
       onClick={handlePayment}>
-      Get Started
+      {text}
     </button>
   );
 };
