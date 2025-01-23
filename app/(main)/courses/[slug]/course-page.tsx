@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   BookOpen,
@@ -22,6 +23,7 @@ import {
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
 type Props = {
   // eslint-disable-next-line
   course: {} | any;
@@ -380,6 +382,33 @@ export default function CoursePage({ course }: Props) {
           {/* Sidebar */}
           <div className="md:col-span-1">
             <div className="bg-card border shadow dark:shadow-indigo-500 rounded-xl p-6 md:sticky top-8 md:top-16">
+              <p className="text-lg font-medium">
+                Subscribe to Courseloom pro membership plan
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Get this course plus 5,000+ of our top-rated courses with a pro
+                membership plan.{" "}
+                <Link href="/pricing" className="text-blue-500 underline">
+                  Learn More
+                </Link>
+              </p>{" "}
+              <Button
+                variant="outline"
+                asChild
+                className="bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors w-full my-2 ">
+                <Link href="/pricing">Try Pro for free</Link>
+              </Button>
+              <p className="text-xs text-center w-full text-muted-foreground mb-1">
+                Starting from KSH 2,999 per month after trial
+              </p>
+              <p className="text-xs text-center w-full text-muted-foreground">
+                Cancel anytime
+              </p>
+              <div className="flex items-center gap-2 w-full py-2 ">
+                <hr className="border border-gray-200 w-full" />
+                <div className="text-sm flex-1 w-fit whitespace-nowrap">Or</div>
+                <hr className="border border-gray-200 w-full" />
+              </div>
               <div className="text-3xl font-bold mb-4">
                 {new Intl.NumberFormat("en-US", {
                   style: "currency",
@@ -396,6 +425,7 @@ export default function CoursePage({ course }: Props) {
                 <Lock className="h-4 w-4" />{" "}
                 <span>30-Day Money-Back Guarantee</span>
               </div>
+              <p className="text-muted-foreground text-sm text-center">Full Lifetime Access</p>
               <Separator className="mb-2" />
               <div className="space-y-4 text-muted-foreground">
                 <div className="flex items-center">
