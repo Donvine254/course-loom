@@ -70,13 +70,15 @@ export default function CoursePage({ course }: Props) {
                     {Number(course.students).toLocaleString()} students
                   </span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <BadgeInfo className="w-4 h-4 rotate-180" />
-                  <span>Last updated on {course.lastUpdated}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Globe className="w-4 h-4" />
-                  <span>English</span>
+                <div className="flex items-center flex-wrap gap-4 mb-2 text-sm md:text-base">
+                  <div className="flex items-center gap-1">
+                    <BadgeInfo className="w-4 h-4 rotate-180" />
+                    <span>Last updated on {course.lastUpdated}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Globe className="w-4 h-4" />
+                    <span>English</span>
+                  </div>
                 </div>
               </div>
               <div className="flex items-center gap-2 mb-6">
