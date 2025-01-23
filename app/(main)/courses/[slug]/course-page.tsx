@@ -68,7 +68,7 @@ export default function CoursePage({ course }: Props) {
                   {course.category}
                 </span>
               </div>
-              <h1 className="xsm:text-xl sm:text-2xl md:text-4xl font-bold mb-4 leading-loose tracking-tight">
+              <h1 className="xsm:text-xl sm:text-2xl md:text-4xl font-bold mb-4 tracking-tight">
                 {course.title}
               </h1>
               <p className="text-sm text-gray-200 my-2">

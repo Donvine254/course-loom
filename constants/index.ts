@@ -115,7 +115,7 @@ export const course = {
   lastUpdated: "1st March 2024",
   price: 89.99,
   coverImage:
-    "https://images.unsplash.com/photo-1627398242454-45a1465c2479?auto=format&fit=crop&w=1600&q=80",
+    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
   duration: "24 hours",
   totalChapters: 12,
   prerequisites: [
