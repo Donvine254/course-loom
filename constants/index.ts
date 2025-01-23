@@ -83,8 +83,10 @@ export const sampleCourses = [
 
 export const course = {
   title: "Advanced Web Development with React & TypeScript",
-  short_description:"Learn the fundamentals of web development, including HTML, CSS, JavaScript, and modern frameworks like React and Next.js.",
-  long_description:"Master modern web development with our comprehensive course on React and TypeScript. This course is designed for developers who want to take their skills to the next level by learning how to build scalable, type-safe applications using industry best practices. You'll learn through practical examples, real-world projects, and hands-on exercises that will help you understand complex concepts and apply them in your own work.",
+  short_description:
+    "Learn the fundamentals of web development, including HTML, CSS, JavaScript, and modern frameworks like React and Next.js.",
+  long_description:
+    "Master modern web development with our comprehensive course on React and TypeScript. This course is designed for developers who want to take their skills to the next level by learning how to build scalable, type-safe applications using industry best practices. You'll learn through practical examples, real-world projects, and hands-on exercises that will help you understand complex concepts and apply them in your own work.",
   instructor: {
     name: "Sarah Johnson",
     role: "Senior Software Engineer",
@@ -107,7 +109,7 @@ export const course = {
   },
   previewVideo: "https://example.com/preview.mp4", //In the model, this will be the first video in the course chapter
   rating: 4.8,
-  reviews: 342,
+  reviews: 3,
   students: 1205,
   lastUpdated: "1st March 2024",
   price: 89.99,

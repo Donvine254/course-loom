@@ -4,9 +4,7 @@ import {
   Users,
   Award,
   Clock,
-  Star,
   Lock,
-  CheckCircle,
   Download,
   Share2,
   BookmarkPlus,
@@ -16,9 +14,11 @@ import {
   PlayIcon,
   CirclePlay,
   EyeIcon,
+  Check,
 } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 type Props = {
   // eslint-disable-next-line
   course: {} | any;
@@ -34,19 +34,26 @@ type Review = {
 export default function CoursePage({ course }: Props) {
   const renderStars = (rating: number) => {
     return [...Array(5)].map((_, index) => (
-      <Star
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width="1.5em"
+        height="1.5em"
         key={index}
         className={`w-5 h-5 ${
-          index < rating ? "text-yellow-400 fill-current" : "text-gray-300"
-        }`}
-      />
+          index < rating ? "text-yellow-400 fill-yellow-400" : "text-gray-400"
+        }`}>
+        <path
+          fill="currentColor"
+          d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2L9.19 8.63L2 9.24l5.46 4.73L5.82 21z"></path>
+      </svg>
     ));
   };
   return (
     <div className="min-h-screen ">
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-indigo-600 to-indigo-800 text-white">
-        <div className="container mx-auto px-4 py-12">
+        <div className="mx-auto px-4 py-12">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
               <h1 className="xsm:text-xl sm:text-2xl md:text-4xl lg:text-6xl font-bold mb-4 leading-relaxed tracking-tight">
@@ -113,29 +120,29 @@ export default function CoursePage({ course }: Props) {
       </div>
 
       {/* Course Content */}
-      <div className="container mx-auto px-4 py-12">
+      <div className="mx-auto p-2 sm:p-4">
         <div className="grid md:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="md:col-span-2">
             {/* Course Overview */}
-            <div className="bg-white rounded-xl p-8 mb-8 shadow-sm">
+            <div className="p-8">
               <h2 className="text-2xl font-bold mb-6">Course Overview</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-                <div className="flex flex-col items-center p-4 bg-gray-50 rounded-lg">
+                <div className="flex flex-col items-center p-4 bg-card rounded-lg shadow">
                   <Clock className="w-6 h-6 text-indigo-600 mb-2" />
                   <span className="text-sm text-muted-foreground">
                     Duration
                   </span>
                   <span className="font-semibold">{course.duration}</span>
                 </div>
-                <div className="flex flex-col items-center p-4 bg-gray-50 rounded-lg">
+                <div className="flex flex-col items-center p-4 bg-card shadow rounded-lg">
                   <BookOpen className="w-6 h-6 text-indigo-600 mb-2" />
                   <span className="text-sm text-muted-foreground">
                     Chapters
                   </span>
                   <span className="font-semibold">{course.totalChapters}</span>
                 </div>
-                <div className="flex flex-col items-center p-4 bg-gray-50 rounded-lg">
+                <div className="flex flex-col items-center p-4 bg-card shadow rounded-lg">
                   <Download className="w-6 h-6 text-indigo-600 mb-2" />
                   <span className="text-sm text-muted-foreground">
                     Resources
@@ -153,7 +160,7 @@ export default function CoursePage({ course }: Props) {
                     <li
                       key={index}
                       className="flex items-center text-muted-foreground">
-                      <CheckCircle className="w-5 h-5 text-green-500 mr-2" />
+                      <Check className="w-5 h-5 text-indigo-500 mr-2" />
                       {pre}
                     </li>
                   ))}
@@ -161,7 +168,7 @@ export default function CoursePage({ course }: Props) {
               </div>
               <div>
                 <h3 className="text-xl font-semibold mb-4">
-                  Learning Objectives
+                  What You&apos;ll Learn
                 </h3>
                 <ul className="space-y-2">
                   {course.learningObjectives.map(
@@ -169,7 +176,7 @@ export default function CoursePage({ course }: Props) {
                       <li
                         key={index}
                         className="flex items-center text-muted-foreground">
-                        <CheckCircle className="w-5 h-5 text-green-500 mr-2" />
+                        <Check className="w-5 h-5 text-indigo-500 mr-2" />
                         {objective}
                       </li>
                     )
@@ -178,7 +185,7 @@ export default function CoursePage({ course }: Props) {
               </div>
             </div>
             {/* Instructor Profile */}
-            <div className="bg-inherit p-8 mb-3">
+            <div className="bg-inherit p-2 sm:p-4">
               <h2 className="text-2xl font-bold mb-3">Meet Your Instructor</h2>
               <div className="flex gap-6">
                 <Image
@@ -238,7 +245,7 @@ export default function CoursePage({ course }: Props) {
             </div>
 
             {/* Course Content */}
-            <div className="bg-inherit p-8 mb-3">
+            <div className="bg-inherit p-2 sm:p-4">
               <h2 className="text-2xl font-bold mb-4">Course Content</h2>
               <div className="space-y-4">
                 {course.chapters.map((chapter: Chapter, index: number) => (
@@ -260,68 +267,72 @@ export default function CoursePage({ course }: Props) {
             </div>
 
             {/* Student Reviews */}
-            <div className="bg-white rounded-xl p-8 shadow-sm">
-              <h2 className="text-2xl font-bold mb-6">Student Reviews</h2>
-              <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <div className="text-5xl font-bold text-center mb-4">
-                    {course.rating}
+            <hr className="my-2" />
+            <div className="p-2 sm:p-4 bg-card rounded-xl shadow">
+              <h2 className="text-2xl font-bold mb-6">Student Feedback</h2>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 md:gap-6 mb-4">
+                  <div className="bg-gray-100 dark:bg-indigo-950 space-y-2 p-6 border shadow">
+                    <h2 className="text-5xl font-bold text-center">
+                      {course.rating}
+                    </h2>
+                    <div className="flex justify-center">
+                      {renderStars(Math.floor(course.rating))}
+                    </div>
+                    <p className="text-center text-muted-foreground">
+                      {course.studentReviews.length} Reviews
+                    </p>
                   </div>
-                  <div className="flex justify-center mb-4">
-                    {renderStars(Math.floor(course.rating))}
-                  </div>
-                  <p className="text-center text-muted-foreground mb-6">
-                    Course Rating • {course.reviews} Reviews
-                  </p>
-                  <div className="space-y-2">
+                  <div className="space-y-2 flex-1">
                     {Object.entries(course.ratingBreakdown)
                       .reverse()
                       .map(([rating, percentage]) => (
                         <div key={rating} className="flex items-center gap-2">
-                          <div className="flex items-center w-20">
+                          <div className="flex items-center w-[20%]">
                             {renderStars(parseInt(rating))}
                           </div>
-                          <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                          <div className="w-[70%] h-2 bg-gray-200 rounded-full overflow-hidden">
                             <div
-                              className="h-full bg-indigo-600 rounded-full"
+                              className="h-full bg-blue-600 rounded-full"
                               style={{ width: `${percentage}%` }}></div>
                           </div>
-                          <div className="w-12 text-right text-muted-foreground">
+                          <div className="w-[10%] text-right text-muted-foreground">
                             {percentage as number}%
                           </div>
                         </div>
                       ))}
                   </div>
                 </div>
+                <h2 className="text-lg font-semibold my-6">
+                  Reviews ({course.studentReviews.length})
+                </h2>
                 <div className="space-y-6">
                   {course.studentReviews.map(
                     (review: Review, index: number) => (
                       <div
                         key={index}
-                        className="border-b border-gray-200 pb-6 last:border-0">
-                        <div className="flex items-center gap-4 mb-3">
+                        className="border-b border-input pb-4 last:border-0">
+                        <div className="flex items-start gap-4">
                           <Image
-                            width={32}
-                            height={32}
+                            width={48}
+                            height={48}
                             src={review.image}
                             alt={review.name}
-                            className="w-8 h-8 rounded-full"
+                            className="w-12 h-12 rounded-full object-cover"
                           />
-                          <div>
+                          <div className="flex-1">
                             <h4 className="font-semibold">{review.name}</h4>
-                            <div className="flex items-center gap-2">
-                              <div className="flex">
-                                {renderStars(review.rating)}
-                              </div>
-                              <span className="text-muted-foreground text-sm">
-                                {review.date}
-                              </span>
+                            <span className="text-muted-foreground text-sm">
+                              {review.date}
+                            </span>
+                            <div className="flex my-2">
+                              {renderStars(review.rating)}
                             </div>
+                            <p className="text-muted-foreground">
+                              {review.comment}
+                            </p>
                           </div>
                         </div>
-                        <p className="text-muted-foreground">
-                          {review.comment}
-                        </p>
                       </div>
                     )
                   )}
@@ -329,23 +340,24 @@ export default function CoursePage({ course }: Props) {
               </div>
             </div>
           </div>
-
           {/* Sidebar */}
           <div className="md:col-span-1">
-            <div className="bg-card border shadow dark:shadow-indigo-500 rounded-xl p-6 sticky top-4">
+            <div className="bg-card border shadow dark:shadow-indigo-500 rounded-xl p-6 md:sticky top-8 md:top-16">
               <div className="text-3xl font-bold mb-4">${course.price}</div>
               <Button
                 variant="outline"
-                className="bg-indigo-600 text-white py-3 rounded-lg font-semibold mb-4 hover:bg-indigo-700 transition-colors w-full ">
+                className="bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors w-full ">
                 <PlayIcon className="h-4 w-4" /> Enroll Now
               </Button>
-              <button className="w-full border border-indigo-600 text-indigo-600 py-3 rounded-lg font-semibold mb-6 hover:bg-indigo-50 transition-colors">
-                Try Free Preview
-              </button>
+              <div className="text-muted-foreground text-sm w-full my-2 inline-flex items-center gap-1 justify-center">
+                <Lock className="h-4 w-4" />{" "}
+                <span>30-Day Money-Back Guarantee</span>
+              </div>
+              <Separator className="mb-2" />
               <div className="space-y-4 text-muted-foreground">
                 <div className="flex items-center">
                   <Clock className="w-5 h-5 mr-3" />
-                  <span>{course.duration} of content</span>
+                  <span>Lifetime Access</span>
                 </div>
                 <div className="flex items-center">
                   <BookOpen className="w-5 h-5 mr-3" />
