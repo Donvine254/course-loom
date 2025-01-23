@@ -8,7 +8,6 @@ import {
   Download,
   Share2,
   BookmarkPlus,
-  Mail,
   Globe,
   PlayIcon,
   CirclePlay,
@@ -54,11 +53,11 @@ export default function CoursePage({ course }: Props) {
     ));
   };
   return (
-    <div className="min-h-screen ">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-indigo-600 to-indigo-800 text-white">
-        <div className="mx-auto px-4 py-12">
-          <div className="grid md:grid-cols-2 gap-8 items-center ">
+      <div className="bg-gradient-to-r from-indigo-600 to-indigo-800 text-white min-h-screen">
+        <div className="container mx-auto px-4 py-12">
+          <div className="grid md:grid-cols-2 gap-6 xsm:gap-2 md:gap-8 items-center ">
             <div>
               <div className="flex items-center gap-2 my-2 lg:mb-4">
                 <span className="text-sm font-medium text-indigo-600 bg-indigo-50 px-3 py-1 rounded-sm  ">
@@ -68,13 +67,13 @@ export default function CoursePage({ course }: Props) {
                   {course.category}
                 </span>
               </div>
-              <h1 className="xsm:text-xl sm:text-2xl md:text-4xl font-bold mb-4 tracking-tight">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 tracking-tight">
                 {course.title}
               </h1>
               <p className="text-sm text-gray-200 my-2">
                 {course.short_description}
               </p>
-              <div className="flex items-center flex-wrap gap-4 mb-4">
+              <div className="flex items-center flex-wrap gap-4 mb-4 text-sm md:text-base">
                 <div className="flex items-center">
                   <div className="flex mr-2">
                     {renderStars(Math.floor(course.rating))}
@@ -231,7 +230,7 @@ export default function CoursePage({ course }: Props) {
             {/* Instructor Profile */}
             <div className="bg-inherit p-2 sm:p-4">
               <h2 className="text-2xl font-bold mb-3">Meet Your Instructor</h2>
-              <div className="flex gap-6">
+              <div className="flex gap-4">
                 <Image
                   height={96}
                   width={96}
@@ -239,35 +238,35 @@ export default function CoursePage({ course }: Props) {
                   alt={course.instructor.name}
                   className="h-24 w-24 rounded-lg object-cover"
                 />
-                <div className="flex-1 space-y-2">
+                <div>
                   <h3 className="text-xl font-semibold capitalize">
                     {course.instructor.name}
                   </h3>
                   <p className="text-muted-foreground text-sm text-indigo-500">
                     {course.instructor.role}
                   </p>
-                  <p className="text-muted-foreground">
-                    {course.instructor.bio}
+                  <p className="text-sm text-muted-foreground">
+                    {course.instructor.courses.length} Courses
                   </p>
-                  <div className="inline-flex items-center">
-                    <Mail className="w-5 h-5 mr-2 text-indigo-500" />
-                    <a
-                      href={`mailto:${course.instructor.email}`}
-                      target="_blank"
-                      className="hover:underline hover:text-blue-500">
-                      {course.instructor.email}
-                    </a>
-                  </div>
+                  <a
+                    href={`mailto:${course.instructor.email}`}
+                    target="_blank"
+                    className="hover:underline text-blue-500 truncate break-words text-sm text-muted-foreground">
+                    {course.instructor.email}
+                  </a>
                 </div>
               </div>
+              <p className="text-muted-foreground my-2 leading-relaxed">
+                {course.instructor.bio}
+              </p>
               <div className="mt-6">
                 <h4 className="font-semibold mb-3">Areas of Expertise</h4>
-                <div className="flex flex-wrap gap-2 xsm:gap-x-4">
+                <div className="flex flex-wrap gap-2 xsm:gap-x-4 xsm:text-xs text-sm">
                   {course.instructor.expertise.map(
                     (skill: string, index: number) => (
                       <span
                         key={index}
-                        className="px-3 py-1 text-indigo-50 bg-indigo-600 dark:bg-indigo-900 dark:text-indigo-300 rounded-full text-sm">
+                        className="px-3 py-1 text-indigo-50 bg-indigo-600 dark:bg-indigo-900 dark:text-indigo-300 rounded-full ">
                         {skill}
                       </span>
                     )
@@ -298,7 +297,7 @@ export default function CoursePage({ course }: Props) {
             <div className="p-2 sm:p-4 bg-card dark:bg-inherit rounded-xl shadow">
               <h2 className="text-2xl font-bold mb-6">Student Feedback</h2>
               <div className="space-y-2">
-                <div className="flex items-center gap-2 md:gap-6 mb-4">
+                <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6 mb-4">
                   <div className="bg-gray-50 rounded-sm dark:bg-indigo-950 space-y-2 p-6 border shadow">
                     <h2 className="text-5xl font-bold text-center">
                       {course.rating}
@@ -310,7 +309,7 @@ export default function CoursePage({ course }: Props) {
                       {course.studentReviews.length} Reviews
                     </p>
                   </div>
-                  <div className="space-y-2 flex-1">
+                  <div className="space-y-2 flex-1 xsm:w-full xsm:px-2">
                     {Object.entries(course.ratingBreakdown)
                       .reverse()
                       .map(([rating, percentage]) => (
@@ -333,7 +332,7 @@ export default function CoursePage({ course }: Props) {
                 <h2 className="text-lg font-semibold my-6">
                   Reviews ({course.studentReviews.length})
                 </h2>
-                <div className="space-y-6">
+                <div className="space-y-6 xsm:p-2">
                   {course.studentReviews.map(
                     (review: Review, index: number) => (
                       <div
