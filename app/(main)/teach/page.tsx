@@ -2,6 +2,13 @@ import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Course Loom | Become an Instructor",
+    description: "An LMS platform that powers the modern mind!",
+  };
+  
 export default function Page() {
   const stats = [
     { value: "62M+", label: "Students" },

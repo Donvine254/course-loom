@@ -1,6 +1,12 @@
 import React from "react";
 import CoursePage from "./course-page";
 import { course } from "@/constants";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Course Loom | Explore our courses",
+  description: "An LMS platform that powers the modern mind!",
+};
 export default async function Page({
   params,
 }: {
