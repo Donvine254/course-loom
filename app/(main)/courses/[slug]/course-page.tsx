@@ -5,7 +5,7 @@ import {
   Award,
   Clock,
   Star,
-  Play,
+  Lock,
   CheckCircle,
   Download,
   Share2,
@@ -14,6 +14,7 @@ import {
   Info,
   Globe,
   PlayIcon,
+  CirclePlay,
   EyeIcon,
 } from "lucide-react";
 import Image from "next/image";
@@ -177,7 +178,7 @@ export default function CoursePage({ course }: Props) {
               </div>
             </div>
             {/* Instructor Profile */}
-            <div className="bg-inherit rounded-xl p-8 mb-8 shadow-sm">
+            <div className="bg-inherit p-8 mb-3">
               <h2 className="text-2xl font-bold mb-3">Meet Your Instructor</h2>
               <div className="flex gap-6">
                 <Image
@@ -197,8 +198,8 @@ export default function CoursePage({ course }: Props) {
                   <p className="text-muted-foreground">
                     {course.instructor.bio}
                   </p>
-                  <div className="inline-flex text-muted-foreground">
-                    <Mail className="w-5 h-5 mr-2 stroke-white fill-indigo-500" />
+                  <div className="inline-flex items-center text-muted-foreground">
+                    <Mail className="w-5 h-5 mr-2 text-indigo-500" />
                     {course.instructor.email}
                   </div>
                 </div>
@@ -210,7 +211,7 @@ export default function CoursePage({ course }: Props) {
                     (skill: string, index: number) => (
                       <span
                         key={index}
-                        className="px-3 py-1 bg-indigo-50 text-indigo-600 rounded-full text-sm">
+                        className="px-3 py-1 text-indigo-50 bg-indigo-600 dark:bg-indigo-900 dark:text-indigo-300 rounded-full text-sm">
                         {skill}
                       </span>
                     )
@@ -227,7 +228,7 @@ export default function CoursePage({ course }: Props) {
                       <li
                         key={index}
                         className="flex items-center text-muted-foreground">
-                        <BookOpen className="w-5 h-5 text-indigo-600 mr-2" />
+                        <CirclePlay className="w-4 h-4 text-indigo-600 mr-2" />
                         {otherCourse}
                       </li>
                     )
@@ -237,13 +238,13 @@ export default function CoursePage({ course }: Props) {
             </div>
 
             {/* Course Content */}
-            <div className="bg-white rounded-xl p-8 mb-8 shadow-sm">
-              <h2 className="text-2xl font-bold mb-6">Course Content</h2>
+            <div className="bg-inherit p-8 mb-3">
+              <h2 className="text-2xl font-bold mb-4">Course Content</h2>
               <div className="space-y-4">
                 {course.chapters.map((chapter: Chapter, index: number) => (
                   <div
                     key={index}
-                    className="border border-gray-200 rounded-lg p-4">
+                    className="border border-indigo-500 rounded-lg p-4">
                     <div className="flex items-center justify-between">
                       <div>
                         <h3 className="font-semibold">{chapter.title}</h3>
@@ -251,7 +252,7 @@ export default function CoursePage({ course }: Props) {
                           {chapter.lessons} lessons • {chapter.duration}
                         </div>
                       </div>
-                      <Play className="w-5 h-5 text-indigo-600" />
+                      <Lock className="w-4 h-4 text-indigo-600" />
                     </div>
                   </div>
                 ))}
