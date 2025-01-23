@@ -1,5 +1,3 @@
-"use client";
-import React from "react";
 import {
   BookOpen,
   Users,
@@ -11,7 +9,6 @@ import {
   Globe,
   CirclePlay,
   Check,
-  EllipsisVertical,
   BadgeInfo,
   GraduationCap,
 } from "lucide-react";
@@ -21,6 +18,8 @@ import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import { SubscriptionButton } from "@/components/ui/subscription-button";
 import { VideoPreviewModal } from "./preview-modal";
+import { slugify } from "@/lib/utils";
+import { ReviewActions } from "./review-actions";
 type Props = {
   // eslint-disable-next-line
   course: {} | any;
@@ -253,7 +252,7 @@ export default function CoursePage({ course }: Props) {
                     {course.instructor.email}
                   </a>
                   <p className="text-sm text-muted-foreground">
-                    {course.instructor.courses.length} Courses
+                    {course.instructor.courses.length + 1} Courses
                   </p>
                 </div>
               </div>
@@ -285,8 +284,12 @@ export default function CoursePage({ course }: Props) {
                       <li
                         key={index}
                         className="flex items-center text-muted-foreground">
-                        <CirclePlay className="w-4 h-4 text-indigo-600 mr-2" />
-                        {otherCourse}
+                        <CirclePlay className="w-4 h-4 text-blue-600 mr-2" />
+                        <Link
+                          href={`/courses/${slugify(otherCourse)}`}
+                          className="hover:underline text-blue-500">
+                          {otherCourse}
+                        </Link>
                       </li>
                     )
                   )}
@@ -359,20 +362,9 @@ export default function CoursePage({ course }: Props) {
                             <p className="text-muted-foreground">
                               {review.comment}
                             </p>
-                            {/* <div className="flex items-center justify-start gap-2 mt-2 text-muted-foreground text-sm">
-                              <p>Helpful? </p>
-                              <ThumbsUp className="h-4 w-4 cursor-pointer hover:text-green-500" />
-                              <ThumbsDown className="h-4 w-4 cursor-pointer hover:text-destructive" />
-                            </div> */}
                           </div>
                         </div>
-                        <button
-                          className="h-6 w-6 p-1 rounded-md hover:bg-indigo-100 hover:text-gray-950 absolute right-2 top-2 flex items-center justify-center"
-                          title="report"
-                          aria-label="report"
-                          type="button">
-                          <EllipsisVertical className="h-5 w-5" />
-                        </button>
+                        <ReviewActions />
                       </div>
                     )
                   )}
