@@ -42,15 +42,16 @@ export default function Page() {
           </div>
           <div className="relative z-10 container mx-auto px-6 h-screen flex items-center">
             <div className="max-w-2xl">
-              <h1 className="text-5xl font-bold mb-6 tracking-tight">
+              <h1 className="text-5xl lg:text-6xl font-bold mb-6 tracking-tight">
                 Become an Instructor
               </h1>
               <p className="text-xl mb-8 leading-relaxed text-muted-foreground">
                 Join our community of educators and share your expertise with
-                learners worldwide. Transform your knowledge into impact.
+                learners worldwide. Transform your knowledge into impact and
+                change lives — including your own.
               </p>
-              <Button className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors min-w-64">
-                Get Started
+              <Button className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors md:text-lg min-w-64">
+                Get Started Today
               </Button>
             </div>
           </div>
