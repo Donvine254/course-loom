@@ -12,16 +12,17 @@ import {
   Globe,
   PlayIcon,
   CirclePlay,
-  EyeIcon,
   Check,
   EllipsisVertical,
   BadgeInfo,
+  GraduationCap,
 } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import { SubscriptionButton } from "@/components/ui/subscription-button";
+import { VideoPreviewModal } from "./preview-modal";
 type Props = {
   // eslint-disable-next-line
   course: {} | any;
@@ -113,13 +114,12 @@ export default function CoursePage({ course }: Props) {
               </div>
               <div className="flex gap-4">
                 <Button variant="secondary" className="justify-start gap-2">
-                  <PlayIcon className="h-4 w-4" /> Enroll Now
+                  <GraduationCap className="h-4 w-4" /> Enroll Now
                 </Button>
-                <Button
-                  variant="ghost"
-                  className="border border-gray-200 hover:border-background justify-start gap-2">
-                  <EyeIcon className="h-4 w-4" /> Preview Course
-                </Button>
+                <VideoPreviewModal
+                  title={course.title}
+                  videoUrl="https://www.youtube.com/embed/FJDVKeh7RJI"
+                />
               </div>
             </div>
             <div className="relative">
