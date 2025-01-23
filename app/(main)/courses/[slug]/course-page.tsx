@@ -56,7 +56,7 @@ export default function CoursePage({ course }: Props) {
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-indigo-600 to-indigo-800 text-white min-h-screen">
         <div className="container mx-auto px-4 py-12">
-          <div className="grid md:grid-cols-2 gap-6 xsm:gap-2 md:gap-8 items-center ">
+          <div className="grid lg:grid-cols-2 gap-6 xsm:gap-2 md:gap-8 items-center ">
             <div>
               <div className="flex items-center gap-2 my-2 lg:mb-4">
                 <span className="text-sm font-medium text-indigo-600 bg-indigo-50 px-3 py-1 rounded-sm  ">
@@ -311,7 +311,7 @@ export default function CoursePage({ course }: Props) {
                       {course.studentReviews.length} Reviews
                     </p>
                   </div>
-                  <div className="space-y-2 flex-1 xsm:w-full xsm:px-2">
+                  <div className="space-y-2 md:flex-1 w-full xsm:px-2">
                     {Object.entries(course.ratingBreakdown)
                       .reverse()
                       .map(([rating, percentage]) => (
@@ -381,7 +381,9 @@ export default function CoursePage({ course }: Props) {
             </div>
           </div>
           {/* Sidebar */}
-          <div className="md:col-span-1" id="enroll">
+          <div
+            className="md:col-span-1 xsm:w-full sm:max-w-sm sm:mx-auto"
+            id="enroll">
             <div className="bg-card border shadow dark:shadow-indigo-500 rounded-xl p-6 md:sticky top-8 md:top-16">
               <p className="text-lg font-medium">
                 Subscribe to Courseloom pro membership plan
