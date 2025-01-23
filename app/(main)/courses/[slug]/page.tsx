@@ -1,7 +1,11 @@
 import React from "react";
 import CoursePage from "./course-page";
 import { course } from "@/constants";
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
   console.log(slug);
   return (
