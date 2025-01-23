@@ -19,43 +19,22 @@ import { Separator } from "@/components/ui/separator";
 import { SubscriptionButton } from "@/components/ui/subscription-button";
 import { VideoPreviewModal } from "./preview-modal";
 import { slugify } from "@/lib/utils";
-import { ReviewActions } from "./review-actions";
+
 import {
   Accordion,
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion";
+import StudentFeedback from "./review-items";
+import { renderStars } from "@/lib/render-stars";
 type Props = {
   // eslint-disable-next-line
   course: {} | any;
 };
 type Chapter = { title: string; lessons: number; duration: string };
-type Review = {
-  name: string;
-  rating: number;
-  date: string;
-  image: string;
-  comment: string;
-};
+
 export default function CoursePage({ course }: Props) {
-  const renderStars = (rating: number) => {
-    return [...Array(5)].map((_, index) => (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        width="1.5em"
-        height="1.5em"
-        key={index}
-        className={`w-5 h-5 ${
-          index < rating ? "text-yellow-400 fill-yellow-400" : "text-gray-300"
-        }`}>
-        <path
-          fill="currentColor"
-          d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2L9.19 8.63L2 9.24l5.46 4.73L5.82 21z"></path>
-      </svg>
-    ));
-  };
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -338,78 +317,7 @@ export default function CoursePage({ course }: Props) {
 
             {/* Student Reviews */}
             <Separator className="my-2 bg-gray-400" />
-            <div className="p-2 sm:p-4 bg-card dark:bg-inherit rounded-xl shadow">
-              <h2 className="text-2xl font-bold mb-6">Student Feedback</h2>
-              <div className="space-y-2">
-                <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6 mb-4">
-                  <div className="bg-gray-50 rounded-sm dark:bg-indigo-950 space-y-2 p-6 border shadow">
-                    <h2 className="text-5xl font-bold text-center">
-                      {course.rating}
-                    </h2>
-                    <div className="flex justify-center">
-                      {renderStars(Math.floor(course.rating))}
-                    </div>
-                    <p className="text-center text-muted-foreground">
-                      {course.studentReviews.length} Reviews
-                    </p>
-                  </div>
-                  <div className="space-y-2 md:flex-1 w-full xsm:px-2">
-                    {Object.entries(course.ratingBreakdown)
-                      .reverse()
-                      .map(([rating, percentage]) => (
-                        <div key={rating} className="flex items-center gap-2">
-                          <div className="flex items-center w-[20%]">
-                            {renderStars(parseInt(rating))}
-                          </div>
-                          <div className="w-[70%] h-2 bg-gray-200 rounded-full overflow-hidden">
-                            <div
-                              className="h-full bg-blue-600 rounded-full"
-                              style={{ width: `${percentage}%` }}></div>
-                          </div>
-                          <div className="w-[10%] text-right text-muted-foreground">
-                            {percentage as number}%
-                          </div>
-                        </div>
-                      ))}
-                  </div>
-                </div>
-                <h2 className="text-lg font-semibold my-6">
-                  Reviews ({course.studentReviews.length})
-                </h2>
-                <div className="space-y-6 xsm:p-2">
-                  {course.studentReviews.map(
-                    (review: Review, index: number) => (
-                      <div
-                        key={index}
-                        className="border-b border-input dark:border-b-gray-500 pb-4 last:border-0 relative">
-                        <div className="flex items-start gap-4">
-                          <Image
-                            width={48}
-                            height={48}
-                            src={review.image}
-                            alt={review.name}
-                            className="w-12 h-12 rounded-full object-cover"
-                          />
-                          <div className="flex-1">
-                            <h4 className="font-semibold">{review.name}</h4>
-                            <span className="text-muted-foreground text-sm">
-                              {review.date}
-                            </span>
-                            <div className="flex my-2">
-                              {renderStars(review.rating)}
-                            </div>
-                            <p className="text-muted-foreground">
-                              {review.comment}
-                            </p>
-                          </div>
-                        </div>
-                        <ReviewActions />
-                      </div>
-                    )
-                  )}
-                </div>
-              </div>
-            </div>
+            <StudentFeedback course={course} />
           </div>
           {/* Sidebar */}
           <div
