@@ -147,6 +147,30 @@ export default function Page() {
       </div>
       {/* Get started section */}
       <GetStarted />
+      {/* section for CTA */}
+      <section className="bg-indigo-600 dark:bg-indigo-800 text-white py-8 md:py-12relative overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <span className="inline-block px-4 py-1 mb-6 text-sm font-medium rounded-full bg-indigo-50 text-indigo-600">
+              Begin Your Journey
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Transform your expertise into impact
+            </h2>
+            <p className="text-lg text-muted-foreground mb-8">
+              Join our community of instructors and start creating courses
+              today. Share your knowledge and help others grow while building
+              your own success story.
+            </p>
+            <Button
+              size="lg"
+              className="bg-indigo-600 text-white hover:bg-indigo-700 transition-all duration-300 text-lg ">
+              Start Teaching Today
+            </Button>
+          </div>
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white pointer-events-none" />
+      </section>
     </section>
   );
 }
