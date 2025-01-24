@@ -19,7 +19,7 @@ export default function Page() {
   ];
 
   return (
-    <section className="py-2 pt-8 md:pt-10 bg-gradient-to-tr from-indigo-200 via-gray-100 to-indigo-200 dark:bg-gradient-to-tr dark:from-indigo-950 dark:via-gray-950 dark:to-indigo-950">
+    <section className="pt-8 md:pt-10 bg-gradient-to-tr from-indigo-200 via-gray-100 to-indigo-200 dark:bg-gradient-to-tr dark:from-indigo-950 dark:via-gray-950 dark:to-indigo-950">
       {/* Hero section */}
       <div className="min-h-screen">
         <div className="md:hidden flex flex-col">
@@ -157,7 +157,7 @@ export default function Page() {
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
               Transform your expertise into impact
             </h2>
-            <p className="text-lg text-muted-foreground mb-8">
+            <p className="text-lg text-gray-200 mb-8">
               Join our community of instructors and start creating courses
               today. Share your knowledge and help others grow while building
               your own success story.
@@ -169,7 +169,6 @@ export default function Page() {
             </Button>
           </div>
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white pointer-events-none" />
       </section>
     </section>
   );
