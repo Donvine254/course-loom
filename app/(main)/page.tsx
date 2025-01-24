@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 export default async function Page() {
   return (
     <section className="bg-gradient-to-tr from-indigo-200 via-gray-100 to-indigo-200 dark:bg-gradient-to-tr dark:from-indigo-950 dark:via-gray-950 dark:to-indigo-950">
-      <div className="pt-12 bg-grid-indigo-100 dark:bg-grid-indigo-800 bg-opacity-20  min-h-screen  overflow-hidden py-2 md:pt-8 flex items-center justify-center relative">
+      <div className="pt-12 bg-grid-indigo-100 dark:bg-grid-indigo-800 bg-opacity-20  min-h-screen  overflow-hidden md:pt-8 flex items-center justify-center relative">
         <div className="container mx-auto px-6 pt-12 md:pt-20 pb-16 md:pb-24 text-center max-w-4xl">
           <div className="inline-block">
             <span className="inline-flex items-center rounded-full px-4 py-1 text-sm bg-indigo-50 text-indigo-600 border border-indigo-600 mb-6">

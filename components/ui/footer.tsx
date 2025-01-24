@@ -24,7 +24,7 @@ export default function Footer() {
           </Link>
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 text-center sm:text-left">
             <Link
-              href="/instructor"
+              href="/teach"
               prefetch={false}
               className="hover:text-blue-600 hover:underline">
               Become an Instructor

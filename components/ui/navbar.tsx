@@ -93,14 +93,7 @@ export default async function Navbar() {
                 </Link>
               </li>
             </SignedIn>
-            <li>
-              <Link
-                href="/contact"
-                prefetch={false}
-                className="hover:bg-gray-50 dark:hover:bg-gray-900 border-b border-input dark:border-gray-800 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 dark:xsm:hover:bg-indigo-900 xsm:px-2 xsm:rounded-md">
-                Contact
-              </Link>
-            </li>
+
             <li>
               <Link
                 href="/courses"
@@ -108,19 +101,76 @@ export default async function Navbar() {
                 Courses
               </Link>
             </li>
+
             <li>
-              <Link
-                href="/testimonials"
-                className="hover:bg-gray-50 dark:hover:bg-gray-900 border-b border-input dark:border-gray-800 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 dark:xsm:hover:bg-indigo-900 xsm:px-2 xsm:rounded-md">
-                Testimonials
-              </Link>
+              <button
+                id="dropdownNavbarLink"
+                data-dropdown-toggle="dropdownNavbar3"
+                className=" hover:bg-gray-50 dark:hover:bg-gray-900 border-b border-gray-100 dark:border-gray-800 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2  md:p-0 font-medium flex items-center justify-between w-full md:w-auto hover:underline underline-offset-2  xsm:hover:bg-indigo-100 dark:xsm:hover:bg-indigo-900 xsm:px-2 xsm:rounded-md">
+                Resources{" "}
+                <svg
+                  className="w-4 h-4 ml-1"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    fillRule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clipRule="evenodd"></path>
+                </svg>
+              </button>
+              {/* Dropdown menu  */}
+              <div
+                id="dropdownNavbar3"
+                className="hidden text-base list-none divide-y divide-gray-200 rounded shadow my-4 w-[84%] md:w-44 shadow-indigo-600 z-20 bg-white text-gray-950">
+                <ul className="py-1" aria-labelledby="dropdownLargeButton">
+                  <li>
+                    <Link
+                      href="/pricing"
+                      className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md">
+                      Pricing
+                    </Link>
+                  </li>
+
+                  <li>
+                    <Link
+                      href="/contact"
+                      className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md">
+                      Contact
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/faqs"
+                      className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md">
+                      FAQs
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/testimonials"
+                      className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md">
+                      Testimonials
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/teach"
+                      className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md">
+                      Become an Instructor
+                    </Link>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li className="md:hidden">
-              <SignInButton>
-                <button className="hover:bg-gray-50 dark:hover:bg-gray-900 border-b border-input dark:border-gray-800 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 dark:xsm:hover:bg-indigo-900 xsm:px-2 xsm:rounded-md w-full text-start">
-                  Get Started
-                </button>
-              </SignInButton>
+              <SignedOut>
+                <SignInButton>
+                  <button className="hover:bg-gray-50 dark:hover:bg-gray-900 border-b border-input dark:border-gray-800 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 dark:xsm:hover:bg-indigo-900 xsm:px-2 xsm:rounded-md w-full text-start">
+                    Get Started
+                  </button>
+                </SignInButton>
+              </SignedOut>
             </li>
             <li className="hidden md:block">
               <SignedOut>
@@ -137,7 +187,7 @@ export default async function Navbar() {
                 <button
                   id="dropdownNavbarLink"
                   data-dropdown-toggle="dropdownNavbar"
-                  className="hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:p-0 md:font-medium flex items-center justify-between w-full md:w-auto hover:underline underline-offset-2 xsm:hover:bg-indigo-100 xsm:px-2 xsm:rounded-md">
+                  className="hover:bg-gray-50 border-b border-b-input dark:border-b-gray-800 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:p-0 md:font-medium flex items-center justify-between w-full md:w-auto hover:underline underline-offset-2 xsm:hover:bg-indigo-100 xsm:hover:text-black xsm:px-2 xsm:rounded-md">
                   {/* Render user image */}
                   <Image
                     src={
