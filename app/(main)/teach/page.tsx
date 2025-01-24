@@ -164,7 +164,7 @@ export default function Page() {
             </p>
             <Button
               size="lg"
-              className="bg-indigo-600 text-white hover:bg-indigo-700 transition-all duration-300 text-lg ">
+              className="bg-white text-indigo-600  hover:bg-gray-100 transition-all duration-300 text-lg ">
               Start Teaching Today
             </Button>
           </div>
