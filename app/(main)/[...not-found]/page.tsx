@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 export default function NotFound() {
   return (
-    <section className="h-screen py-2 pt-8 md:pt-10 flex items-center justify-center bg-indigo-100 dark:bg-indigo-950 bg-blend-darken">
+    <section className="min-h-screen pt-8 md:pt-10 flex items-center justify-center bg-indigo-100 dark:bg-indigo-950 bg-blend-darken">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8 lg:gap-16 p-6">
         {/* Illustration */}
         <div className="aspect-video w-full relative overflow-hidden lg:hidden">
