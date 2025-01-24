@@ -3,12 +3,13 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Metadata } from "next";
+import GetStarted from "./get-started";
 
 export const metadata: Metadata = {
-    title: "Course Loom | Become an Instructor",
-    description: "An LMS platform that powers the modern mind!",
-  };
-  
+  title: "Course Loom | Become an Instructor",
+  description: "An LMS platform that powers the modern mind!",
+};
+
 export default function Page() {
   const stats = [
     { value: "62M+", label: "Students" },
@@ -81,7 +82,7 @@ export default function Page() {
       {/* Reasons section */}
       <div className="py-4 pb-8 bg-background">
         <div className="container mx-auto px-6">
-          <h2 className="text-4xl font-bold text-center mb-4 md:mb-8">
+          <h2 className="text-2xl md:text-4xl font-bold text-center mb-4 md:mb-8">
             So many reasons to start
           </h2>
           <div className="grid md:grid-cols-3 gap-12">
@@ -144,6 +145,8 @@ export default function Page() {
           </div>
         </div>
       </div>
+      {/* Get started section */}
+      <GetStarted />
     </section>
   );
 }
