@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 import { DialogTitle } from "@radix-ui/react-dialog";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
@@ -35,6 +36,7 @@ export default function OnboardingForm({
     topicArea: "",
     commitment: "",
   });
+  const router = useRouter();
   const validateStep = (currentStep: number) => {
     const newErrors = { ...errors };
     let isValid = true;
@@ -89,30 +91,20 @@ export default function OnboardingForm({
   };
 
   const handleNext = () => {
-    if (validateStep(step)) {
+    if (step < 3 && validateStep(step)) {
       setStep(step + 1);
     }
   };
-  const handleSubmit = () => {
-    toast.success("Application submitted successfully", {
-      position: "bottom-center",
-    });
-    setOpen(false);
-    setStep(1);
-    setFormData({
-      teachingExperience: "",
-      videoExperience: "",
-      expertise: "",
-      topicArea: "",
-      commitment: "",
-    });
-    setErrors({
-      teachingExperience: "",
-      videoExperience: "",
-      expertise: "",
-      topicArea: "",
-      commitment: "",
-    });
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (validateStep(3)) {
+      toast.success("Application submitted successfully", {
+        position: "bottom-center",
+      });
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 2000);
+    }
   };
 
   const handlePrevious = () => {
@@ -354,16 +346,24 @@ export default function OnboardingForm({
                   disabled={step === 1}>
                   Previous
                 </Button>
-                <Button
-                  onClick={step === 3 ? handleSubmit : handleNext}
-                  type={step === 3 ? "submit" : "button"}
-                  className={`px-6 py-2 rounded-lg font-medium ${
-                    step !== 3
-                      ? "bg-indigo-500 text-white hover:text-white  hover:bg-indigo-600"
-                      : ""
-                  }`}>
-                  {step === 3 ? "Submit" : "Next"}
-                </Button>
+                {step < 3 && (
+                  <Button
+                    onClick={handleNext}
+                    type="button"
+                    variant="outline"
+                    disabled={step === 3}
+                    className="px-6 py-2 rounded-lg font-medium bg-indigo-500 text-white hover:text-white  hover:bg-indigo-600">
+                    Next
+                  </Button>
+                )}
+                {step === 3 && (
+                  <Button
+                    type="submit"
+                    title="submit"
+                    className="px-6 py-2 rounded-lg font-medium  bg-indigo-500 text-white hover:text-white  hover:bg-indigo-600">
+                    Submit
+                  </Button>
+                )}
               </div>
             </form>
           </DialogContent>
