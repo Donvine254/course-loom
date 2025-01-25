@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Metadata } from "next";
 import GetStarted from "./get-started";
+import OnboardingForm from "./onboarding-form";
 
 export const metadata: Metadata = {
   title: "Course Loom | Become an Instructor",
@@ -41,9 +41,7 @@ export default function Page() {
               Join our community of educators and share your expertise with
               learners worldwide. Transform your knowledge into impact.
             </p>
-            <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-lg font-medium transition-colors">
-              Start Teaching
-            </button>
+            <OnboardingForm className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-lg font-medium transition-colors min-w-64" />
           </div>
         </div>
 
@@ -71,9 +69,7 @@ export default function Page() {
                 learners worldwide. Transform your knowledge into impact and
                 change lives — including your own.
               </p>
-              <Button className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors md:text-lg min-w-64">
-                Get Started Today
-              </Button>
+              <OnboardingForm className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors md:text-lg min-w-64" />
             </div>
           </div>
         </div>
@@ -162,11 +158,10 @@ export default function Page() {
               today. Share your knowledge and help others grow while building
               your own success story.
             </p>
-            <Button
-              size="lg"
-              className="bg-white text-indigo-600  hover:bg-gray-100 transition-all duration-300 text-lg ">
-              Start Teaching Today
-            </Button>
+            <OnboardingForm
+              className="bg-white text-indigo-600  hover:bg-gray-100 transition-all duration-300 text-lg "
+              title="Start Teaching Today"
+            />
           </div>
         </div>
       </section>
