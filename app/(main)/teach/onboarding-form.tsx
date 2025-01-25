@@ -324,7 +324,7 @@ export default function OnboardingForm({
               </div>
               <div className="w-full bg-secondary h-2 rounded-full mb-6">
                 <div
-                  className="bg-primary h-2 rounded-full transition-all duration-300 ease-in-out"
+                  className="bg-primary dark:bg-indigo-500 h-2 rounded-full transition-all duration-300 ease-in-out"
                   style={{ width: `${(step / 3) * 100}%` }}
                 />
               </div>
