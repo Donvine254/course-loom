@@ -4,6 +4,9 @@ import "../../globals.css";
 import { ClerkProvider, GoogleOneTap } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "next-themes";
+import { SidebarGroup, SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/dashboard/app-sidebar";
+import { currentUser, UserJSON } from "@clerk/nextjs/server";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -24,6 +27,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const user = (await currentUser()) as UserJSON ;
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -38,7 +42,13 @@ export default async function RootLayout({
             <GoogleOneTap />
             <Toaster richColors closeButton />
             {/* add sidebars */}
-            <main>{children}</main>
+            <SidebarProvider>
+              <AppSidebar user={user} />
+              <SidebarGroup className="bg-[#F8F9FA] dark:bg-gray-950 transition-colors duration-300 !p-0">
+                {/* <Header user={user} /> */}
+                <main className="space-y-2 pt-20">{children}</main>
+              </SidebarGroup>
+            </SidebarProvider>
           </ClerkProvider>
         </ThemeProvider>
       </body>
