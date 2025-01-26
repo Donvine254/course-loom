@@ -3,9 +3,8 @@ import { SidebarHeader, SidebarTrigger } from "../ui/sidebar";
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
 import { Search } from "lucide-react";
-import { currentUser } from "@clerk/nextjs/server";
-export default async function Header() {
-  const user = await currentUser();
+import { sessionUser } from "@/types";
+export default function Header({ user }: { user?: sessionUser }) {
   return (
     <SidebarHeader className="fixed top-0 h-20 z-10 bg-white dark:bg-black transition-colors duration-300 w-full border-b border-input">
       <div className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 items-center gap-4 h-full w-full px-4 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">

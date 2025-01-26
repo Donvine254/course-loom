@@ -1,20 +1,16 @@
 "use client";
 
 import * as React from "react";
-// import {
-//   Activity,
-//   Box,
-//   FileText,
-//   Landmark,
-//   LayoutDashboard,
-//   LucideTruck,
-//   PieChart,
-//   Settings,
-//   Users,
-// } from "lucide-react";
+import {
+  Activity,
+  TvMinimalPlay,
+  Settings,
+  Mails,
+  HandCoins,
+  Wrench,
+  CircleHelp,
+} from "lucide-react";
 
-// import { NavItems } from "./nav-items";
-// import { NavUser } from "./nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -25,80 +21,69 @@ import {
 import Image from "next/image";
 
 import Link from "next/link";
+import { sessionUser } from "@/types";
+import { NavUser } from "./nav-user";
+import { NavItems } from "./nav-items";
 
-// This is sample data.
-// const data = {
-//   items: [
-//     {
-//       name: "Courses",
-//       url: "/admin/courses",
-//       title: "Overview",
-//       icon: LayoutDashboard,
-//     },
-//     {
-//       name: "Deliveries",
-//       url: "/admin/dashboard/deliveries",
-//       title: "Manage Deliveries",
-//       icon: Box,
-//     },
-//     {
-//       name: "Invoices",
-//       url: "/admin/dashboard/invoices",
-//       title: "Manage Invoices",
-//       icon: FileText,
-//     },
-//     {
-//       name: "Customers",
-//       url: "/admin/dashboard/customers",
-//       title: "Manage Customers",
-//       icon: Users,
-//     },
-//     {
-//       name: "Web Analytics",
-//       url: "https://vercel.com/donvine254s-projects/sendit/analytics",
-//       title: "View website performance",
-//       icon: Activity,
-//       target: "_blank",
-//     },
-//     {
-//       name: "Riders",
-//       url: "#",
-//       title: "Manage Riders",
-//       icon: LucideTruck,
-//     },
-//     {
-//       name: "Finances",
-//       url: "https://dashboard.stripe.com/test/payments",
-//       title: "Manage Finances",
-//       icon: Landmark,
-//       target: "_blank",
-//     },
-//     {
-//       name: "Sales & Marketing",
-//       title: "Sales & Marketing",
-//       url: "#",
-//       icon: PieChart,
-//     },
-//     {
-//       name: "Settings",
-//       title: "Adjust settings",
-//       url: "/admin/dashboard/settings",
-//       icon: Settings,
-//     },
-//   ],
-// };
-// interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
-//   user?: UserJSON | null;
-// }
+const data = {
+  items: [
+    {
+      name: "Courses",
+      url: "/admin/courses",
+      title: "Your courses",
+      icon: TvMinimalPlay,
+    },
+    {
+      name: "Communication",
+      url: "/admin/communication",
+      title: "Manage communications",
+      icon: Mails,
+    },
+    {
+      name: "Performance",
+      url: "/admin/performance",
+      title: "View performance",
+      icon: Activity,
+    },
+    {
+      name: "Earnings",
+      url: "/admin/earnings",
+      title: "view your earnings",
+      icon: HandCoins,
+    },
+    {
+      name: "Tools",
+      url: "/admin/earnings",
+      title: "Useful tools",
+      icon: Wrench,
+    },
+    {
+      name: "Resources",
+      url: "/admin/resources",
+      title: "Useful resources",
+      icon: CircleHelp,
+    },
+
+    {
+      name: "Settings",
+      title: "Adjust settings",
+      url: "/admin/settings",
+      icon: Settings,
+    },
+  ],
+};
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  user?: sessionUser | undefined;
+}
 //TODO: Pass user props to AppSidebarProps
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ user, ...props }: AppSidebarProps) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className="bg-[#F8F9FA] dark:bg-black transition-colors duration-300 border-b border-input h-20">
-        {/* <NavUser user={user} /> */}
+        <NavUser user={user} />
       </SidebarHeader>
       <SidebarContent className="dark:bg-none  bg-gradient-to-b from-[#f6faff] via-[#f8f9fa] to-[#eaf3ff]  transition-colors duration-300 border-r border-input">
-        {/* <NavItems items={data.items} /> */}
+        <NavItems items={data.items} />
       </SidebarContent>
       <SidebarFooter className="border-t  border-input">
         <Link
