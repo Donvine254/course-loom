@@ -6,7 +6,8 @@ import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "next-themes";
 import { SidebarGroup, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/dashboard/app-sidebar";
-import { currentUser, UserJSON } from "@clerk/nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
+import Header from "@/components/dashboard/header";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -27,7 +28,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = (await currentUser()) as UserJSON ;
+  const user = await currentUser();
+  console.log(user);
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -43,9 +45,9 @@ export default async function RootLayout({
             <Toaster richColors closeButton />
             {/* add sidebars */}
             <SidebarProvider>
-              <AppSidebar user={user} />
+              <AppSidebar />
               <SidebarGroup className="bg-[#F8F9FA] dark:bg-gray-950 transition-colors duration-300 !p-0">
-                {/* <Header user={user} /> */}
+                <Header />
                 <main className="space-y-2 pt-20">{children}</main>
               </SidebarGroup>
             </SidebarProvider>
