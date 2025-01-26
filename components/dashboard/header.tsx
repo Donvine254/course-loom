@@ -3,7 +3,9 @@ import { SidebarHeader, SidebarTrigger } from "../ui/sidebar";
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
 import { Search } from "lucide-react";
-export default function Header() {
+import { currentUser } from "@clerk/nextjs/server";
+export default async function Header() {
+  const user = await currentUser();
   return (
     <SidebarHeader className="fixed top-0 h-20 z-10 bg-white dark:bg-black transition-colors duration-300 w-full border-b border-input">
       <div className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 items-center gap-4 h-full w-full px-4 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
@@ -14,7 +16,7 @@ export default function Header() {
           <p className="tracking-tight leading-tight inline-flex flex-col py-2">
             {/* account for when users have a really long name */}
             <span className="font-semibold leading-tight truncate capitalize">
-              Hello User!
+              Hello {user?.firstName || "User"}!
             </span>
             <span className="text-muted-foreground text-xs sm:text-sm">
               {new Date().toLocaleDateString(undefined, {
