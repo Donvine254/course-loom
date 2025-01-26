@@ -40,7 +40,11 @@ export const ThemeToggleButton = ({ className }: { className?: string }) => {
   }
 
   return (
-    <div className="flex items-center  justify-center gap-2 xsm:gap-8 border rounded-lg w-fit p-1">
+    <div
+      className={cn(
+        "flex items-center  justify-center gap-2 xsm:gap-8 border rounded-lg w-fit p-1",
+        className
+      )}>
       <button
         className={` p-1 rounded-full transition-colors duration-300  ${
           theme === "light" ? "bg-gray-200 dark:bg-gray-600 " : ""

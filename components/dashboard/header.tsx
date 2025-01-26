@@ -4,6 +4,7 @@ import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
 import { Search } from "lucide-react";
 import { sessionUser } from "@/types";
+import { ThemeSwitch } from "./theme-switch";
 export default function Header({ user }: { user?: sessionUser }) {
   return (
     <SidebarHeader className="fixed top-0 h-20 z-10 bg-white dark:bg-black transition-colors duration-300 w-full border-b border-input">
@@ -43,7 +44,7 @@ export default function Header({ user }: { user?: sessionUser }) {
         {/* Right Section for student button */}
         <div className="flex md:static items-center gap-4 justify-start group-has-[[data-collapsible=icon]]/sidebar-wrapper:justify-center absolute right-0">
           <Button variant="ghost">Student</Button>
-          {/* <ThemeToggle className="xsm:hidden" /> */}
+          <ThemeSwitch className="xsm:hidden" />
         </div>
       </div>
     </SidebarHeader>

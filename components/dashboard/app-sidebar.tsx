@@ -24,6 +24,7 @@ import Link from "next/link";
 import { sessionUser } from "@/types";
 import { NavUser } from "./nav-user";
 import { NavItems } from "./nav-items";
+import { ThemeToggleButton } from "../ui/theme-toggle";
 
 const data = {
   items: [
@@ -86,6 +87,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
         <NavItems items={data.items} />
       </SidebarContent>
       <SidebarFooter className="border-t  border-input">
+        <ThemeToggleButton className="md:hidden mx-auto" />
         <Link
           href="/"
           prefetch={false}
