@@ -29,8 +29,8 @@ export function NavItems({
             <SidebarMenuButton
               tooltip={item.title}
               asChild
-              className={`hover:bg-blue-100 hover:text-blue-600 ${
-                pathname === item.url ? "bg-blue-100 text-blue-700" : ""
+              className={`hover:bg-indigo-100 hover:text-indigo-600 ${
+                pathname === item.url ? "bg-indigo-100 text-indigo-700" : ""
               }`}>
               <Link
                 href={item.url}
