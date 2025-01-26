@@ -23,7 +23,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import Image from "next/image";
-import { ThemeToggleButton } from "../ui/theme-toggle";
+
 import Link from "next/link";
 
 // This is sample data.
@@ -101,19 +101,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {/* <NavItems items={data.items} /> */}
       </SidebarContent>
       <SidebarFooter className="border-t  border-input">
-        <ThemeToggleButton />
         <Link
           href="/"
           prefetch={false}
-          className="flex items-center gap-1 text-indigo-600 space-x-2 mb-8 md:mb-0">
+          className="flex items-center gap-2 text-indigo-600 mb-8 md:mb-0 xsm:hidden">
           <Image
             src="https://res.cloudinary.com/dipkbpinx/image/upload/v1737068784/logos/uxdt5wtwbk0qctgm5qbe.png"
-            width={100}
-            height={30}
+            width={24}
+            height={24}
             alt="Course Loom"
             priority
-            className="mx-auto xsm:hidden"
+            className="h-6 w-6"
           />
+          <span className="block group-has-[[data-collapsible=icon]]/sidebar-wrapper:hidden">
+            CourseLoom
+          </span>
         </Link>
       </SidebarFooter>
       <SidebarRail />
