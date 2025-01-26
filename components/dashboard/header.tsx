@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/tooltip";
 export default function Header({ user }: { user?: sessionUser }) {
   return (
-    <SidebarHeader className="fixed top-0 h-20 z-10 bg-white dark:bg-black transition-colors duration-300 w-full border-b border-input">
+    <SidebarHeader className="fixed top-0 h-20 z-10 bg-white dark:bg-black transition-colors duration-300 w-full border-b border-input shadow dark:shadow-gray-600">
       <div className="flex items-center justify-between xsm:gap-4 h-full  px-4 transition-[width,height] ease-linear min-h-12 md:max-w-[calc(100%-250px)] md:group-has-[[data-collapsible=icon]]/sidebar-wrapper:max-w-[calc(100%-50px)]">
         {/* Left Section */}
         <div className="flex flex-grow items-center gap-2  min-w-0">

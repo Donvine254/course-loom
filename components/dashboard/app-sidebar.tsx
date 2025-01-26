@@ -9,6 +9,11 @@ import {
   HandCoins,
   Wrench,
   CircleHelp,
+  CompassIcon,
+  LandmarkIcon,
+  LayoutDashboard,
+  GraduationCap,
+  Users,
 } from "lucide-react";
 
 import {
@@ -26,67 +31,152 @@ import { NavUser } from "./nav-user";
 import { NavItems } from "./nav-items";
 import { ThemeToggleButton } from "../ui/theme-toggle";
 
-const data = {
-  items: [
+const sidebarData = {
+  admin: [
+    {
+      name: "Overview",
+      url: "/admin",
+      title: "Overview",
+      icon: LayoutDashboard,
+    },
     {
       name: "Courses",
       url: "/admin/courses",
-      title: "Your courses",
+      title: "Manage courses",
       icon: TvMinimalPlay,
     },
     {
-      name: "Communication",
-      url: "/admin/communication",
+      name: "Revenue",
+      url: "/admin/revenue",
       title: "Manage communications",
-      icon: Mails,
+      icon: LandmarkIcon,
     },
     {
-      name: "Performance",
-      url: "/admin/performance",
-      title: "View performance",
-      icon: Activity,
+      name: "Students",
+      url: "/admin/students",
+      title: "Manage students",
+      icon: GraduationCap,
     },
     {
-      name: "Earnings",
-      url: "/admin/earnings",
-      title: "view your earnings",
-      icon: HandCoins,
+      name: "Instructors",
+      url: "/admin/instructors",
+      title: "Manage instructors",
+      icon: Users,
     },
-    {
-      name: "Tools",
-      url: "/admin/earnings",
-      title: "Useful tools",
-      icon: Wrench,
-    },
+    { name: "Tools", url: "/admin/tools", title: "Useful tools", icon: Wrench },
     {
       name: "Resources",
       url: "/admin/resources",
       title: "Useful resources",
       icon: CircleHelp,
     },
-
     {
       name: "Settings",
-      title: "Adjust settings",
       url: "/admin/settings",
+      title: "Adjust settings",
+      icon: Settings,
+    },
+  ],
+  instructor: [
+    {
+      name: "Courses",
+      url: "/instructor/courses",
+      title: "Your instructor courses",
+      icon: TvMinimalPlay,
+    },
+    {
+      name: "Performance",
+      url: "/instructor/performance",
+      title: "View your performance",
+      icon: Activity,
+    },
+    {
+      name: "Communication",
+      url: "/instructor/communication",
+      title: "Manage communications",
+      icon: Mails,
+    },
+    {
+      name: "Earnings",
+      url: "/instructor/earnings",
+      title: "Track your earnings",
+      icon: HandCoins,
+    },
+    {
+      name: "Tools",
+      url: "/instructor/tools",
+      title: "Useful tools",
+      icon: Wrench,
+    },
+    {
+      name: "Resources",
+      url: "/instructor/resources",
+      title: "Useful resources",
+      icon: CircleHelp,
+    },
+    {
+      name: "Settings",
+      url: "/instructor/settings",
+      title: "Adjust settings",
+      icon: Settings,
+    },
+  ],
+  student: [
+    {
+      name: "My Courses",
+      url: "/learn/courses",
+      title: "Your enrolled courses",
+      icon: TvMinimalPlay,
+    },
+    {
+      name: "Browse Courses",
+      url: "/courses",
+      title: "browse available courses",
+      icon: CompassIcon,
+    },
+    {
+      name: "Performance",
+      url: "/learn/performance",
+      title: "View your performance",
+      icon: Activity,
+    },
+    {
+      name: "Learning Tools",
+      url: "/learn/tools",
+      title: "Learning tools",
+      icon: Wrench,
+    },
+    {
+      name: "Resources",
+      url: "/learn/resources",
+      title: "Access resources",
+      icon: CircleHelp,
+    },
+    {
+      name: "Settings",
+      url: "/learn/settings",
+      title: "Adjust settings",
       icon: Settings,
     },
   ],
 };
+
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   user?: sessionUser | undefined;
+  path: "admin" | "instructor" | "student";
 }
 //TODO: Pass user props to AppSidebarProps
-export function AppSidebar({ user, ...props }: AppSidebarProps) {
+export function AppSidebar({ user, path, ...props }: AppSidebarProps) {
+  const navItems = React.useMemo(() => sidebarData[path], [path]);
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader className="bg-[#F8F9FA] dark:bg-black transition-colors duration-300 border-b border-input h-20">
+      <SidebarHeader className="bg-[#F8F9FA] dark:bg-black transition-colors duration-300 border-b border-input h-20 shadow dark:shadow-gray-600">
         <NavUser user={user} />
       </SidebarHeader>
-      <SidebarContent className="dark:bg-none  bg-gradient-to-b from-[#f6faff] via-[#f8f9fa] to-[#eaf3ff]  transition-colors duration-300 border-r border-input">
-        <NavItems items={data.items} />
+      <SidebarContent className="dark:bg-none dark:bg-indigo-950/50  bg-gradient-to-b from-indigo-100 via-gray-50 to-indigo-100 transition-colors duration-300 border-r border-input">
+        <NavItems items={navItems} />
       </SidebarContent>
-      <SidebarFooter className="border-t  border-input">
+      <SidebarFooter className="border-t  border-input dark:bg-background">
         <ThemeToggleButton className="md:hidden mx-auto" />
         <Link
           href="/"

@@ -57,7 +57,7 @@ export default async function RootLayout({
             <Toaster richColors closeButton />
             {/* add sidebars */}
             <SidebarProvider>
-              <AppSidebar user={userData} />
+              <AppSidebar user={userData} path="admin" />
               <SidebarGroup className="bg-[#F8F9FA] dark:bg-gray-950 transition-colors duration-300 !p-0">
                 <Header user={userData} />
                 <main className="space-y-2 pt-20">{children}</main>
