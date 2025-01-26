@@ -14,10 +14,9 @@ import {
 export default function Header({ user }: { user?: sessionUser }) {
   return (
     <SidebarHeader className="fixed top-0 h-20 z-10 bg-white dark:bg-black transition-colors duration-300 w-full border-b border-input">
-      <div className="flex items-center gap-4 h-full  px-4 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 outline">
-        {/* the info icon is getting hidden. When collapsed i.e group-has-[[data-collapsible=icon]], the right section is getting completely hidden although there is still enough space */}
+      <div className="flex items-center justify-between xsm:gap-4 h-full  px-4 transition-[width,height] ease-linear min-h-12 md:max-w-[calc(100%-250px)] md:group-has-[[data-collapsible=icon]]/sidebar-wrapper:max-w-[calc(100%-50px)]">
         {/* Left Section */}
-        <div className="flex items-center gap-2 flex-grow min-w-0">
+        <div className="flex flex-grow items-center gap-2  min-w-0">
           <SidebarTrigger className="-ml-1" title="collapse menu" />
           <Separator orientation="vertical" className="mr-2 h-4" />
           <p className="tracking-tight leading-tight inline-flex flex-col py-2">
@@ -37,7 +36,7 @@ export default function Header({ user }: { user?: sessionUser }) {
         </div>
 
         {/* Right Section */}
-        <div className="flex items-center gap-4 xsm:gap-2 justify-end flex-shrink-0">
+        <div className="flex items-center gap-4 xsm:gap-2 justify-end  flex-shrink-0">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger className="hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none h-10 px-4 py-2">
