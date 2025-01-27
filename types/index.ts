@@ -8,7 +8,7 @@ export type sessionUser = {
   imageUrl?: string;
 };
 
-export type Roles = "admin" | "instructor";
+export type Roles = "admin" | "instructor" | undefined;
 
 declare global {
   interface CustomJwtSessionClaims {
