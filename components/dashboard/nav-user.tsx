@@ -5,6 +5,7 @@ import {
   Bell,
   ChevronsUpDown,
   Home,
+  LogOut,
   TvMinimalPlay,
 } from "lucide-react";
 
@@ -138,9 +139,13 @@ export function NavUser({ user }: { user?: sessionUser | undefined }) {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <SignOutButton />
-            </DropdownMenuItem>
+            <SignOutButton>
+              <button
+                type="button"
+                className="w-full text-destructive hover:bg-destructive hover:text-destructive-foreground flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+                <LogOut className="h-4 w-4" /> Sign Out
+              </button>
+            </SignOutButton>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
