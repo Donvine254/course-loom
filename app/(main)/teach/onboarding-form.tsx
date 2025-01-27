@@ -153,7 +153,7 @@ export default function OnboardingForm({
         position: "bottom-center",
       });
       setTimeout(() => {
-        router.push("/dashboard");
+        router.push("/instructor");
       }, 500);
     }
   };
