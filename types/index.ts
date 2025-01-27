@@ -7,3 +7,13 @@ export type sessionUser = {
   hasImage: boolean;
   imageUrl?: string;
 };
+
+export type Roles = "admin" | "instructor";
+
+declare global {
+  interface CustomJwtSessionClaims {
+    metadata: {
+      role?: Roles;
+    };
+  }
+}

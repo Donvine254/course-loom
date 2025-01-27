@@ -30,7 +30,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const user = await currentUser();
-
+  // console.log(user.publicMetadata.role);
   let userData: sessionUser | undefined;
   if (user) {
     userData = {

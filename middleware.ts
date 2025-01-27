@@ -1,4 +1,5 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const isProtectedRoute = createRouteMatcher([
   "/admin(.*)",
@@ -7,10 +8,25 @@ const isProtectedRoute = createRouteMatcher([
   "/profile(.*)",
   "/dashboard(.*)",
 ]);
-// if req.pathname === "/dashboard", redirect users to either /admin or /instructor or /learn based on their roles
-export default clerkMiddleware(async (auth, req) => {
+
+export default clerkMiddleware(async (auth, req: NextRequest) => {
+  const { pathname } = req.nextUrl;
+  const role = (await auth()).sessionClaims?.metadata?.role;
+  console.log(role);
   if (isProtectedRoute(req)) {
     await auth.protect();
+  }
+  if (pathname === "/dashboard") {
+    let targetPath = "/learn";
+    switch (role) {
+      case "admin":
+        targetPath = "/admin";
+        break;
+      case "instructor":
+        targetPath = "/instructor";
+        break;
+    }
+    return NextResponse.redirect(new URL(targetPath, req.url));
   }
 });
 
