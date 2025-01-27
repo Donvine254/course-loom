@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    <div className="h-screen flex flex-col justify-center items-center py-3 bg-gradient-to-tr from-indigo-200 via-gray-50 to-blue-200">
+    <div className="h-screen flex flex-col justify-center items-center py-3 bg-gradient-to-tr from-indigo-200 via-gray-100 to-indigo-200 dark:bg-gradient-to-tr dark:from-indigo-950 dark:via-gray-950 dark:to-indigo-950">
       <SignUp
         routing="hash"
         appearance={{
