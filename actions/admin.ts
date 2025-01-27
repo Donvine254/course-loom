@@ -7,6 +7,7 @@ export async function setRole(id: string, role: string) {
     const res = await client.users.updateUserMetadata(id, {
       publicMetadata: { role: role },
     });
+    // TODO: refresh session token immediately after updating the role
     return { success: true, message: res.publicMetadata };
   } catch (err) {
     return { success: false, message: err };

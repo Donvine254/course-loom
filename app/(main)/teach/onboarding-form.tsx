@@ -106,7 +106,6 @@ export default function OnboardingForm({
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [errors, setErrors] = useState<Errors>(initialErrors);
   const router = useRouter();
-
   const validateStep = (currentStep: number): boolean => {
     const newErrors: Errors = {};
     let isValid = true;
@@ -154,20 +153,19 @@ export default function OnboardingForm({
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (validateStep(3)) {
-      toast.success("Application submitted successfully", {
-        position: "bottom-center",
-      });
       const res = await setRole(id, "instructor");
       if (res.success) {
+        // TODO: figure a way to refresh the token
         toast.success("Welcome to the courseloom team!");
         confetti({
-          particleCount: 1000,
+          particleCount: 4000,
           spread: 100,
           origin: { y: 0.3 },
         });
         setTimeout(() => {
-          router.push("/instructor");
-        }, 1000);
+          // Experimental: Push to an onboarding page that perform a hard refresh
+          router.replace("/instructor");
+        }, 2000);
       } else {
         toast.error("something went wrong, try again later");
       }
