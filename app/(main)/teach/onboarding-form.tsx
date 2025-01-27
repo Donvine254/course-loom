@@ -1,4 +1,5 @@
 "use client";
+import { setRole } from "@/actions/admin";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -15,6 +16,8 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
+// eslint-disable-next-line
+declare const confetti: any;
 interface FormData {
   teachingExperience: string;
   videoExperience: string;
@@ -34,7 +37,7 @@ const initialFormData: FormData = {
 };
 
 const initialErrors: Errors = {};
-// TODO: Change this to shadcn radio group
+
 const CustomRadioGroup = ({
   options,
   onChange,
@@ -92,16 +95,17 @@ const InputField = ({
 export default function OnboardingForm({
   className,
   title = "Get Started",
+  id,
 }: {
   className?: string;
   title?: string;
+  id: string;
 }) {
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [errors, setErrors] = useState<Errors>(initialErrors);
   const router = useRouter();
-
   const validateStep = (currentStep: number): boolean => {
     const newErrors: Errors = {};
     let isValid = true;
@@ -146,15 +150,25 @@ export default function OnboardingForm({
     }
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (validateStep(3)) {
-      toast.success("Application submitted successfully", {
-        position: "bottom-center",
-      });
-      setTimeout(() => {
-        router.push("/instructor");
-      }, 500);
+      const res = await setRole(id, "instructor");
+      if (res.success) {
+        // TODO: figure a way to refresh the token
+        toast.success("Welcome to the courseloom team!");
+        confetti({
+          particleCount: 4000,
+          spread: 100,
+          origin: { y: 0.3 },
+        });
+        setTimeout(() => {
+          // Experimental: Push to an onboarding page that perform a hard refresh
+          router.replace("/instructor");
+        }, 2000);
+      } else {
+        toast.error("something went wrong, try again later");
+      }
     }
   };
 

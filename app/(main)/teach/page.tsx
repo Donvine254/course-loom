@@ -4,22 +4,28 @@ import { Separator } from "@/components/ui/separator";
 import { Metadata } from "next";
 import GetStarted from "./get-started";
 import OnboardingForm from "./onboarding-form";
+import { currentUser } from "@clerk/nextjs/server";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "Course Loom | Become an Instructor",
   description: "An LMS platform that powers the modern mind!",
 };
 
-export default function Page() {
+export default async function Page() {
   const stats = [
     { value: "62M+", label: "Students" },
     { value: "830M+", label: "Enrollments" },
     { value: "180+", label: "Countries" },
     { value: "75+", label: "Languages" },
   ];
-
+  const user = await currentUser();
   return (
     <section className="pt-8 md:pt-10 bg-gradient-to-tr from-indigo-200 via-gray-100 to-indigo-200 dark:bg-gradient-to-tr dark:from-indigo-950 dark:via-gray-950 dark:to-indigo-950">
+      <Script
+        async
+        defer
+        src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.2/tsparticles.confetti.bundle.min.js"></Script>
       {/* Hero section */}
       <div className="min-h-screen">
         <div className="md:hidden flex flex-col">
@@ -41,7 +47,10 @@ export default function Page() {
               Join our community of educators and share your expertise with
               learners worldwide. Transform your knowledge into impact.
             </p>
-            <OnboardingForm className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-lg font-medium transition-colors min-w-64" />
+            <OnboardingForm
+              className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-lg font-medium transition-colors min-w-64"
+              id={user?.id || ""}
+            />
           </div>
         </div>
 
@@ -69,7 +78,10 @@ export default function Page() {
                 learners worldwide. Transform your knowledge into impact and
                 change lives — including your own.
               </p>
-              <OnboardingForm className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors md:text-lg min-w-64" />
+              <OnboardingForm
+                className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors md:text-lg min-w-64"
+                id={user?.id || ""}
+              />
             </div>
           </div>
         </div>
@@ -161,6 +173,7 @@ export default function Page() {
             <OnboardingForm
               className="bg-white text-indigo-600  hover:bg-gray-100 transition-all duration-300 text-lg "
               title="Start Teaching Today"
+              id={user?.id || ""}
             />
           </div>
         </div>

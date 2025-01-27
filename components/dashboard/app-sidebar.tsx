@@ -24,13 +24,11 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import Image from "next/image";
-
 import Link from "next/link";
 import { sessionUser } from "@/types";
 import { NavUser } from "./nav-user";
 import { NavItems } from "./nav-items";
 import { ThemeToggleButton } from "../ui/theme-toggle";
-
 const sidebarData = {
   admin: [
     {
