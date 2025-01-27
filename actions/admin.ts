@@ -7,10 +7,9 @@ export async function setRole(id: string, role: string) {
     const res = await client.users.updateUserMetadata(id, {
       publicMetadata: { role: role },
     });
-    console.log(res.publicMetadata);
-    return { message: res.publicMetadata };
+    return { success: true, message: res.publicMetadata };
   } catch (err) {
-    return { message: err };
+    return { success: false, message: err };
   }
 }
 

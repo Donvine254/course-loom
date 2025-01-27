@@ -30,7 +30,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const user = await currentUser();
-  console.log(user?.id);
   let userData: sessionUser | undefined;
   if (user) {
     userData = {
