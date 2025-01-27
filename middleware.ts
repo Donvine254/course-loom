@@ -16,6 +16,13 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
   if (isProtectedRoute(req)) {
     await auth.protect();
   }
+  // Role-specific validation for `/admin` and `/instructor`
+  if (pathname.startsWith("/admin") && role !== "admin") {
+    return NextResponse.redirect(new URL("/dashboard", req.url));
+  }
+  if (pathname.startsWith("/instructor") && role !== "instructor") {
+    return NextResponse.redirect(new URL("/dashboard", req.url));
+  }
   if (pathname === "/dashboard") {
     let targetPath = "/learn";
     switch (role) {
