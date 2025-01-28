@@ -21,9 +21,10 @@ declare const confetti: any;
 interface FormData {
   teachingExperience: string;
   videoExperience: string;
+  specialization: string;
   expertise: string;
-  topicArea: string;
   commitment: string;
+  bio: "";
 }
 
 type Errors = Partial<FormData>;
@@ -31,9 +32,10 @@ type Errors = Partial<FormData>;
 const initialFormData: FormData = {
   teachingExperience: "none",
   videoExperience: "none",
+  specialization: "",
   expertise: "",
-  topicArea: "",
   commitment: "part-time",
+  bio: "",
 };
 
 const initialErrors: Errors = {};
@@ -71,12 +73,14 @@ const InputField = ({
   value,
   onChange,
   error,
+  maxLength = 250,
 }: {
   label: string;
   placeholder: string;
   value: string;
   onChange: (value: string) => void;
   error?: string;
+  maxLength?: number;
 }) => (
   <div>
     <label className="block text-base font-medium mb-2">{label}</label>
@@ -84,6 +88,7 @@ const InputField = ({
       type="text"
       value={value}
       minLength={5}
+      maxLength={maxLength}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
       className={error ? "border-destructive" : ""}
@@ -121,12 +126,12 @@ export default function OnboardingForm({
     }
 
     if (currentStep === 3) {
-      if (!formData.expertise.trim()) {
-        newErrors.expertise = "Please enter your area of expertise.";
+      if (!formData.specialization.trim()) {
+        newErrors.specialization = "Please enter your area of specialization.";
         isValid = false;
       }
-      if (!formData.topicArea.trim()) {
-        newErrors.topicArea = "Please enter your topic area.";
+      if (!formData.specialization.trim()) {
+        newErrors.expertise = "Please enter your expertise or topic areas.";
         isValid = false;
       }
       if (!formData.commitment) {
@@ -235,18 +240,26 @@ export default function OnboardingForm({
         return (
           <div className="space-y-2">
             <InputField
-              label="What’s your area of expertise?"
-              placeholder="e.g., Web Development, Digital Marketing"
+              label="What’s your area of specialization?"
+              placeholder="e.g., Web Development, Digital Marketing, Software Engineering"
+              value={formData.specialization}
+              onChange={(value) => handleInputChange("specialization", value)}
+              error={errors.specialization}
+            />
+            <InputField
+              label="What's is your area of expertise?"
+              placeholder="e.g., JavaScript, React, Typescript, AI, etc"
               value={formData.expertise}
               onChange={(value) => handleInputChange("expertise", value)}
               error={errors.expertise}
             />
             <InputField
-              label="What topic area would you like to teach?"
-              placeholder="e.g., JavaScript, Social Media Marketing"
-              value={formData.topicArea}
-              onChange={(value) => handleInputChange("topicArea", value)}
-              error={errors.topicArea}
+              label="Create your instructor bio."
+              placeholder="e.g., I'm a software engineer with 10yrs experience.."
+              value={formData.bio}
+              maxLength={200}
+              onChange={(value) => handleInputChange("bio", value)}
+              error={errors.bio}
             />
             <div>
               <label className="block text-base font-medium mb-4">
@@ -295,7 +308,7 @@ export default function OnboardingForm({
                 Instructor Application
               </DialogTitle>
               <DialogDescription>
-                Tell us about your experience and expertise to begin your
+                Tell us about your experience and specialization to begin your
                 journey as an instructor.
               </DialogDescription>
             </DialogHeader>
