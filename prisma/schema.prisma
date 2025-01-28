@@ -72,7 +72,7 @@ model Course {
   reviews       Review[]
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
-  Instructor    Instructor   @relation(fields: [instructorId], references: [id])
+  Instructor    Instructor   @relation(fields: [instructorId], references: [id], onDelete: Cascade)
 
   @@index([categoryId, slug, instructorId])
 }
@@ -87,7 +87,7 @@ model Chapter {
   id           String         @id @default(cuid())
   title        String
   description  String?
-  course       Course         @relation(fields: [courseId], references: [id])
+  course       Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId     String
   videoUrl     String?        @db.Text
   position     Int            @default(autoincrement())
@@ -137,10 +137,10 @@ model Review {
   id        String   @id @default(cuid())
   rating    Int
   comment   String
-  course    Course   @relation(fields: [courseId], references: [id])
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId  String
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -149,10 +149,10 @@ model InstructorReviews {
   id           String     @id @default(cuid())
   rating       Int
   comment      String
-  instructor   Instructor @relation(fields: [instructorId], references: [id])
+  instructor   Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
   instructorId String
   userId       String
-  user         User       @relation(fields: [userId], references: [id])
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
 }
