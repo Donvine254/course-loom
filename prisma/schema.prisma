@@ -34,40 +34,45 @@ model User {
 }
 
 model Instructor {
-  id           String              @id @default(cuid())
-  userId       String              @unique
-  user         User                @relation(fields: [userId], references: [id])
-  bio          String?
-  courses      Course[]
-  reviews      InstructorReviews[]
-  studentCount Int                 @default(0)
-  createdAt    DateTime            @default(now())
-  updatedAt    DateTime            @updatedAt
+  id             String              @id @default(cuid())
+  userId         String              @unique
+  email          String
+  user           User                @relation(fields: [userId], references: [id])
+  bio            String?
+  expertise      String //e.g react, javascript, typescript etc
+  specialization String //e.g software engineer
+  courses        Course[]
+  reviews        InstructorReviews[]
+  // studentCount   Int                 @default(0) //not needed, we can count the number of students in each course
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+
+  @@index([userId, email])
 }
 
 model Course {
-  id                  String       @id @default(cuid())
-  short_description   String
-  long_description    String
-  slug                String       @unique
-  title               String
-  price               Float
-  imageUrl            String?
-  prerequisites       String
-  learning_objectives String
-  attachments         Attachment[]
-  purchases           Purchase[]
-  status              CourseStatus @default(DRAFT)
-  isPublished         Boolean      @default(false)
-  isFree              Boolean      @default(false)
-  instructorId        String
-  categoryId          String
-  category            Category     @relation(fields: [categoryId], references: [id])
-  chapters            Chapter[]
-  reviews             Review[]
-  createdAt           DateTime     @default(now())
-  updatedAt           DateTime     @updatedAt
-  Instructor          Instructor   @relation(fields: [instructorId], references: [id])
+  id            String       @id @default(cuid())
+  summary       String //short description about the course
+  description   String //long description about the course, can be html
+  slug          String       @unique
+  title         String
+  price         Float
+  imageUrl      String?
+  prerequisites String
+  objectives    String
+  attachments   Attachment[]
+  purchases     Purchase[]
+  status        CourseStatus @default(DRAFT)
+  isPublished   Boolean      @default(false)
+  isFree        Boolean      @default(false)
+  instructorId  String
+  categoryId    String
+  category      Category     @relation(fields: [categoryId], references: [id])
+  chapters      Chapter[]
+  reviews       Review[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  Instructor    Instructor   @relation(fields: [instructorId], references: [id])
 
   @@index([categoryId, slug, instructorId])
 }
