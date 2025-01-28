@@ -26,23 +26,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange>
-        <ClerkProvider
-          appearance={{
-            layout: {
-              socialButtonsPlacement: "bottom",
-            },
-          }}>
-          <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased scroll-smooth`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased scroll-smooth`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange>
+          <ClerkProvider
+            appearance={{
+              layout: {
+                socialButtonsPlacement: "bottom",
+              },
+            }}>
             <main>{children}</main>
-          </body>
-        </ClerkProvider>
-      </ThemeProvider>
+          </ClerkProvider>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
