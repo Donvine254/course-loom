@@ -74,6 +74,7 @@ const InputField = ({
   onChange,
   error,
   maxLength = 250,
+  type = "text",
 }: {
   label: string;
   placeholder: string;
@@ -81,11 +82,12 @@ const InputField = ({
   onChange: (value: string) => void;
   error?: string;
   maxLength?: number;
+  type?: string;
 }) => (
   <div>
     <label className="block text-base font-medium mb-2">{label}</label>
     <Input
-      type="text"
+      type={type}
       value={value}
       minLength={5}
       maxLength={maxLength}
@@ -279,15 +281,29 @@ export default function OnboardingForm({
               onChange={(value) => handleInputChange("expertise", value)}
               error={errors.expertise}
             />
-            <small>Enter at least 3</small>
-            <InputField
-              label="Create your instructor bio."
-              placeholder="e.g., I'm a software engineer with 10yrs experience.."
-              value={formData.bio}
-              maxLength={200}
-              onChange={(value) => handleInputChange("bio", value)}
-              error={errors.bio}
-            />
+            <small className="text-muted-foreground">Enter at least 3</small>
+            <div>
+              <label className="block text-base font-medium mb-2">
+                Enter your instructor bio.
+              </label>
+              <textarea
+                value={formData.bio}
+                maxLength={200}
+                onChange={(e) => handleInputChange("bio", e.target.value)}
+                placeholder="e.g., I'm a software engineer with 10yrs experience.."
+                className={
+                  errors.bio
+                    ? "border-destructive"
+                    : "w-full min-h-10  rounded-md border bg-gray-100 dark:bg-input px-3 py-2 text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:bg-background focus-visible:ring-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                }
+              />
+              <small className="text-muted-foreground float-right">
+                {formData.bio.length}/200
+              </small>
+              {errors.bio && (
+                <p className="mt-2 text-sm text-destructive">{errors.bio}</p>
+              )}
+            </div>
           </div>
         );
       default:
