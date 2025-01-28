@@ -288,17 +288,23 @@ export default function OnboardingForm({
               </label>
               <textarea
                 value={formData.bio}
-                maxLength={200}
+                maxLength={250}
+                minLength={100}
                 onChange={(e) => handleInputChange("bio", e.target.value)}
                 placeholder="e.g., I'm a software engineer with 10yrs experience.."
+                onInput={(e) => {
+                  const target = e.target as HTMLTextAreaElement;
+                  target.style.height = "auto";
+                  target.style.height = `${target.scrollHeight}px`;
+                }}
                 className={
                   errors.bio
                     ? "border-destructive"
-                    : "w-full min-h-10  rounded-md border bg-gray-100 dark:bg-input px-3 py-2 text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:bg-background focus-visible:ring-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                    : "w-full  h-auto  rounded-md border bg-gray-100 dark:bg-input px-3 py-2 text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:bg-background focus-visible:ring-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
                 }
               />
               <small className="text-muted-foreground float-right">
-                {formData.bio.length}/200
+                {formData.bio.length}/250
               </small>
               {errors.bio && (
                 <p className="mt-2 text-sm text-destructive">{errors.bio}</p>
