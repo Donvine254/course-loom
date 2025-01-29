@@ -1,5 +1,5 @@
 "use client";
-import { setRole } from "@/actions/admin";
+import { createInstructorAccount } from "@/lib/actions/admin";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -21,9 +21,10 @@ declare const confetti: any;
 interface FormData {
   teachingExperience: string;
   videoExperience: string;
+  specialization: string;
   expertise: string;
-  topicArea: string;
   commitment: string;
+  bio: string;
 }
 
 type Errors = Partial<FormData>;
@@ -31,9 +32,10 @@ type Errors = Partial<FormData>;
 const initialFormData: FormData = {
   teachingExperience: "none",
   videoExperience: "none",
+  specialization: "",
   expertise: "",
-  topicArea: "",
   commitment: "part-time",
+  bio: "",
 };
 
 const initialErrors: Errors = {};
@@ -71,19 +73,24 @@ const InputField = ({
   value,
   onChange,
   error,
+  maxLength = 250,
+  type = "text",
 }: {
   label: string;
   placeholder: string;
   value: string;
   onChange: (value: string) => void;
   error?: string;
+  maxLength?: number;
+  type?: string;
 }) => (
   <div>
     <label className="block text-base font-medium mb-2">{label}</label>
     <Input
-      type="text"
+      type={type}
       value={value}
       minLength={5}
+      maxLength={maxLength}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
       className={error ? "border-destructive" : ""}
@@ -119,18 +126,23 @@ export default function OnboardingForm({
       newErrors.videoExperience = "Please select your video experience.";
       isValid = false;
     }
+    if (currentStep === 3 && !formData.commitment) {
+      newErrors.commitment = "Please select your time commitment.";
+      isValid = false;
+    }
 
-    if (currentStep === 3) {
-      if (!formData.expertise.trim()) {
-        newErrors.expertise = "Please enter your area of expertise.";
+    if (currentStep === 4) {
+      if (!formData.specialization.trim()) {
+        newErrors.specialization = "Please enter your area of specialization.";
         isValid = false;
       }
-      if (!formData.topicArea.trim()) {
-        newErrors.topicArea = "Please enter your topic area.";
+      if (!formData.specialization.trim()) {
+        newErrors.expertise =
+          "Please enter your areas expertise or topic areas.";
         isValid = false;
       }
-      if (!formData.commitment) {
-        newErrors.commitment = "Please select your time commitment.";
+      if (!formData.bio) {
+        newErrors.bio = "Please create your instructor bio.";
         isValid = false;
       }
     }
@@ -145,15 +157,20 @@ export default function OnboardingForm({
   };
 
   const handleNext = () => {
-    if (step < 3 && validateStep(step)) {
+    if (step < 4 && validateStep(step)) {
       setStep(step + 1);
     }
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (validateStep(3)) {
-      const res = await setRole(id, "instructor");
+    if (validateStep(4)) {
+      const res = await createInstructorAccount({
+        clerkId: id,
+        bio: formData.bio,
+        expertise: formData.expertise,
+        specialization: formData.specialization,
+      });
       if (res.success) {
         // TODO: figure a way to refresh the token
         toast.success("Welcome to the courseloom team!");
@@ -233,38 +250,70 @@ export default function OnboardingForm({
         );
       case 3:
         return (
+          <div>
+            <label className="block text-base font-medium mb-4">
+              How much time can you commit to course creation?{" "}
+              <span className="text-destructive">*</span>
+            </label>
+            <CustomRadioGroup
+              name="commitment"
+              options={[
+                { value: "part-time", label: "A few hours per week" },
+                { value: "half-time", label: "10-20 hours per week" },
+                { value: "full-time", label: "20+ hours per week" },
+                { value: "undecided", label: "I have not decided yet" },
+              ]}
+              value={formData.commitment}
+              onChange={(value) => handleInputChange("commitment", value)}
+              error={errors.commitment}
+            />
+          </div>
+        );
+      case 4:
+        return (
           <div className="space-y-2">
             <InputField
-              label="What’s your area of expertise?"
-              placeholder="e.g., Web Development, Digital Marketing"
+              label="What’s your area of specialization?"
+              placeholder="e.g., Web Development, Digital Marketing, Software Engineering"
+              value={formData.specialization}
+              onChange={(value) => handleInputChange("specialization", value)}
+              error={errors.specialization}
+            />
+            <InputField
+              label="What's are your areas of expertise?"
+              placeholder="e.g., JavaScript, React, Typescript, AI, etc"
               value={formData.expertise}
               onChange={(value) => handleInputChange("expertise", value)}
               error={errors.expertise}
             />
-            <InputField
-              label="What topic area would you like to teach?"
-              placeholder="e.g., JavaScript, Social Media Marketing"
-              value={formData.topicArea}
-              onChange={(value) => handleInputChange("topicArea", value)}
-              error={errors.topicArea}
-            />
+            <small className="text-muted-foreground">Enter at least 3</small>
             <div>
-              <label className="block text-base font-medium mb-4">
-                How much time can you commit to course creation?{" "}
-                <span className="text-destructive">*</span>
+              <label className="block text-base font-medium mb-2">
+                Enter your instructor bio.
               </label>
-              <CustomRadioGroup
-                name="commitment"
-                options={[
-                  { value: "part-time", label: "A few hours per week" },
-                  { value: "half-time", label: "10-20 hours per week" },
-                  { value: "full-time", label: "20+ hours per week" },
-                  { value: "undecided", label: "I have not decided yet" },
-                ]}
-                value={formData.commitment}
-                onChange={(value) => handleInputChange("commitment", value)}
-                error={errors.commitment}
+              <textarea
+                value={formData.bio}
+                maxLength={250}
+                minLength={100}
+                onChange={(e) => handleInputChange("bio", e.target.value)}
+                placeholder="e.g., I'm a software engineer with 10yrs experience.."
+                onInput={(e) => {
+                  const target = e.target as HTMLTextAreaElement;
+                  target.style.height = "auto";
+                  target.style.height = `${target.scrollHeight}px`;
+                }}
+                className={
+                  errors.bio
+                    ? "border-destructive"
+                    : "w-full  h-auto  rounded-md border bg-gray-100 dark:bg-input px-3 py-2 text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:bg-background focus-visible:ring-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                }
               />
+              <small className="text-muted-foreground float-right">
+                {formData.bio.length}/250
+              </small>
+              {errors.bio && (
+                <p className="mt-2 text-sm text-destructive">{errors.bio}</p>
+              )}
             </div>
           </div>
         );
@@ -295,18 +344,18 @@ export default function OnboardingForm({
                 Instructor Application
               </DialogTitle>
               <DialogDescription>
-                Tell us about your experience and expertise to begin your
+                Tell us about your experience and specialization to begin your
                 journey as an instructor.
               </DialogDescription>
             </DialogHeader>
             <form
               className="flex-grow flex flex-col overflow-hidden"
               onSubmit={handleSubmit}>
-              <div className="text-center text-sm mb-2">Step {step} of 3</div>
+              <div className="text-center text-sm mb-2">Step {step} of 4</div>
               <div className="w-full bg-secondary h-2 rounded-full">
                 <div
                   className="bg-primary dark:bg-indigo-500  h-2 rounded-full transition-all duration-300"
-                  style={{ width: `${(step / 3) * 100}%` }}
+                  style={{ width: `${(step / 4) * 100}%` }}
                 />
               </div>
               <div className="flex-grow overflow-y-auto p-4 border rounded-md my-4">
@@ -319,8 +368,8 @@ export default function OnboardingForm({
                   disabled={step === 1}>
                   Previous
                 </Button>
-                {step < 3 && <Button onClick={handleNext}>Next</Button>}
-                {step === 3 && (
+                {step < 4 && <Button onClick={handleNext}>Next</Button>}
+                {step === 4 && (
                   <Button
                     type="submit"
                     className="bg-indigo-500 text-white hover:bg-indigo-600 hover:text-white">
