@@ -31,9 +31,10 @@ model User {
 model Instructor {
   id             String              @id @default(cuid())
   userId         String              @unique
-  email          String
+  email          String              @unique
+  username       String
   user           User                @relation(fields: [userId], references: [id])
-  bio            String?
+  bio            String
   expertise      String //e.g react, javascript, typescript etc
   specialization String //e.g software engineer
   courses        Course[]

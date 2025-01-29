@@ -47,3 +47,11 @@ export async function createUser(data: userData) {
     throw new Error(error);
   }
 }
+
+type InstructorData = {
+  clerkId: string;
+  bio: string;
+  expertise: string;
+  specialization: string;
+};
+export async function createInstructorAccount(data: InstructorData) {}
