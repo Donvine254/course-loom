@@ -78,15 +78,15 @@ export default function ComboBox({
             />
           </div>
 
-          <ol className="p-4 space-y-1 font-medium text-sm text-gray-600 dark:text-muted-foreground max-h-[200px] overflow-y-auto">
+          <ol className="p-4 space-y-2 font-medium text-sm text-gray-600 dark:text-muted-foreground max-h-[200px] overflow-y-auto">
             {filteredCategories.length > 0 ? (
               filteredCategories.map((category) => (
                 <li
                   key={category.id}
                   className={cn(
-                    "flex justify-between gap-2 cursor-pointer px-2 py-1 rounded-md hover:bg-input",
+                    "flex justify-between gap-2 cursor-pointer p-2 rounded-md hover:bg-input",
                     selected === category.id &&
-                      "bg-blue-500 text-white hover:bg-blue-500 hover:text-white"
+                      "bg-indigo-500 text-white hover:bg-indigo-500 hover:text-white"
                   )}
                   onClick={() => handleSelect(category.id)}>
                   {category.name}

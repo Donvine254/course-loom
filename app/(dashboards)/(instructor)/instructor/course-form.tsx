@@ -14,6 +14,9 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
+import { createCourse } from "@/lib/actions/courses";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const courseSchema = z.object({
   categoryId: z.string().min(1, "Category is required"),
@@ -25,11 +28,17 @@ const courseSchema = z.object({
 
 type CourseFormData = z.infer<typeof courseSchema>;
 
-export const CourseForm = ({ categories }: { categories: Category[] }) => {
+export const CourseForm = ({
+  categories,
+  userId,
+}: {
+  categories: Category[];
+  userId: string;
+}) => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid, isSubmitting },
+    formState: { errors, isSubmitting },
     setValue,
     watch,
   } = useForm<CourseFormData>({
@@ -40,10 +49,27 @@ export const CourseForm = ({ categories }: { categories: Category[] }) => {
     },
     mode: "onChange",
   });
-
-  const onSubmit = (data: CourseFormData) => {
-    console.log("Form data is valid:", data);
-    // Proceed with form submission
+  const router = useRouter();
+  const onSubmit = async (data: CourseFormData) => {
+    console.log(data);
+    try {
+      const res = await createCourse({
+        title: data.title,
+        categoryId: data.categoryId,
+        instructorId: userId,
+      });
+      if (res.success) {
+        toast.success(res.message, {
+          position: "top-center",
+        });
+        router.push(`/instructor/courses/${res.data?.id}`);
+      } else {
+        toast.error(res.error);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong");
+    }
   };
 
   const watchCategory = watch("categoryId");
@@ -127,7 +153,7 @@ export const CourseForm = ({ categories }: { categories: Category[] }) => {
       </div>
       <Button
         type="submit"
-        disabled={!isValid || isSubmitting}
+        disabled={isSubmitting}
         className="w-full max-w-md"
         title="create course">
         {isSubmitting ? (
