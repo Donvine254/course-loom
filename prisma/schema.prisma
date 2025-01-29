@@ -47,14 +47,14 @@ model Instructor {
 
 model Course {
   id            String       @id @default(cuid())
-  summary       String //short description about the course
-  description   String //long description about the course, can be html
   slug          String       @unique
   title         String
-  price         Float
+  summary       String? //short description about the course
+  description   String? //long description about the course, can be html
+  price         Float?
   imageUrl      String?
-  prerequisites String
-  objectives    String
+  prerequisites String?
+  objectives    String?
   attachments   Attachment[]
   purchases     Purchase[]
   status        CourseStatus @default(DRAFT)
