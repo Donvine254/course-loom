@@ -35,11 +35,10 @@ model Instructor {
   username       String
   user           User                @relation(fields: [userId], references: [id])
   bio            String
-  expertise      String //e.g react, javascript, typescript etc
-  specialization String //e.g software engineer
+  expertise      String
+  specialization String
   courses        Course[]
   reviews        InstructorReviews[]
-  // studentCount   Int                 @default(0) //not needed, we can count the number of students in each course
   createdAt      DateTime            @default(now())
   updatedAt      DateTime            @updatedAt
 

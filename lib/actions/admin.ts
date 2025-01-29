@@ -54,4 +54,38 @@ type InstructorData = {
   expertise: string;
   specialization: string;
 };
-export async function createInstructorAccount(data: InstructorData) {}
+export async function createInstructorAccount(data: InstructorData) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        clerkId: data.clerkId,
+      },
+    });
+    if (!user) {
+      console.error("No user with matching id found");
+      throw new Error("User not found");
+    }
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { role: "INSTRUCTOR" },
+    });
+    await prisma.instructor.create({
+      data: {
+        userId: user.id,
+        email: user.email,
+        username: `${user.firstName} ${user.lastName}`,
+        bio: data.bio,
+        expertise: data.expertise,
+        specialization: data.specialization,
+      },
+    });
+    return {
+      success: true,
+      message: "instructor account created successfully",
+    };
+  } catch (error) {
+    console.error("An error occurred", error);
+    throw new Error("Something went wrong");
+  }
+}
