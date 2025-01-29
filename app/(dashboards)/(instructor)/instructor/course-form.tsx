@@ -1,5 +1,4 @@
 "use client";
-
 import ComboBox from "@/components/custom/combobox";
 import { Input } from "@/components/ui/input";
 import { Category } from "@prisma/client";
@@ -12,6 +11,9 @@ import {
 import { HelpCircle } from "lucide-react";
 import React, { useState } from "react";
 import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
 
 const courseSchema = z.object({
   category: z
@@ -22,7 +24,7 @@ const courseSchema = z.object({
     .nullable(),
   title: z
     .string()
-    .min(1, "Title is required")
+    .min(50, "Title is required")
     .max(100, "Title must be within 100 characters"),
 });
 type CourseFormData = z.infer<typeof courseSchema>;
@@ -76,11 +78,10 @@ export const CourseForm = ({ categories }: { categories: Category[] }) => {
         </label>
         <Input
           name="title"
-          placeholder="Enter course title"
+          placeholder="e.g Web Development for Beginners"
           maxLength={100}
           value={formData.title}
           onChange={handleChange}
-          required
         />
         <small></small>
       </div>
@@ -121,6 +122,7 @@ export const CourseForm = ({ categories }: { categories: Category[] }) => {
           later
         </small>
       </div>
+      <Button type="submit">Submit</Button>
     </form>
   );
 };
