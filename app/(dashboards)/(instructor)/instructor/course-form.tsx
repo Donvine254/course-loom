@@ -48,17 +48,15 @@ export const CourseForm = ({ categories }: { categories: Category[] }) => {
 
   const watchCategory = watch("categoryId");
   return (
-    <form className=" space-y-4" onSubmit={handleSubmit(onSubmit)}>
-      <div>
+    <form
+      className="space-y-4 md:space-y-8 py-4 w-full max-w-lg"
+      onSubmit={handleSubmit(onSubmit)}>
+      <div className="mb-4">
         <h1 className="text-center text-xl md:text-2xl font-bold">
           Create a Course
         </h1>
       </div>
       <div className="space-y-2">
-        <p className="text-sm text-muted-foreground">
-          What would you like to name your course? Don&apos;t worry, you can
-          change this later.
-        </p>
         <label
           htmlFor="title"
           className="font-semibold flex items-center gap-2 text-muted-foreground">
@@ -85,6 +83,7 @@ export const CourseForm = ({ categories }: { categories: Category[] }) => {
           {...register("title")}
           placeholder="eg. Web Development for Beginners"
           maxLength={100}
+          className="max-w-md"
         />
         {errors.title && (
           <small className="text-red-500">{errors.title.message}</small>
@@ -129,8 +128,13 @@ export const CourseForm = ({ categories }: { categories: Category[] }) => {
       <Button
         type="submit"
         disabled={!isValid || isSubmitting}
+        className="w-full max-w-md"
         title="create course">
-        {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Create"}
+        {isSubmitting ? (
+          <Loader2 className="h-4 w-4 animate-spin " />
+        ) : (
+          "Create"
+        )}
       </Button>
     </form>
   );
