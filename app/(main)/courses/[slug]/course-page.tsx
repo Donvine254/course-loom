@@ -16,7 +16,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
-import { SubscriptionButton } from "@/components/ui/subscription-button";
+import { SubscriptionButton } from "@/components/custom/subscription-button";
 import { VideoPreviewModal } from "./preview-modal";
 import { slugify } from "@/lib/utils";
 

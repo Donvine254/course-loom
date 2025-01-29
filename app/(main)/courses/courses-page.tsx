@@ -27,8 +27,8 @@ import {
   FlaskConical,
 } from "lucide-react";
 import { sampleCourses } from "@/constants";
-import CourseCard from "@/components/ui/course-card";
-import { FilterContent } from "@/components/ui/courses-filter";
+import CourseCard from "@/components/custom/course-card";
+import { FilterContent } from "@/components/custom/courses-filter";
 
 const categories = [
   { name: "All", icon: LayoutGrid, color: "text-gray-500" },

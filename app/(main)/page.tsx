@@ -13,7 +13,7 @@ import Link from "next/link";
 import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { CourseShowCase } from "@/components/ui/course-carousel";
+import { CourseShowCase } from "@/components/custom/course-carousel";
 import { Metadata } from "next";
 import CTA from "@/components/ui/call-to-action";
 
