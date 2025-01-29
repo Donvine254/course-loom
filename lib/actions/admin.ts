@@ -87,5 +87,7 @@ export async function createInstructorAccount(data: InstructorData) {
   } catch (error) {
     console.error("An error occurred", error);
     throw new Error("Something went wrong");
+  } finally {
+    await setRole(data.clerkId, "instructor");
   }
 }

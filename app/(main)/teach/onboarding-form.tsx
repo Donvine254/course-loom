@@ -1,5 +1,5 @@
 "use client";
-import { setRole } from "@/lib/actions/admin";
+import { createInstructorAccount } from "@/lib/actions/admin";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -165,7 +165,12 @@ export default function OnboardingForm({
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (validateStep(4)) {
-      const res = await setRole(id, "instructor");
+      const res = await createInstructorAccount({
+        clerkId: id,
+        bio: formData.bio,
+        expertise: formData.expertise,
+        specialization: formData.specialization,
+      });
       if (res.success) {
         // TODO: figure a way to refresh the token
         toast.success("Welcome to the courseloom team!");
