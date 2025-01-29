@@ -1,4 +1,5 @@
 "use server";
+import prisma from "@/prisma/prisma";
 import { clerkClient } from "@clerk/nextjs/server";
 
 export async function setRole(id: string, role: string) {
@@ -24,5 +25,24 @@ export async function removeRole(id: string) {
     return { message: res.publicMetadata };
   } catch (err) {
     return { message: err };
+  }
+}
+
+type userData = {
+  email: string;
+  clerkId: string;
+  name: string;
+  profileImage?: string;
+};
+export async function createUser(data: userData) {
+  try {
+    const user = await prisma.user.create({
+      data,
+    });
+    return { message: "user created successfully", user };
+    // eslint-disable-next-line
+  } catch (error: any) {
+    console.error(error);
+    throw new Error(error);
   }
 }

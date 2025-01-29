@@ -1,5 +1,5 @@
 "use client";
-import { setRole } from "@/actions/admin";
+import { setRole } from "@/lib/actions/admin";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
