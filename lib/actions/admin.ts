@@ -28,10 +28,11 @@ export async function removeRole(id: string) {
   }
 }
 
-type userData = {
+export type userData = {
   email: string;
   clerkId: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   profileImage?: string;
 };
 export async function createUser(data: userData) {
