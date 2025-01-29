@@ -1,59 +1,64 @@
 "use client";
 import ComboBox from "@/components/custom/combobox";
 import { Input } from "@/components/ui/input";
-import { Category } from "@prisma/client";
+import type { Category } from "@prisma/client";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { HelpCircle } from "lucide-react";
-import React, { useState } from "react";
+import { HelpCircle, Loader2 } from "lucide-react";
+import type React from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 
 const courseSchema = z.object({
-  category: z
-    .object({
-      id: z.string(),
-      name: z.string(),
-    })
-    .nullable(),
+  categoryId: z.string().min(1, "Category is required"),
   title: z
     .string()
-    .min(50, "Title is required")
+    .min(20, "Title is required and must be greater than 50 characters")
     .max(100, "Title must be within 100 characters"),
 });
+
 type CourseFormData = z.infer<typeof courseSchema>;
+
 export const CourseForm = ({ categories }: { categories: Category[] }) => {
-  const [formData, setFormData] = useState<CourseFormData>({
-    category: null,
-    title: "",
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid, isSubmitting },
+    setValue,
+    watch,
+  } = useForm<CourseFormData>({
+    resolver: zodResolver(courseSchema),
+    defaultValues: {
+      categoryId: "",
+      title: "",
+    },
+    mode: "onChange",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      const validatedData = courseSchema.parse(formData);
-      console.log("Form data is valid:", validatedData);
-      // Proceed with form submission
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        console.error("Validation errors:", error.errors);
-        // Handle validation errors (e.g., display error messages)
-      }
-    }
+  const onSubmit = (data: CourseFormData) => {
+    console.log("Form data is valid:", data);
+    // Proceed with form submission
   };
 
+  const watchCategory = watch("categoryId");
   return (
-    <form className="min-w-[400px] space-y-4" onSubmit={handleSubmit}>
+    <form className=" space-y-4" onSubmit={handleSubmit(onSubmit)}>
+      <div>
+        <h1 className="text-center text-xl md:text-2xl font-bold">
+          Create a Course
+        </h1>
+      </div>
       <div className="space-y-2">
+        <p className="text-sm text-muted-foreground">
+          What would you like to name your course? Don&apos;t worry, you can
+          change this later.
+        </p>
         <label
           htmlFor="title"
           className="font-semibold flex items-center gap-2 text-muted-foreground">
@@ -77,13 +82,13 @@ export const CourseForm = ({ categories }: { categories: Category[] }) => {
           </TooltipProvider>
         </label>
         <Input
-          name="title"
-          placeholder="e.g Web Development for Beginners"
+          {...register("title")}
+          placeholder="eg. Web Development for Beginners"
           maxLength={100}
-          value={formData.title}
-          onChange={handleChange}
         />
-        <small></small>
+        {errors.title && (
+          <small className="text-red-500">{errors.title.message}</small>
+        )}
       </div>
       <div className="space-y-2">
         <label
@@ -110,19 +115,23 @@ export const CourseForm = ({ categories }: { categories: Category[] }) => {
         </label>
         <ComboBox
           categories={categories}
-          value={formData.category?.id || ""}
+          value={watchCategory || ""}
           onChange={(id) => {
             const selectedCategory =
               categories.find((cat) => cat.id === id) || null;
-            setFormData((prev) => ({ ...prev, category: selectedCategory }));
+            setValue("categoryId", selectedCategory?.id || "");
           }}
         />
-        <small>
-          If you&apos;re not sure about the right category, you can change it
-          later
-        </small>
+        {errors.categoryId && (
+          <small className="text-red-500">{errors.categoryId.message}</small>
+        )}
       </div>
-      <Button type="submit">Submit</Button>
+      <Button
+        type="submit"
+        disabled={!isValid || isSubmitting}
+        title="create course">
+        {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Create"}
+      </Button>
     </form>
   );
 };
