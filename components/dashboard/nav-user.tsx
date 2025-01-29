@@ -120,19 +120,19 @@ export function NavUser({ user }: { user?: sessionUser | undefined }) {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/me/profile">
+                <Link href="/profile">
                   <BadgeCheck />
                   My Account
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/me/learn">
+                <Link href="/learn">
                   <TvMinimalPlay />
                   My Learning
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/me/settings#notifications">
+                <Link href="/profile/settings#notifications">
                   <Bell />
                   Notifications
                 </Link>

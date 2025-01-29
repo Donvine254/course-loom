@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Course Loom | Instructor",
+  title: "Course Loom | Learning",
   description: "An LMS platform that powers the modern mind!",
 };
 
