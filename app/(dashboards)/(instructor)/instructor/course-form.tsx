@@ -17,7 +17,6 @@ import { Button } from "@/components/ui/button";
 import { createCourse } from "@/lib/actions/courses";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import RichEditor from "@/components/custom/editor";
 
 const courseSchema = z.object({
   categoryId: z.string().min(1, "Category is required"),
@@ -156,7 +155,7 @@ export const CourseForm = ({
         )}
       </div>
       {/* div for course summary */}
-      <div className="space-y-2">
+      {/* <div className="space-y-2">
         <label
           htmlFor="description"
           className="font-semibold flex items-center gap-2 text-muted-foreground">
@@ -220,7 +219,7 @@ export const CourseForm = ({
             className="flex-1 rounded-md"
           />
         </div>
-      </div>
+      </div> */}
       <Button
         type="submit"
         disabled={isSubmitting}
