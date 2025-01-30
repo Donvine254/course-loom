@@ -72,7 +72,7 @@ export async function createInstructorAccount(data: InstructorData) {
     });
     await prisma.instructor.create({
       data: {
-        userId: user.id,
+        clerkId: user.clerkId,
         email: user.email,
         username: `${user.firstName} ${user.lastName}`,
         bio: data.bio,

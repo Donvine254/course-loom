@@ -22,7 +22,7 @@ const courseSchema = z.object({
   categoryId: z.string().min(1, "Category is required"),
   title: z
     .string()
-    .min(20, "Title is required and must be greater than 50 characters")
+    .min(10, "Title is required and must be greater than 10 characters")
     .max(100, "Title must be within 100 characters"),
 });
 
@@ -51,12 +51,15 @@ export const CourseForm = ({
   });
   const router = useRouter();
   const onSubmit = async (data: CourseFormData) => {
-    console.log(data);
+    if (!data.title || !data.categoryId || !userId) {
+      throw new Error("All fields are required.");
+    }
+
     try {
       const res = await createCourse({
         title: data.title,
         categoryId: data.categoryId,
-        instructorId: userId,
+        userId: userId,
       });
       if (res.success) {
         toast.success(res.message, {

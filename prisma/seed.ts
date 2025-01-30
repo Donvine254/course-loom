@@ -38,6 +38,7 @@ async function seedDb() {
 seedDb().then((res) => console.log(res));
 // async function cleanDb() {
 //   console.log("🧹 Cleaning database...");
-//   await prisma.user.deleteMany();
+//   await prisma.instructor.deleteMany();
 //   console.log("✅ Cleared data from the database...");
 // }
+// cleanDb().then((res) => console.log(res));
