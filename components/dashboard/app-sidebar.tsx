@@ -77,6 +77,12 @@ const sidebarData = {
   ],
   instructor: [
     {
+      name: "Dashboard",
+      url: "/instructor",
+      title: "Dashboard",
+      icon: LayoutDashboard,
+    },
+    {
       name: "Courses",
       url: "/instructor/courses",
       title: "Your instructor courses",
@@ -120,6 +126,12 @@ const sidebarData = {
     },
   ],
   student: [
+    {
+      name: "Dashboard",
+      url: "/instructor",
+      title: "Dashboard",
+      icon: LayoutDashboard,
+    },
     {
       name: "My Courses",
       url: "/learn/courses",
