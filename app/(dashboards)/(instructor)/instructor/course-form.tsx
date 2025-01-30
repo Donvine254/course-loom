@@ -113,7 +113,7 @@ export const CourseForm = ({
           {...register("title")}
           placeholder="eg. Web Development for Beginners"
           maxLength={100}
-          className="max-w-md"
+          className="max-w-md bg-white"
         />
         {errors.title && (
           <small className="text-red-500">{errors.title.message}</small>
@@ -155,6 +155,42 @@ export const CourseForm = ({
           <small className="text-red-500">{errors.categoryId.message}</small>
         )}
       </div>
+      {/* div for course summary */}
+      <div className="space-y-2">
+        <label
+          htmlFor="description"
+          className="font-semibold flex items-center gap-2 text-muted-foreground">
+          Short Description/ Summary
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <HelpCircle className="h-4 w-4 text-muted-foreground" />
+              </TooltipTrigger>
+              <TooltipContent
+                className="max-w-72 text-sm"
+                side="bottom"
+                data-state="delayed-open">
+                <p>
+                  Write a concise overview of your course (max 250 characters).
+                  Tell us what this course is about.
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </label>
+        <textarea
+          maxLength={250}
+          minLength={100}
+          rows={3}
+          placeholder="Enter a brief summary of your course."
+          onInput={(e) => {
+            const target = e.target as HTMLTextAreaElement;
+            target.style.height = "auto";
+            target.style.height = `${target.scrollHeight}px`;
+          }}
+          className="w-full  h-auto  rounded-md border bg-white dark:bg-input px-3 py-2 text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:bg-background focus-visible:ring-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+        />
+      </div>
       <div className="space-y-2">
         <label
           htmlFor="description"
@@ -177,12 +213,13 @@ export const CourseForm = ({
             </Tooltip>
           </TooltipProvider>
         </label>
-
-        <RichEditor
-          placeholder="Enter a course description"
-          onChange={(value) => console.log(value)}
-          className="min-h-[200px] border rounded-md"
-        />
+        <div className="rounded-md min-h-[200px] h-full flex flex-col ">
+          <RichEditor
+            placeholder="Enter a course description"
+            onChange={(value) => console.log(value)}
+            className="flex-1 rounded-md"
+          />
+        </div>
       </div>
       <Button
         type="submit"
