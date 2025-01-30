@@ -16,7 +16,7 @@ export const Header = ({ id }: { id: string }) => {
         </AlertDescription>
       </Alert>
       {/* buttons section */}
-      <div className="flex flex-col gap-2 sm:flex-row sm:justify-between  p-2 sm:p-4 md:px-6">
+      <div className="flex flex-col gap-2 sm:flex-row sm:justify-between  p-2 sm:p-4 md:px-6 mx-auto max-w-4xl">
         <div className="flex gap-5">
           <Link href={`/instructor/courses/${id}`}>
             <Button

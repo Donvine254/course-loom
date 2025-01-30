@@ -23,7 +23,7 @@ export const EditCourseForm = ({
   categories: Category[];
 }) => {
   return (
-    <div className="p-2 sm:p-4 md:px-6 mx-auto max-w-4xl">
+    <div className="p-2 sm:p-4 md:px-6 mx-auto max-w-4xl space-y-2">
       {/* first section */}
       <p className="mb-4">Complete all sections to publish</p>
 

@@ -60,7 +60,7 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
   };
 
   return (
-    <div className="border bg-card rounded-md p-4">
+    <div className="border bg-card rounded-md p-4 mb-2">
       <div className="font-medium flex items-center justify-between">
         <label
           htmlFor="title"

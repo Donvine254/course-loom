@@ -111,7 +111,7 @@ export const CategoryForm = ({
                     disabled={isSubmitting || !isEditing}
                     value={field.value}
                     onChange={field.onChange}
-                    className="w-full  bg-white dark:bg-input border dark:border-input px-3 py-2 rounded-md text-sm">
+                    className="flex h-10 w-full rounded-md border bg-gray-100 dark:bg-input  px-3 py-2 text-base ring-offset-background  placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:bg-background focus-visible:ring-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm">
                     <option value="" disabled>
                       Select a category
                     </option>
