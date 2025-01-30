@@ -6,6 +6,7 @@ import { StatsCard } from "@/components/dashboard/stat-card";
 import { EmptyState } from "@/components/dashboard/no-courses";
 import { currentUser } from "@clerk/nextjs/server";
 import prisma from "@/prisma/prisma";
+import Link from "next/link";
 // TODO: add metadata
 export default async function Dashboard() {
   const user = await currentUser();
@@ -45,9 +46,11 @@ export default async function Dashboard() {
       <div className="space-y-4 p-2 sm:p-4 md:px-6">
         <div className="flex justify-between items-center gap-4">
           <h1 className="font-semibold text-lg md:text-xl">Recent Courses</h1>
-          <Button>
-            <Plus className="mr-2 h-4 w-4" />
-            New Course
+          <Button asChild>
+            <Link href="/instructor/courses/new">
+              <Plus className="mr-2 h-4 w-4" />
+              New Course
+            </Link>
           </Button>
         </div>
         {userCourses && userCourses.length > 0 ? (

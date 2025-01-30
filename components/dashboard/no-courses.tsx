@@ -27,7 +27,7 @@ export function EmptyState() {
           </p>
           <Link
             prefetch={false}
-            href="/instructor/courses/create"
+            href="/instructor/courses/new"
             className="text-indigo-600 md:text-lg underline font-semibold self-center md:self-start">
             Get Started
           </Link>
