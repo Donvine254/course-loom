@@ -44,6 +44,7 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData,
+    mode: "onChange",
   });
 
   const { isSubmitting, isValid } = form.formState;
