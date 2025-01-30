@@ -4,17 +4,35 @@ import { Button } from "@/components/ui/button";
 import { Course, CourseTable } from "@/components/dashboard/recent-courses";
 import { StatsCard } from "@/components/dashboard/stat-card";
 import { EmptyState } from "@/components/dashboard/no-courses";
+import { currentUser } from "@clerk/nextjs/server";
+import prisma from "@/prisma/prisma";
+// TODO: add metadata
+export default async function Dashboard() {
+  const user = await currentUser();
+  let userCourses: Course[] | undefined;
+  if (user) {
+    const userData = await prisma.instructor.findUnique({
+      where: {
+        clerkId: user.id,
+      },
+      select: {
+        courses: {
+          select: {
+            id: true,
+            title: true,
+            status: true,
+            price: true,
+          },
+        },
+      },
+    });
 
-// Mock data
-const mockCourses: Course[] = [
-  // { id: "1", title: "React Fundamentals", status: "published", price: 99 },
-  // { id: "2", title: "Advanced TypeScript", status: "draft", price: 149 },
-  // { id: "3", title: "Node.js Masterclass", status: "published", price: 199 },
-  // { id: "4", title: "GraphQL API Design", status: "archived", price: 79 },
-  // { id: "5", title: "Docker for Developers", status: "published", price: 129 },
-];
-
-export default function Dashboard() {
+    // Ensure price defaults to 0 if undefined
+    userCourses = userData?.courses.map((course) => ({
+      ...course,
+      price: course.price ?? 0,
+    }));
+  }
   return (
     <div className="pt-8 md:pt-10 bg-gradient-to-tr from-indigo-100 via-gray-50 to-indigo-100 dark:bg-gradient-to-tr dark:from-indigo-950 dark:via-gray-950 dark:to-indigo-950 min-h-screen p-2">
       <div className="grid gap-4 p-2 sm:p-4 md:p-6 md:group-has-[[data-collapsible=icon]]/sidebar-wrapper:grid-cols-3 lg:grid-cols-3">
@@ -32,8 +50,8 @@ export default function Dashboard() {
             New Course
           </Button>
         </div>
-        {mockCourses.length > 0 ? (
-          <CourseTable courses={mockCourses} />
+        {userCourses && userCourses.length > 0 ? (
+          <CourseTable courses={userCourses} />
         ) : (
           <EmptyState />
         )}

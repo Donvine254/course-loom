@@ -16,11 +16,12 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 
 export interface Course {
   id: string;
   title: string;
-  status: "draft" | "published" | "archived";
+  status: "DRAFT" | "PUBLISHED" | "ARCHIVED";
   price: number;
 }
 
@@ -31,11 +32,11 @@ interface CourseTableProps {
 export function CourseTable({ courses }: CourseTableProps) {
   const getStatusColor = (status: Course["status"]) => {
     switch (status) {
-      case "published":
+      case "PUBLISHED":
         return "bg-green-500 text-white";
-      case "draft":
+      case "DRAFT":
         return "bg-yellow-500 text-white";
-      case "archived":
+      case "ARCHIVED":
         return "bg-gray-500 text-white";
       default:
         return "bg-gray-500 text-white";
@@ -45,12 +46,12 @@ export function CourseTable({ courses }: CourseTableProps) {
   return (
     <div className="overflow-x-auto bg-white dark:bg-gray-900  rounded-lg mt-2 border border-input shadow">
       <Table className="table-auto">
-        <TableHeader>
+        <TableHeader className="bg-indigo-600 text-white">
           <TableRow>
-            <TableHead>Title</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Price</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
+            <TableHead className="text-white">Title</TableHead>
+            <TableHead className="text-white">Status</TableHead>
+            <TableHead className="text-white">Price</TableHead>
+            <TableHead className="text-right"></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -61,10 +62,17 @@ export function CourseTable({ courses }: CourseTableProps) {
                 <Badge
                   variant="secondary"
                   className={getStatusColor(course.status)}>
-                  {course.status}
+                  {course.status.toLocaleLowerCase()}
                 </Badge>
               </TableCell>
-              <TableCell>${course.price}</TableCell>
+              <TableCell>
+                {" "}
+                {new Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: "KSH",
+                  maximumFractionDigits: 1,
+                }).format(course.price)}
+              </TableCell>
               <TableCell className="text-right">
                 <Popover>
                   <PopoverTrigger asChild>
@@ -72,27 +80,31 @@ export function CourseTable({ courses }: CourseTableProps) {
                       <MoreHorizontal className="h-4 w-4" />
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-40" align="end">
-                    <div className="flex flex-col space-y-1">
-                      <Button
-                        variant="ghost"
-                        className="flex items-center justify-start">
-                        <Eye className="mr-2 h-4 w-4" />
-                        View
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        className="flex items-center justify-start">
-                        <Edit className="mr-2 h-4 w-4" />
+                  <PopoverContent className="w-40 space-y-2" align="end">
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start gap-2"
+                      asChild>
+                      <Link href={`/instructor/courses/preview/${course.id}`}>
+                        <Eye className=" h-4 w-4" />
+                        Preview
+                      </Link>
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start gap-2"
+                      asChild>
+                      <Link href={`/instructor/courses/${course.id}`}>
+                        <Edit className="h-4 w-4" />
                         Edit
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        className="flex items-center justify-start text-red-600 hover:text-red-700 hover:bg-red-100">
-                        <Trash2 className="mr-2 h-4 w-4" />
-                        Delete
-                      </Button>
-                    </div>
+                      </Link>
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start gap-2 text-red-600 hover:text-red-700 hover:bg-red-100">
+                      <Trash2 className=" h-4 w-4" />
+                      Delete
+                    </Button>
                   </PopoverContent>
                 </Popover>
               </TableCell>
