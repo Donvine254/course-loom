@@ -143,6 +143,7 @@ export const CourseForm = ({
         </label>
         <ComboBox
           categories={categories}
+          className="max-w-md"
           value={watchCategory || ""}
           onChange={(id) => {
             const selectedCategory =
@@ -154,7 +155,7 @@ export const CourseForm = ({
           <small className="text-red-500">{errors.categoryId.message}</small>
         )}
       </div>
-      
+
       <Button
         type="submit"
         disabled={isSubmitting}

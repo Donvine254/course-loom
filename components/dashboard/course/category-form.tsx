@@ -22,6 +22,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Category } from "@prisma/client";
+import ComboBox from "@/components/custom/combobox";
 
 interface CategoryProps {
   initialData: {
@@ -107,20 +108,18 @@ export const CategoryForm = ({
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <select
-                    disabled={isSubmitting || !isEditing}
+                  <ComboBox
+                    categories={categories}
                     value={field.value}
-                    onChange={field.onChange}
-                    className="flex h-10 w-full rounded-md border bg-gray-100 dark:bg-input  px-3 py-2 text-base ring-offset-background  placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:bg-background focus-visible:ring-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm">
-                    <option value="" disabled>
-                      Select a category
-                    </option>
-                    {categories.map((category) => (
-                      <option key={category.id} value={category.id}>
-                        {category.name}
-                      </option>
-                    ))}
-                  </select>
+                    disabled={!isEditing}
+                    className="[&btn]:max-w-md"
+                    onChange={() => {
+                      const selectedCategory =
+                        categories.find((cat) => cat.id === field.value) ||
+                        null;
+                      form.setValue("categoryId", selectedCategory?.id || "");
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

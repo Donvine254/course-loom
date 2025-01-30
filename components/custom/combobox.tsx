@@ -9,12 +9,16 @@ interface ComboBoxProps {
   categories: Category[];
   value?: string;
   onChange: (value: string) => void;
+  className?: string;
+  disabled?: boolean;
 }
 
 export default function ComboBox({
   categories,
   value,
   onChange,
+  className,
+  disabled,
 }: ComboBoxProps) {
   const [selected, setSelected] = useState(value || "");
   const [showDropdown, setShowDropdown] = useState(false);
@@ -58,7 +62,11 @@ export default function ComboBox({
   return (
     <div className="relative min-w-md flex items-center" ref={dropdownRef}>
       <button
-        className="w-full max-w-md flex items-center justify-between bg-white dark:bg-input px-3 py-2 border dark:border-input rounded-md text-sm"
+        disabled={disabled}
+        className={cn(
+          className,
+          "w-full flex items-center justify-between bg-white dark:bg-input px-3 py-2 border dark:border-input rounded-md text-sm disabled:cursor-not-allowed disabled:opacity-50"
+        )}
         onClick={() => setShowDropdown(!showDropdown)}
         type="button">
         {categories.find((cat) => cat.id === selected)?.name ||
@@ -67,7 +75,11 @@ export default function ComboBox({
       </button>
 
       {showDropdown && (
-        <div className="border border-input w-full max-w-md bg-card absolute top-full left-0 right-0 mt-2 z-50 rounded-md shadow">
+        <div
+          className={cn(
+            className,
+            "border border-input w-full bg-card absolute top-full left-0 right-0 mt-2 z-50 rounded-md shadow"
+          )}>
           <div className="sticky flex items-center top-0 z-20 bg-input group ">
             <Search className="h-4 w-4 text-gray-400 absolute left-3" />
             <input
