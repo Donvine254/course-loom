@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { createCourse } from "@/lib/actions/courses";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import RichEditor from "@/components/custom/editor";
 
 const courseSchema = z.object({
   categoryId: z.string().min(1, "Category is required"),
@@ -153,6 +154,35 @@ export const CourseForm = ({
         {errors.categoryId && (
           <small className="text-red-500">{errors.categoryId.message}</small>
         )}
+      </div>
+      <div className="space-y-2">
+        <label
+          htmlFor="description"
+          className="font-semibold flex items-center gap-2 text-muted-foreground">
+          Course Description
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <HelpCircle className="h-4 w-4 text-muted-foreground" />
+              </TooltipTrigger>
+              <TooltipContent
+                className="max-w-72 text-sm"
+                side="bottom"
+                data-state="delayed-open">
+                <p>
+                  Provide detailed information about your course content and
+                  structure.
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </label>
+
+        <RichEditor
+          placeholder="Enter a course description"
+          onChange={(value) => console.log(value)}
+          className="min-h-[200px] border rounded-md"
+        />
       </div>
       <Button
         type="submit"
