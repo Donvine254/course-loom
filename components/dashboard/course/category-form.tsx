@@ -43,7 +43,12 @@ export const CategoryForm = ({
   categories,
 }: CategoryProps) => {
   const [isEditing, setIsEditing] = useState(false);
-  const toggleEdit = () => setIsEditing((current) => !current);
+  const toggleEdit = () => {
+    if (isEditing) {
+      form.reset(initialData);
+    }
+    setIsEditing((current) => !current);
+  };
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -112,7 +117,7 @@ export const CategoryForm = ({
                     categories={categories}
                     value={field.value}
                     disabled={!isEditing}
-                    className="[&btn]:max-w-md"
+                    className={isEditing ? "max-w-md" : ""}
                     onChange={() => {
                       const selectedCategory =
                         categories.find((cat) => cat.id === field.value) ||
