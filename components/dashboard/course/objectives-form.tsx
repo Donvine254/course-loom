@@ -1,3 +1,4 @@
+"use client";
 import { Course } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -180,7 +181,7 @@ export const ObjectivesForm = ({
                         type="button"
                         variant="outline"
                         title="remove"
-                        disabled={fields.length <= 4}
+                        disabled={fields.length <= 4 || !isEditing}
                         size="icon"
                         onClick={() => remove(index)}
                         className="shrink-0 text-red-500 bg-gray-100 dark:bg-red-100 hover:bg-destructive hover:text-destructive-foreground dark:hover:text-red-800">

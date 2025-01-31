@@ -58,6 +58,7 @@ interface UpdateCourseData {
   price?: number;
   isFree?: boolean;
   slug?: string;
+  categoryId?: string;
 }
 export const updateCourse = async (
   courseId: string,

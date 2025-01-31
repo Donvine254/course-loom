@@ -1,3 +1,4 @@
+"use client";
 import { Course } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -175,7 +176,7 @@ export const PrerequisitesForm = ({
                         type="button"
                         variant="outline"
                         title="remove"
-                        disabled={fields.length <= 1}
+                        disabled={fields.length <= 1 || !isEditing}
                         size="icon"
                         onClick={() => remove(index)}
                         className="shrink-0 text-red-500 bg-gray-100 dark:bg-red-100 hover:bg-destructive hover:text-destructive-foreground dark:hover:text-red-800">

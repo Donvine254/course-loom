@@ -132,7 +132,7 @@ export const DescriptionForm = ({
       </small>
       {!isEditing &&
         (initialData.description ? (
-          <div className="mt-4">
+          <div className="mt-4" suppressHydrationWarning>
             <div className="prose prose-sm max-w-none p-4 bg-muted rounded-md text-muted-foreground text-sm">
               {parse(initialData.description) ?? initialData.description}
             </div>

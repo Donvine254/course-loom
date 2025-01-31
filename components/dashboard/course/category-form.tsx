@@ -23,6 +23,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Category } from "@prisma/client";
 import ComboBox from "@/components/custom/combobox";
+import { updateCourse } from "@/lib/actions/courses";
 
 interface CategoryProps {
   initialData: {
@@ -59,10 +60,14 @@ export const CategoryForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      console.log(courseId, values);
-      toast.success("Course updated successfully!");
-      toggleEdit();
-      router.refresh();
+      const res = await updateCourse(courseId, values);
+      if (res.success) {
+        toast.success("Course description updated successfully");
+        toggleEdit();
+        router.refresh();
+      } else {
+        toast.error(res.error || "Something went wrong");
+      }
     } catch {
       toast.error("Something went wrong");
     }
