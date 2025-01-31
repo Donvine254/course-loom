@@ -22,7 +22,6 @@ model User {
   reviews           Review[]
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
-  Instructor        Instructor?
   InstructorReviews InstructorReviews[]
 
   @@index([clerkId, email])
@@ -30,10 +29,9 @@ model User {
 
 model Instructor {
   id             String              @id @default(cuid())
-  userId         String              @unique
+  clerkId        String              @unique
   email          String              @unique
   username       String
-  user           User                @relation(fields: [userId], references: [id])
   bio            String
   expertise      String
   specialization String
@@ -42,19 +40,19 @@ model Instructor {
   createdAt      DateTime            @default(now())
   updatedAt      DateTime            @updatedAt
 
-  @@index([userId, email])
+  @@index([clerkId, email])
 }
 
 model Course {
   id            String       @id @default(cuid())
-  summary       String //short description about the course
-  description   String //long description about the course, can be html
   slug          String       @unique
   title         String
-  price         Float
+  summary       String? //short description about the course
+  description   String? //long description about the course, can be html
+  price         Float?       @default(19.99)
   imageUrl      String?
-  prerequisites String
-  objectives    String
+  prerequisites String?
+  objectives    String?
   attachments   Attachment[]
   purchases     Purchase[]
   status        CourseStatus @default(DRAFT)

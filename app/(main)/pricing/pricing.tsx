@@ -4,7 +4,7 @@ import { useState } from "react";
 import { pricingPlans } from "@/constants/pricing";
 import { CheckCircle, InfoIcon } from "lucide-react";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
-import { SubscriptionButton } from "@/components/ui/subscription-button";
+import { SubscriptionButton } from "@/components/custom/subscription-button";
 
 export default function Pricing() {
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">(

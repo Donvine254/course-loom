@@ -106,3 +106,29 @@
     @apply bg-background text-foreground;
   }
 }
+.ql-container {
+  height: 100% !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.ql-editor {
+  flex: 1;
+  min-height: 150px; /* Ensures it’s not collapsed */
+  font-size: small;
+}
+.ql-editor,
+.ql-container {
+  @apply bg-white dark:bg-input dark:text-white;
+}
+.dark .ql-editor::before {
+  color: white !important;
+  opacity: 0.6;
+}
+.ql-toolbar {
+  background-color: #f3f4f6;
+  border-bottom: 1px solid #e5e7eb;
+}
+.ql-toolbar {
+  @apply dark:bg-gray-400;
+}
