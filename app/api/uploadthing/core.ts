@@ -9,8 +9,6 @@ export const ourFileRouter = {
       maxFileCount: 1,
     },
   }).onUploadComplete(async ({ file }) => {
-    console.log("Upload complete for userId:");
-    console.log("file url", file.url);
     return { file: file.url };
   }),
 } satisfies FileRouter;

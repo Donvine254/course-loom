@@ -42,7 +42,9 @@ export default function CourseImageUpload({
   };
   return (
     <div className="border bg-card rounded-md p-4 my-4 transition-[height] animate-accordion-down ease-in-out">
-      <h2 className="text-2xl font-semibold mb-4">Course image</h2>
+      <h2 className="font-semibold flex items-center gap-2 text-muted-foreground mb-2">
+        Course image
+      </h2>
       <div className="flex gap-6">
         <div className="flex-1 aspect-[16/9] relative bg-muted rounded-lg overflow-hidden">
           {image ? (
@@ -77,6 +79,7 @@ export default function CourseImageUpload({
               onChange={(url) => {
                 if (url) {
                   setImage(url);
+                  setShowUploadBtn(false);
                   onSubmit({ imageUrl: url });
                 }
               }}

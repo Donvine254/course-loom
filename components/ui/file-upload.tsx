@@ -38,8 +38,7 @@ export const ImageUploadButton = ({
       endpoint={endpoint}
       className={className}
       appearance={{
-        button:
-          "ut-ready:bg-indigo-500 ut-uploading:cursor-not-allowed  bg-red-500 bg-none after:bg-orange-400",
+        button: "ut-ready:bg-indigo-500 ut-uploading:cursor-not-allowed",
         allowedContent: "text-sm",
       }}
       onClientUploadComplete={(res) => {
