@@ -41,7 +41,7 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const toggleEdit = () => {
     if (isEditing) {
-      form.reset(initialData);
+      form.setValue("title", initialData.title || "");
     }
     setIsEditing((current) => !current);
   };
