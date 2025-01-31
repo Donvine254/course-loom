@@ -50,6 +50,7 @@ export const CourseForm = ({
     },
     mode: "onChange",
   });
+
   const router = useRouter();
   const onSubmit = async (data: CourseFormData) => {
     if (!data.title || !data.categoryId || !userId) {
@@ -72,6 +73,7 @@ export const CourseForm = ({
       }
     } catch (error) {
       console.error(error);
+
       toast.error("Something went wrong");
     }
   };
@@ -164,10 +166,9 @@ export const CourseForm = ({
                       value={field.value}
                       className="max-w-md"
                       disabled={isSubmitting}
-                      onChange={() => {
+                      onChange={(id) => {
                         const selectedCategory =
-                          categories.find((cat) => cat.id === field.value) ||
-                          null;
+                          categories.find((cat) => cat.id === id) || null;
                         form.setValue("categoryId", selectedCategory?.id || "");
                       }}
                     />

@@ -13,6 +13,7 @@ export async function createCourse(formData: CourseData) {
     instructorId: formData.userId,
     slug: slugify(formData.title),
   };
+
   try {
     const course = await prisma.course.create({
       data,
@@ -24,7 +25,6 @@ export async function createCourse(formData: CourseData) {
     };
     // eslint-disable-next-line
   } catch (error: any) {
-    console.error(error);
     if (error.code === "P2002") {
       return {
         success: false,
@@ -70,7 +70,6 @@ export const updateCourse = async (
     return { success: true, message: "Course updated successfully" };
     // eslint-disable-next-line
   } catch (error: any) {
-    console.error("Error updating course:", error);
     if (error.code === "P2002") {
       return {
         success: false,
