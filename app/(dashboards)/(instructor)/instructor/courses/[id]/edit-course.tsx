@@ -9,6 +9,7 @@ import { PrerequisitesForm } from "@/components/dashboard/course/prerequisites-f
 import CourseImageUpload from "@/components/dashboard/course/image-form";
 import PricingForm from "@/components/dashboard/course/pricing-form";
 import { CircleDollarSign } from "lucide-react";
+import ProgressIndicator from "@/components/dashboard/course/progress-indicator";
 type courseWithCategory = Course & {
   category: Category;
 };
@@ -20,9 +21,9 @@ export const EditCourseForm = ({
   categories: Category[];
 }) => {
   return (
-    <div className="p-2 sm:p-4 md:px-6 mx-auto max-w-4xl">
+    <div className="p-2 sm:p-4 md:px-6 mx-auto max-w-4xl ">
       {/* first section */}
-      <p className="mb-4">Complete all sections to publish</p>
+      <ProgressIndicator course={course} />
       {/* First section */}
       <section className="space-y-2 md:space-y-4">
         <TitleForm initialData={course} courseId={course.id} />

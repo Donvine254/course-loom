@@ -38,10 +38,15 @@ export const Header = ({ id }: { id: string }) => {
           </Link>
         </div>
         <div className="flex gap-5 items-start">
+          {/* TODO: Add publish and delete buttons */}
           <Button disabled variant="ghost">
             Publish
           </Button>
-          <Button size="icon" className="text-destructive">
+          <Button
+            size="icon"
+            title="delete course"
+            type="button"
+            className="bg-red-100 text-destructive hover:bg-destructive hover:text-destructive-foreground">
             <Trash2 className="h-5 w-5" />
           </Button>
         </div>

@@ -49,7 +49,7 @@ model Course {
   title         String
   summary       String? //short description about the course
   description   String? //long description about the course, can be html
-  price         Float?
+  price         Float?       @default(19.99)
   imageUrl      String?
   prerequisites String?
   objectives    String?
