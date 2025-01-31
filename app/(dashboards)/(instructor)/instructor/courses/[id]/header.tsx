@@ -11,15 +11,16 @@ export const Header = ({ id }: { id: string }) => {
       {" "}
       <Alert variant="warning">
         <InfoIcon className="h-4 w-4" />
-        <AlertDescription>
+        <AlertDescription className="xsm:text-xs">
           This course is unpublished. It will not be visible to students
         </AlertDescription>
       </Alert>
       {/* buttons section */}
-      <div className="flex flex-col gap-2 sm:flex-row sm:justify-between  p-2 sm:p-4 md:px-6 mx-auto max-w-4xl">
-        <div className="flex gap-5">
+      <div className="flex gap-2 overflow-x-auto p-4 md:px-6 mx-auto max-w-4xl w-full justify-between">
+        <div className="flex gap-5 ">
           <Link href={`/instructor/courses/${id}`}>
             <Button
+              size="sm"
               variant={
                 pathname === `/instructor/courses/${id}` ? "default" : "outline"
               }>
@@ -28,6 +29,7 @@ export const Header = ({ id }: { id: string }) => {
           </Link>
           <Link href={`/instructor/courses/${id}/sections`}>
             <Button
+              size="sm"
               variant={
                 pathname === `/instructor/courses/${id}/sections`
                   ? "default"
@@ -39,7 +41,7 @@ export const Header = ({ id }: { id: string }) => {
         </div>
         <div className="flex gap-5 items-start">
           {/* TODO: Add publish and delete buttons */}
-          <Button disabled variant="ghost">
+          <Button disabled variant="ghost" size="sm">
             Publish
           </Button>
           <Button
