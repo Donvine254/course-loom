@@ -77,7 +77,7 @@ export const SummaryForm = ({ initialData, courseId }: SummaryFormProps) => {
   };
 
   return (
-    <div className="border bg-card rounded-md p-4 my-4 transition-[height] animate-accordion-down ease-in-out">
+    <div className="border bg-card rounded-md p-4 my-4 transition-[height] animate-accordion-down ease-in-out shadow dark:shadow-indigo-500">
       <div className="font-medium flex items-center justify-between">
         <label
           htmlFor="description"
@@ -143,7 +143,7 @@ export const SummaryForm = ({ initialData, courseId }: SummaryFormProps) => {
                       target.style.height = "auto";
                       target.style.height = `${target.scrollHeight}px`;
                     }}
-                    className="w-full  h-auto  rounded-md border bg-white dark:bg-input px-3 py-2 text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:bg-background focus-visible:ring-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                    className="w-full  h-auto  rounded-md border bg-gray-100 dark:bg-input px-3 py-2 text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:bg-background focus-visible:ring-indigo-500 disabled:pointer-events-none md:text-sm"
                     disabled={isSubmitting || !isEditing}
                     {...field}
                   />

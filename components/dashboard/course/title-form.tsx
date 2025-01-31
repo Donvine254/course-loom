@@ -59,7 +59,7 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
     try {
       const res = await updateCourse(courseId, values);
       if (res.success) {
-        toast.success("Course description updated successfully");
+        toast.success("Course title updated successfully");
         toggleEdit();
         router.refresh();
       } else {
@@ -71,7 +71,7 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
   };
 
   return (
-    <div className="border bg-card rounded-md p-4 mb-2">
+    <div className="border bg-card rounded-md p-4 mb-2 shadow dark:shadow-indigo-500">
       <div className="font-medium flex items-center justify-between">
         <label
           htmlFor="title"

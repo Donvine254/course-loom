@@ -41,7 +41,7 @@ export default function CourseImageUpload({
     }
   };
   return (
-    <div className="border bg-card rounded-md p-4 my-4 transition-[height] animate-accordion-down ease-in-out">
+    <div className="border bg-card rounded-md p-4 my-4 transition-[height] animate-accordion-down ease-in-out shadow dark:shadow-indigo-500">
       <h2 className="font-semibold flex items-center gap-2 text-muted-foreground mb-2">
         Course image
       </h2>

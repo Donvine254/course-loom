@@ -115,7 +115,7 @@ export const PrerequisitesForm = ({
   };
 
   return (
-    <div className="border bg-card rounded-md p-4 my-4 transition-[height] animate-accordion-down ease-in-out">
+    <div className="border bg-card rounded-md p-4 my-4 transition-[height] animate-accordion-down ease-in-out shadow dark:shadow-indigo-500">
       <div className="font-medium flex items-center justify-between">
         <label className="font-semibold flex items-center gap-2 text-muted-foreground">
           What are the requirements or prerequisites for taking your course?

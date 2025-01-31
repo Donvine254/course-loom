@@ -65,7 +65,7 @@ export default function ComboBox({
         disabled={disabled}
         className={cn(
           className,
-          "w-full flex items-center justify-between bg-white dark:bg-input px-3 py-2 border dark:border-input rounded-md text-sm disabled:cursor-not-allowed disabled:opacity-50"
+          "w-full flex items-center justify-between bg-gray-100 dark:bg-input px-3 py-2 border dark:border-input rounded-md text-sm disabled:cursor-not-allowed"
         )}
         onClick={() => setShowDropdown(!showDropdown)}
         type="button">
