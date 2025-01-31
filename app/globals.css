@@ -115,6 +115,7 @@
 .ql-editor {
   flex: 1;
   min-height: 150px; /* Ensures it’s not collapsed */
+  font-size: small;
 }
 .ql-editor,
 .ql-container {

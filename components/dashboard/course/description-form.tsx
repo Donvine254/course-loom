@@ -24,6 +24,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { updateCourse } from "@/lib/actions/courses";
+import { cn } from "@/lib/utils";
 interface DescriptionFormProps {
   initialData: Course;
   courseId: string;
@@ -129,8 +130,23 @@ export const DescriptionForm = ({
       <small className="text-muted-foreground">
         Description should have a minimum of 200 words.
       </small>
+      {!isEditing &&
+        (initialData.description ? (
+          <div className="mt-4">
+            <div
+              className="prose prose-sm max-w-none p-4 bg-muted rounded-md text-muted-foreground text-sm"
+              dangerouslySetInnerHTML={{ __html: initialData.description }}
+            />
+          </div>
+        ) : (
+          <div className="mt-4 p-4 bg-muted rounded-md text-muted-foreground text-sm">
+            You have not updated your course description yet.
+          </div>
+        ))}
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className={cn("space-y-4 mt-4", !isEditing && "hidden")}>
           <FormField
             control={form.control}
             name="description"
@@ -151,13 +167,12 @@ export const DescriptionForm = ({
               </FormItem>
             )}
           />
-          {isEditing && (
-            <div className="flex items-center gap-x-2">
-              <Button disabled={isSubmitting} type="submit" size="sm">
-                Save
-              </Button>
-            </div>
-          )}
+
+          <div className="flex items-center gap-x-2">
+            <Button disabled={isSubmitting} type="submit" size="sm">
+              Save
+            </Button>
+          </div>
         </form>
       </Form>
     </div>
