@@ -122,7 +122,7 @@ export const DescriptionForm = ({
         </Button>
       </div>
       <small className="text-muted-foreground">
-        Description should have minimum 200 words.
+        Description should have a minimum of 200 words.
       </small>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4">
