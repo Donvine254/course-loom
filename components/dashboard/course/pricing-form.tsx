@@ -31,15 +31,9 @@ interface PricingFormProps {
 }
 const formSchema = z.object({
   price: z
-    .union([z.string(), z.null(), z.number()])
-    .transform((value) => {
-      if (value === null || value === "") return 0;
-      return typeof value === "string" ? parseFloat(value) : value;
-    })
-    .refine((value) => !isNaN(value) && value >= 0 && value <= 1000, {
-      message: `Price must be between 0 and $1,000`,
-    })
-    .nullable(),
+    .number()
+    .min(19.99, "Minimum price is $19.99")
+    .max(199.99, "Maximum price is $199.99"),
   isFree: z.boolean(),
 });
 export default function PricingForm({
@@ -57,14 +51,17 @@ export default function PricingForm({
   };
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData,
+    defaultValues: {
+      ...initialData,
+      price: initialData.price ?? 0,
+    },
     mode: "onChange",
   });
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const res = await updateCourse(courseId, values);
       if (res.success) {
-        toast.success("Course description updated successfully");
+        toast.success("Course updated successfully");
         toggleEdit();
         router.refresh();
       } else {
@@ -94,7 +91,7 @@ export default function PricingForm({
                 side="bottom"
                 data-state="delayed-open">
                 <p>
-                  Select a price for this course. The default price is 29.99 for
+                  Select a price for this course. The default price is 19.99 for
                   all courses. Values are in US dollars but will be converted to
                   local currencies.
                 </p>
@@ -114,7 +111,7 @@ export default function PricingForm({
         </Button>
       </div>
       <small className="text-muted-foreground">
-        Select a price for this course. The default price is 29.99 for all
+        Select a price for this course. The default price is 19.99 for all
         courses. Values are in US dollars but will be converted to local
         currencies.
       </small>
@@ -127,9 +124,15 @@ export default function PricingForm({
               <FormItem>
                 <FormControl>
                   <Input
+                    type="number"
                     disabled={isSubmitting || !isEditing}
+                    step="0.01"
                     placeholder="29.99"
                     {...field}
+                    onChange={(event) => {
+                      const value = event.target.value;
+                      field.onChange(Number(value));
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -152,6 +155,7 @@ export default function PricingForm({
                 </div>
                 <FormControl>
                   <Switch
+                    disabled={!isEditing}
                     checked={field.value}
                     onCheckedChange={field.onChange}
                   />
@@ -159,6 +163,11 @@ export default function PricingForm({
               </FormItem>
             )}
           />
+          {form.getValues("isFree") && (
+            <small className="text-red-500">
+              Warning: This course is free and you will receive no revenue!
+            </small>
+          )}
           {isEditing && (
             <div className="flex items-center gap-x-2">
               <Button
