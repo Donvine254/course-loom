@@ -6,7 +6,14 @@ import { useForm, useFieldArray, FormProvider } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { HelpCircle, Loader2, Pencil, Plus, PlusCircle, Trash2 } from "lucide-react";
+import {
+  HelpCircle,
+  Loader2,
+  Pencil,
+  Plus,
+  PlusCircle,
+  Trash2,
+} from "lucide-react";
 import {
   Form,
   FormControl,
@@ -23,6 +30,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { updateCourse } from "@/lib/actions/courses";
+import { CustomOverlay } from "@/components/custom/overlay";
 
 interface PrerequisitesFormProps {
   initialData: Course;
@@ -115,7 +123,8 @@ export const PrerequisitesForm = ({
   };
 
   return (
-    <div className="border bg-card rounded-md p-4 my-4 transition-[height] animate-accordion-down ease-in-out shadow dark:shadow-indigo-500">
+    <div className="border bg-card rounded-md p-4 my-4 transition-[height] animate-accordion-down ease-in-out shadow dark:shadow-indigo-500 relative">
+      {isSubmitting && <CustomOverlay />}
       <div className="font-medium flex items-center justify-between">
         <label className="font-semibold flex items-center gap-2 t">
           Prerequisites
