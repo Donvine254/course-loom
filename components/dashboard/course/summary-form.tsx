@@ -82,7 +82,7 @@ export const SummaryForm = ({ initialData, courseId }: SummaryFormProps) => {
         <label
           htmlFor="description"
           className="font-semibold flex items-center gap-2 ">
-          Short Description / Summary
+          Course Summary
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -108,12 +108,12 @@ export const SummaryForm = ({ initialData, courseId }: SummaryFormProps) => {
               {initialData && !initialData.summary ? (
                 <>
                   <PlusCircle className="h-4 w-4 mr-2" />
-                  Add Summary
+                  <span className="xsm:hidden">Add summary</span>
                 </>
               ) : (
                 <>
                   <Pencil className="h-4 w-4 mr-2" />
-                  Edit Summary
+                  <span className="xsm:hidden">Edit summary</span>
                 </>
               )}
             </>
@@ -143,7 +143,7 @@ export const SummaryForm = ({ initialData, courseId }: SummaryFormProps) => {
                       target.style.height = "auto";
                       target.style.height = `${target.scrollHeight}px`;
                     }}
-                    className="w-full  h-auto  rounded-md border bg-gray-100 dark:bg-input px-3 py-2 text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:bg-background focus-visible:ring-indigo-500 disabled:pointer-events-none md:text-sm"
+                    className="w-full  h-auto xsm:text-sm  rounded-md border bg-gray-100 dark:bg-input px-3 py-2 text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:bg-background focus-visible:ring-indigo-500 disabled:pointer-events-none md:text-sm"
                     disabled={isSubmitting || !isEditing}
                     {...field}
                   />

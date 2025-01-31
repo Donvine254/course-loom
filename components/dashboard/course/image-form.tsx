@@ -45,7 +45,7 @@ export default function CourseImageUpload({
       <h2 className="font-semibold flex items-center gap-2 mb-2">
         Course image
       </h2>
-      <div className="flex gap-6">
+      <div className="flex flex-col md:roup-has-[[data-collapsible=icon]]/sidebar-wrapper:flex-row lg:flex-row gap-6">
         <div className="flex-1 aspect-[16/9] relative bg-muted rounded-lg overflow-hidden">
           {image ? (
             <Image

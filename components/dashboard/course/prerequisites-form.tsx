@@ -125,7 +125,7 @@ export const PrerequisitesForm = ({
     <div className="border bg-card rounded-md p-4 my-4 transition-[height] animate-accordion-down ease-in-out shadow dark:shadow-indigo-500">
       <div className="font-medium flex items-center justify-between">
         <label className="font-semibold flex items-center gap-2 t">
-          What are the requirements or prerequisites for taking your course?
+          Prerequisites
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -147,15 +147,18 @@ export const PrerequisitesForm = ({
             "Cancel"
           ) : initialData.prerequisites ? (
             <>
-              <Pencil className="h-4 w-4 mr-2" /> Edit prerequisites
+              <Pencil className="h-4 w-4 mr-2" />
+              <span className="xsm:hidden">Edit prerequisites</span>
             </>
           ) : (
             <>
-              <PlusCircle className="h-4 w-4 mr-2" /> Add prerequisites
+              <PlusCircle className="h-4 w-4 mr-2" />
+              <span className="xsm:hidden">Add prerequisites</span>
             </>
           )}
         </Button>
       </div>
+      <p>What are the requirements or prerequisites for taking your course?</p>
       <small className="text-muted-foreground">
         List the required skills, experience, tools or equipment learners should
         have prior to taking your course. If there are no requirements, use this

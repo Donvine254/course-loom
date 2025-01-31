@@ -25,7 +25,7 @@ export const EditCourseForm = ({
       {/* first section */}
       <ProgressIndicator course={course} />
       {/* First section */}
-      <section className="space-y-2 md:space-y-4">
+      <section className="space-y-4">
         <TitleForm initialData={course} courseId={course.id} />
         <CategoryForm
           initialData={{
@@ -40,7 +40,6 @@ export const EditCourseForm = ({
         <DescriptionForm initialData={course} courseId={course.id} />
         <ObjectivesForm initialData={course} courseId={course.id} />
         <PrerequisitesForm initialData={course} courseId={course.id} />
-        {/* <ImageForm initialData={course} courseId={course.id} /> */}
         <CourseImageUpload initialData={course} courseId={course.id} />
         <h2 className="my-2 font-semibold flex items-center gap-4">
           <CircleDollarSign className="h-4 w-4" /> Sell Your Course

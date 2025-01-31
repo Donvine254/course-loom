@@ -115,12 +115,12 @@ export const DescriptionForm = ({
               {initialData && !initialData.description ? (
                 <>
                   <PlusCircle className="h-4 w-4 mr-2" />
-                  Add description
+                  <span className="xsm:hidden">Add Description</span>
                 </>
               ) : (
                 <>
                   <Pencil className="h-4 w-4 mr-2" />
-                  Edit description
+                  <span className="xsm:hidden">Edit Description</span>
                 </>
               )}
             </>

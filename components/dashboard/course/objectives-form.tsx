@@ -132,7 +132,7 @@ export const ObjectivesForm = ({
     <div className="border bg-card rounded-md p-4 my-4 transition-[height] animate-accordion-down ease-in-out shadow dark:shadow-indigo-500">
       <div className="font-medium flex items-center justify-between">
         <label className="font-semibold flex items-center gap-2 ">
-          What will students learn in your course?
+          Learning Objectives
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -152,15 +152,18 @@ export const ObjectivesForm = ({
             "Cancel"
           ) : initialData.objectives ? (
             <>
-              <Pencil className="h-4 w-4 mr-2" /> Edit Objectives
+              <Pencil className="h-4 w-4 mr-2" />
+              <span className="xsm:hidden">Edit Objectives</span>
             </>
           ) : (
             <>
-              <PlusCircle className="h-4 w-4 mr-2" /> Add Objectives
+              <PlusCircle className="h-4 w-4 mr-2" />
+              <span className="xsm:hidden">Add Objectives</span>
             </>
           )}
         </Button>
       </div>
+      <p>What will students learn in your course?</p>
       <small className="text-muted-foreground">
         You must enter at least 4 learning objectives or outcomes that learners
         can expect to achieve after completing your course. Each objective must

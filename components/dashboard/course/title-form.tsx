@@ -101,7 +101,7 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit title
+              <span className="xsm:hidden"> Edit title</span>
             </>
           )}
         </Button>
