@@ -1,5 +1,4 @@
 "use client";
-
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -8,6 +7,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Course } from "@prisma/client";
 import RichEditor from "@/components/custom/editor";
+import parse from "html-react-parser";
 import {
   Form,
   FormControl,
@@ -133,10 +133,9 @@ export const DescriptionForm = ({
       {!isEditing &&
         (initialData.description ? (
           <div className="mt-4">
-            <div
-              className="prose prose-sm max-w-none p-4 bg-muted rounded-md text-muted-foreground text-sm"
-              dangerouslySetInnerHTML={{ __html: initialData.description }}
-            />
+            <div className="prose prose-sm max-w-none p-4 bg-muted rounded-md text-muted-foreground text-sm">
+              {parse(initialData.description) ?? initialData.description}
+            </div>
           </div>
         ) : (
           <div className="mt-4 p-4 bg-muted rounded-md text-muted-foreground text-sm">

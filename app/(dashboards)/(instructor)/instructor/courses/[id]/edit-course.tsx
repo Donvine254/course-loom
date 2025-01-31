@@ -1,6 +1,4 @@
-"use client";
 import React from "react";
-
 import { Category, Course } from "@prisma/client";
 import { TitleForm } from "@/components/dashboard/course/title-form";
 import { CategoryForm } from "@/components/dashboard/course/category-form";
@@ -23,7 +21,6 @@ export const EditCourseForm = ({
     <div className="p-2 sm:p-4 md:px-6 mx-auto max-w-4xl">
       {/* first section */}
       <p className="mb-4">Complete all sections to publish</p>
-
       {/* First section */}
       <section className="space-y-2 md:space-y-4">
         <TitleForm initialData={course} courseId={course.id} />
