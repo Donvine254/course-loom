@@ -121,7 +121,10 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
           />
           {isEditing && (
             <div className="flex items-center gap-x-2">
-              <Button disabled={!isValid || isSubmitting} type="submit">
+              <Button
+                disabled={!isValid || isSubmitting}
+                type="submit"
+                size="sm">
                 Save
               </Button>
             </div>

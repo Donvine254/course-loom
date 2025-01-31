@@ -135,6 +135,7 @@ export const CategoryForm = ({
               <Button
                 disabled={!isValid || isSubmitting}
                 type="submit"
+                size="sm"
                 className="py-0.5">
                 Save
               </Button>
