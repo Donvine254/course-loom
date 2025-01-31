@@ -24,6 +24,7 @@ import { toast } from "sonner";
 import { Category } from "@prisma/client";
 import ComboBox from "@/components/custom/combobox";
 import { updateCourse } from "@/lib/actions/courses";
+import { CustomOverlay } from "@/components/custom/overlay";
 
 interface CategoryProps {
   initialData: {
@@ -56,7 +57,7 @@ export const CategoryForm = ({
     defaultValues: initialData,
   });
 
-  const { isSubmitting, isValid } = form.formState;
+  const { isSubmitting } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
@@ -74,7 +75,8 @@ export const CategoryForm = ({
   };
 
   return (
-    <div className="border bg-card rounded-md p-4 my-2 shadow dark:shadow-indigo-500">
+    <div className="border bg-card rounded-md p-4 my-2 shadow dark:shadow-indigo-500 relative">
+      {isSubmitting && <CustomOverlay />}
       <div className="font-medium flex items-center justify-between">
         <label
           htmlFor="category"
@@ -140,7 +142,7 @@ export const CategoryForm = ({
               <Button
                 size="sm"
                 title="save changes"
-                disabled={isValid || !isSubmitting}
+                disabled={isSubmitting}
                 type="submit">
                 {isSubmitting ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
