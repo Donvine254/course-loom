@@ -81,12 +81,12 @@ export const SummaryForm = ({ initialData, courseId }: SummaryFormProps) => {
       <div className="font-medium flex items-center justify-between">
         <label
           htmlFor="description"
-          className="font-semibold flex items-center gap-2 text-muted-foreground">
-          Short Description/ Summary
+          className="font-semibold flex items-center gap-2 ">
+          Short Description / Summary
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                <HelpCircle className="h-4 w-4" />
               </TooltipTrigger>
               <TooltipContent
                 className="max-w-72 text-sm"
