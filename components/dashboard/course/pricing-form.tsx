@@ -31,7 +31,7 @@ interface PricingFormProps {
   courseId: string;
 }
 const formSchema = z.object({
-  price: z
+  price: z.coerce
     .number()
     .min(19.99, "Minimum price is $19.99")
     .max(199.99, "Maximum price is $199.99"),
@@ -73,7 +73,7 @@ export default function PricingForm({
     }
   };
 
-  const { isSubmitting, isValid } = form.formState;
+  const { isSubmitting } = form.formState;
 
   return (
     <div className="border bg-card rounded-md p-4 mb-2 shadow dark:shadow-indigo-500 relative">
@@ -129,12 +129,8 @@ export default function PricingForm({
                     type="number"
                     disabled={isSubmitting || !isEditing}
                     step="0.01"
-                    placeholder="29.99"
+                    placeholder="Set a price for your course"
                     {...field}
-                    onChange={(event) => {
-                      const value = event.target.value;
-                      field.onChange(Number(value));
-                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -175,7 +171,7 @@ export default function PricingForm({
               <Button
                 size="sm"
                 title="save changes"
-                disabled={isSubmitting || isValid}
+                disabled={isSubmitting}
                 type="submit">
                 {isSubmitting ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
