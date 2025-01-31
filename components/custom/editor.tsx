@@ -8,6 +8,7 @@ interface RichEditorProps {
   onChange: (value: string) => void;
   value?: string;
   className?: string;
+  disabled?: boolean;
 }
 
 const RichEditor = ({
@@ -15,6 +16,7 @@ const RichEditor = ({
   onChange,
   value,
   className,
+  disabled = false,
 }: RichEditorProps) => {
   const ReactQuill = useMemo(
     () => dynamic(() => import("react-quill-new"), { ssr: false }),
@@ -24,6 +26,7 @@ const RichEditor = ({
   return (
     <ReactQuill
       theme="snow"
+      readOnly={disabled}
       placeholder={placeholder}
       value={value}
       className={className}

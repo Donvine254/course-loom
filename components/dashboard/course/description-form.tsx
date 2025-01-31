@@ -7,6 +7,7 @@ import { HelpCircle, Pencil, PlusCircle } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Course } from "@prisma/client";
+import RichEditor from "@/components/custom/editor";
 import {
   Form,
   FormControl,
@@ -22,29 +23,34 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-interface SummaryFormProps {
+interface DescriptionFormProps {
   initialData: Course;
   courseId: string;
 }
 
 const formSchema = z.object({
-  summary: z
+  description: z
     .string()
-    .min(100, "Summary is required and must be greater than 100 characters")
-    .max(250, "Summary must be within 250 characters"),
+    .min(
+      200,
+      "description is required and must be greater than 100 characters"
+    ),
 });
 
-export const SummaryForm = ({ initialData, courseId }: SummaryFormProps) => {
-  const [isEditing, setIsEditing] = useState(!initialData.summary);
+export const DescriptionForm = ({
+  initialData,
+  courseId,
+}: DescriptionFormProps) => {
+  const [isEditing, setIsEditing] = useState(!initialData.description);
 
   const toggleEdit = () => {
     if (isEditing) {
-      form.setValue("summary", initialData.summary || "");
+      form.setValue("description", initialData.description || "");
     }
     setIsEditing((current) => !current);
   };
   useEffect(() => {
-    if (initialData && !initialData.summary) {
+    if (initialData && !initialData.description) {
       setIsEditing(true);
     }
   }, [initialData]);
@@ -54,7 +60,7 @@ export const SummaryForm = ({ initialData, courseId }: SummaryFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      summary: initialData?.summary || "",
+      description: initialData?.description || "",
     },
   });
 
@@ -77,7 +83,7 @@ export const SummaryForm = ({ initialData, courseId }: SummaryFormProps) => {
         <label
           htmlFor="description"
           className="font-semibold flex items-center gap-2 text-muted-foreground">
-          Short Description/ Summary
+          Course Description
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -88,8 +94,8 @@ export const SummaryForm = ({ initialData, courseId }: SummaryFormProps) => {
                 side="bottom"
                 data-state="delayed-open">
                 <p>
-                  Write a concise overview of your course (max 250 characters).
-                  Tell us what this course is about.
+                  Provide detailed information about your course content and
+                  structure.
                 </p>
               </TooltipContent>
             </Tooltip>
@@ -100,15 +106,15 @@ export const SummaryForm = ({ initialData, courseId }: SummaryFormProps) => {
             <>Cancel</>
           ) : (
             <>
-              {initialData && !initialData.summary ? (
+              {initialData && !initialData.description ? (
                 <>
                   <PlusCircle className="h-4 w-4 mr-2" />
-                  Add Summary
+                  Add description
                 </>
               ) : (
                 <>
                   <Pencil className="h-4 w-4 mr-2" />
-                  Edit Summary
+                  Edit description
                 </>
               )}
             </>
@@ -116,31 +122,24 @@ export const SummaryForm = ({ initialData, courseId }: SummaryFormProps) => {
         </Button>
       </div>
       <small className="text-muted-foreground">
-        Provide a short summary on what students will learn in this course.
-        Summary should be attention-grabbing!
+        Description should have minimum 200 words.
       </small>
-
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4">
           <FormField
             control={form.control}
-            name="summary"
+            name="description"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <textarea
-                    rows={3}
-                    maxLength={250}
-                    minLength={100}
-                    placeholder="Enter a brief summary of your course."
-                    onInput={(e) => {
-                      const target = e.target as HTMLTextAreaElement;
-                      target.style.height = "auto";
-                      target.style.height = `${target.scrollHeight}px`;
-                    }}
-                    className="w-full  h-auto  rounded-md border bg-white dark:bg-input px-3 py-2 text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:bg-background focus-visible:ring-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-                    disabled={isSubmitting || !isEditing}
-                    {...field}
+                  <RichEditor
+                    placeholder="Enter a course description"
+                    value={field.value}
+                    disabled={!isEditing}
+                    onChange={(value: string) =>
+                      form.setValue("description", value)
+                    }
+                    className="flex-1 rounded-md"
                   />
                 </FormControl>
                 <FormMessage />
