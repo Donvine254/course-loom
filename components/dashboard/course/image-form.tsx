@@ -1,101 +1,88 @@
 "use client";
-
-import * as z from "zod";
-import { Pencil, PlusCircle, ImageIcon } from "lucide-react";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Course } from "@prisma/client";
 import Image from "next/image";
-
+import { ImageIcon } from "lucide-react";
+import { updateCourse } from "@/lib/actions/courses";
+import { Course } from "@prisma/client";
 import { Button } from "@/components/ui/button";
-
 import { toast } from "sonner";
-import { FileUpload } from "@/components/ui/file-upload";
+import { useRouter } from "next/navigation";
+import { ImageUploadButton } from "@/components/ui/file-upload";
 
 interface ImageFormProps {
   initialData: Course;
   courseId: string;
 }
 
-const formSchema = z.object({
-  imageUrl: z.string().min(1, {
-    message: "Image is required",
-  }),
-});
+type FormSchema = {
+  imageUrl: string;
+};
 
-export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
-  const [isEditing, setIsEditing] = useState(false);
-
-  const toggleEdit = () => setIsEditing((current) => !current);
-
+export default function CourseImageUpload({
+  initialData,
+  courseId,
+}: ImageFormProps) {
   const router = useRouter();
-
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: FormSchema) => {
     try {
-      await console.log(courseId, values);
-      toast.success("Course updated");
-      toggleEdit();
-      router.refresh();
+      const res = await updateCourse(courseId, values);
+      if (res.success) {
+        toast.success("Course image updated successfully");
+        router.refresh();
+      } else {
+        toast.error("Something went wrong");
+      }
     } catch {
       toast.error("Something went wrong");
     }
   };
-
   return (
     <div className="border bg-card rounded-md p-4 my-4 transition-[height] animate-accordion-down ease-in-out">
-      <div className="font-medium flex items-center justify-between">
-        Course image
-        <Button onClick={toggleEdit} variant="ghost">
-          {isEditing && <>Cancel</>}
-          {!isEditing && !initialData.imageUrl && (
-            <>
-              <PlusCircle className="h-4 w-4 mr-2" />
-              Add an image
-            </>
-          )}
-          {!isEditing && initialData.imageUrl && (
-            <>
-              <Pencil className="h-4 w-4 mr-2" />
-              Edit image
-            </>
-          )}
-        </Button>
-      </div>
-      <small className="text-muted-foreground">
-        Upload your course image here. It must meet our course image quality
-        standards to be accepted. Important guidelines: 750x422 pixels; .jpg,
-        .jpeg,. gif, or .png. no text on the image.
-      </small>
-      {!isEditing &&
-        (!initialData.imageUrl ? (
-          <div className="flex items-center justify-center h-60 bg-none border rounded-md mt-2">
-            <ImageIcon className="h-10 w-10 text-slate-500" />
-          </div>
-        ) : (
-          <div className="relative aspect-video mt-2">
+      <h2 className="text-2xl font-semibold mb-4">Course image</h2>
+      <div className="flex gap-6">
+        <div className="flex-1 aspect-[16/9] relative bg-muted rounded-lg overflow-hidden">
+          {initialData.imageUrl ? (
             <Image
-              alt="Upload"
+              src={initialData.imageUrl || "/placeholder.svg"}
+              alt="Course preview"
+              className="bg-neutral italic"
               fill
-              className="object-cover rounded-md"
-              src={initialData.imageUrl}
+              style={{ objectFit: "cover" }}
             />
+          ) : (
+            <div className="flex items-center justify-center h-60 bg-none border rounded-md mt-2">
+              <ImageIcon className="h-10 w-10 text-slate-500" />
+            </div>
+          )}
+        </div>
+        <div className="flex-1 flex flex-col justify-between">
+          <div>
+            <p className="mb-2">
+              Upload your course image here. It must meet our course image
+              quality standards to be accepted.
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Important guidelines: 1280 x 720 pixels; .jpg, .jpeg, .gif, or
+              .png. no text on the image. 16/9 recommended aspect ratio.
+            </p>
           </div>
-        ))}
-      {isEditing && (
-        <div>
-          <FileUpload
-            endpoint="imageUploader"
-            onChange={(url) => {
-              if (url) {
-                onSubmit({ imageUrl: url });
-              }
-            }}
-          />
-          <div className="text-xs text-muted-foreground mt-4">
-            16:9 aspect ratio recommended
+          <div className="space-y-4 my-2 border-2 border-dashed bg-gray-100 dark:bg-gray-900 flex items-center justify-center p-4 rounded-md">
+            {initialData.imageUrl ? (
+              <Button>Change Image</Button>
+            ) : (
+              <ImageUploadButton
+                endpoint="imageUploader"
+                className="w-full "
+                onChange={(url) => {
+                  if (url) {
+                    onSubmit({ imageUrl: url });
+                  }
+                }}
+              />
+            )}
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
-};
+}

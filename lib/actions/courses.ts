@@ -47,3 +47,37 @@ export async function createCourse(formData: CourseData) {
     };
   }
 }
+
+interface UpdateCourseData {
+  title?: string;
+  description?: string;
+  imageUrl?: string;
+  objectives?: string;
+  prerequisites?: string;
+  summary?: string;
+  price?: number;
+  isFree?: boolean;
+  slug?: string;
+}
+export const updateCourse = async (
+  courseId: string,
+  data: UpdateCourseData
+) => {
+  try {
+    const updatedData = { ...data };
+    if (data.title) {
+      updatedData.slug = slugify(data.title);
+    }
+
+    await prisma.course.update({
+      where: { id: courseId },
+      data: updatedData,
+    });
+
+    return { success: true, message: "Course updated successfully" };
+    // eslint-disable-next-line
+  } catch (error: any) {
+    console.error("Error updating course:", error);
+    return { success: false, error: error.message || "Something went wrong" };
+  }
+};

@@ -8,7 +8,7 @@ import { SummaryForm } from "@/components/dashboard/course/summary-form";
 import { DescriptionForm } from "@/components/dashboard/course/description-form";
 import { ObjectivesForm } from "@/components/dashboard/course/objectives-form";
 import { PrerequisitesForm } from "@/components/dashboard/course/prerequisites-form";
-import { ImageForm } from "@/components/dashboard/course/image-form";
+import CourseImageUpload from "@/components/dashboard/course/image-form";
 type courseWithCategory = Course & {
   category: Category;
 };
@@ -40,7 +40,8 @@ export const EditCourseForm = ({
         <DescriptionForm initialData={course} courseId={course.id} />
         <ObjectivesForm initialData={course} courseId={course.id} />
         <PrerequisitesForm initialData={course} courseId={course.id} />
-        <ImageForm initialData={course} courseId={course.id} />
+        {/* <ImageForm initialData={course} courseId={course.id} /> */}
+        <CourseImageUpload initialData={course} courseId={course.id} />
       </section>
 
       {/* second section */}
