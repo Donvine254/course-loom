@@ -22,6 +22,10 @@ export default function CourseImageUpload({
   initialData,
   courseId,
 }: ImageFormProps) {
+  const [image, setImage] = useState<string>(initialData.imageUrl || "");
+  const [showUploadBtn, setShowUploadBtn] = useState<boolean>(
+    !initialData.imageUrl
+  );
   const router = useRouter();
   const onSubmit = async (values: FormSchema) => {
     try {
@@ -41,9 +45,9 @@ export default function CourseImageUpload({
       <h2 className="text-2xl font-semibold mb-4">Course image</h2>
       <div className="flex gap-6">
         <div className="flex-1 aspect-[16/9] relative bg-muted rounded-lg overflow-hidden">
-          {initialData.imageUrl ? (
+          {image ? (
             <Image
-              src={initialData.imageUrl || "/placeholder.svg"}
+              src={image || "/placeholder.jpg"}
               alt="Course preview"
               className="bg-neutral italic"
               fill
@@ -67,18 +71,20 @@ export default function CourseImageUpload({
             </p>
           </div>
           <div className="space-y-4 my-2 border-2 border-dashed bg-gray-100 dark:bg-gray-900 flex items-center justify-center p-4 rounded-md">
-            {initialData.imageUrl ? (
-              <Button>Change Image</Button>
-            ) : (
-              <ImageUploadButton
-                endpoint="imageUploader"
-                className="w-full "
-                onChange={(url) => {
-                  if (url) {
-                    onSubmit({ imageUrl: url });
-                  }
-                }}
-              />
+            <ImageUploadButton
+              endpoint="imageUploader"
+              className={`w-full ${!showUploadBtn ? "hidden" : ""}`}
+              onChange={(url) => {
+                if (url) {
+                  setImage(url);
+                  onSubmit({ imageUrl: url });
+                }
+              }}
+            />
+            {!showUploadBtn && (
+              <Button onClick={() => setShowUploadBtn(!showUploadBtn)}>
+                Change Image
+              </Button>
             )}
           </div>
         </div>
