@@ -53,6 +53,7 @@ export default function CourseImageUpload({
               alt="Course preview"
               className="bg-neutral italic"
               fill
+              priority
               style={{ objectFit: "cover" }}
             />
           ) : (

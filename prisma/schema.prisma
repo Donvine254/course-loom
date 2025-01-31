@@ -65,7 +65,7 @@ model Course {
   reviews       Review[]
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
-  Instructor    Instructor   @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  instructor    Instructor   @relation(fields: [instructorId], references: [clerkId], onDelete: Cascade)
 
   @@index([categoryId, slug, instructorId])
 }
