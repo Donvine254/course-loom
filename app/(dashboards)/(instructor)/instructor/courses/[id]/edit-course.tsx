@@ -7,6 +7,8 @@ import { DescriptionForm } from "@/components/dashboard/course/description-form"
 import { ObjectivesForm } from "@/components/dashboard/course/objectives-form";
 import { PrerequisitesForm } from "@/components/dashboard/course/prerequisites-form";
 import CourseImageUpload from "@/components/dashboard/course/image-form";
+import PricingForm from "@/components/dashboard/course/pricing-form";
+import { CircleDollarSign } from "lucide-react";
 type courseWithCategory = Course & {
   category: Category;
 };
@@ -39,6 +41,10 @@ export const EditCourseForm = ({
         <PrerequisitesForm initialData={course} courseId={course.id} />
         {/* <ImageForm initialData={course} courseId={course.id} /> */}
         <CourseImageUpload initialData={course} courseId={course.id} />
+        <h2 className="my-2 font-semibold flex items-center gap-4">
+          <CircleDollarSign className="h-4 w-4" /> Sell Your Course
+        </h2>
+        <PricingForm initialData={course} courseId={course.id} />
       </section>
 
       {/* second section */}
