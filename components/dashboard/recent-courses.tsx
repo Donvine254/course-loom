@@ -70,8 +70,8 @@ export function CourseTable({ courses }: CourseTableProps) {
                 {new Intl.NumberFormat("en-US", {
                   style: "currency",
                   currency: "KSH",
-                  maximumFractionDigits: 1,
-                }).format(course.price)}
+                  maximumFractionDigits: 2,
+                }).format(course.price * 120)}
               </TableCell>
               <TableCell className="text-right">
                 <Popover>
