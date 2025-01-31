@@ -3,7 +3,7 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { HelpCircle, Pencil } from "lucide-react";
+import { HelpCircle, Loader2, Pencil } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -127,11 +127,16 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
           {isEditing && (
             <div className="flex items-center gap-x-2">
               <Button
-                disabled={!isValid || isSubmitting}
-                type="submit"
-                size="sm">
-                Save
-              </Button>
+                  size="sm"
+                  title="save changes"
+                  disabled={!isValid || isSubmitting}
+                  type="submit">
+                  {isSubmitting ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    "Save"
+                  )}
+                </Button>
             </div>
           )}
         </form>

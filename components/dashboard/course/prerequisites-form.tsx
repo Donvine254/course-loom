@@ -6,7 +6,7 @@ import { useForm, useFieldArray, FormProvider } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { HelpCircle, Pencil, Plus, PlusCircle, Trash2 } from "lucide-react";
+import { HelpCircle, Loader2, Pencil, Plus, PlusCircle, Trash2 } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -212,7 +212,11 @@ export const PrerequisitesForm = ({
                   title="save changes"
                   disabled={isSubmitting}
                   type="submit">
-                  Save
+                  {isSubmitting ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    "Save"
+                  )}
                 </Button>
               </div>
             )}
