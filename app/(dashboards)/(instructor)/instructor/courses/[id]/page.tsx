@@ -45,10 +45,6 @@ export default async function page({
   const missingFields = requiredFields.filter((field) => !Boolean(field));
   const missingFieldsCount = missingFields.length;
   const isCompleted = requiredFields.every(Boolean);
-  console.log(
-    `requiredFields: ${requiredFields.length}`,
-    `missingFields: ${missingFieldsCount}`
-  );
   return (
     <section>
       <Header id={course.id} isCompleted={isCompleted} />
