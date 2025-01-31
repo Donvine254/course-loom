@@ -6,14 +6,7 @@ import { useForm, useFieldArray, FormProvider } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import {
-  Grip,
-  HelpCircle,
-  Pencil,
-  Plus,
-  PlusCircle,
-  Trash2,
-} from "lucide-react";
+import { HelpCircle, Pencil, Plus, PlusCircle, Trash2 } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -191,15 +184,6 @@ export const PrerequisitesForm = ({
                         onClick={() => remove(index)}
                         className="shrink-0 text-red-500 bg-gray-100 dark:bg-red-100 hover:bg-destructive hover:text-destructive-foreground dark:hover:text-red-800">
                         <Trash2 className="h-4 w-4 " />
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        title="drag to re-order items"
-                        disabled={fields.length <= 4 || !isEditing}
-                        size="icon"
-                        className="shrink-0">
-                        <Grip className="h-4 w-4 " />
                       </Button>
                     </div>
                     <FormMessage />
