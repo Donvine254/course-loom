@@ -6,6 +6,7 @@ import { TitleForm } from "@/components/dashboard/course/title-form";
 import { CategoryForm } from "@/components/dashboard/course/category-form";
 import { SummaryForm } from "@/components/dashboard/course/summary-form";
 import { DescriptionForm } from "@/components/dashboard/course/description-form";
+import { ObjectivesForm } from "@/components/dashboard/course/objectives-form";
 type courseWithCategory = Course & {
   category: Category;
 };
@@ -35,6 +36,7 @@ export const EditCourseForm = ({
 
         <SummaryForm initialData={course} courseId={course.id} />
         <DescriptionForm initialData={course} courseId={course.id} />
+        <ObjectivesForm initialData={course} courseId={course.id} />
       </section>
 
       {/* second section */}
