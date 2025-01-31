@@ -124,12 +124,12 @@ export const ObjectivesForm = ({
   return (
     <div className="border bg-card rounded-md p-4 my-4 transition-[height] animate-accordion-down ease-in-out shadow dark:shadow-indigo-500">
       <div className="font-medium flex items-center justify-between">
-        <label className="font-semibold flex items-center gap-2 text-muted-foreground">
+        <label className="font-semibold flex items-center gap-2 ">
           What will students learn in your course?
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                <HelpCircle className="h-4 w-4" />
               </TooltipTrigger>
               <TooltipContent className="max-w-72 text-sm" side="bottom">
                 <p>

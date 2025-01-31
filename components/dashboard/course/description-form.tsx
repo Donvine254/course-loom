@@ -88,12 +88,12 @@ export const DescriptionForm = ({
       <div className="font-medium flex items-center justify-between">
         <label
           htmlFor="description"
-          className="font-semibold flex items-center gap-2 text-muted-foreground">
+          className="font-semibold flex items-center gap-2">
           Course Description
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                <HelpCircle className="h-4 w-4" />
               </TooltipTrigger>
               <TooltipContent
                 className="max-w-72 text-sm"
@@ -133,7 +133,7 @@ export const DescriptionForm = ({
       {!isEditing &&
         (initialData.description ? (
           <div className="mt-4" suppressHydrationWarning>
-            <div className="prose prose-sm max-w-none p-4 bg-muted rounded-md text-muted-foreground text-sm">
+            <div className="prose prose-sm max-w-none p-4 bg-gray-100 dark:bg-input rounded-md  text-sm">
               {parse(initialData.description) ?? initialData.description}
             </div>
           </div>

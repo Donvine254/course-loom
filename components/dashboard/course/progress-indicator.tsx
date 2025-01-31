@@ -30,7 +30,7 @@ export default function ProgressIndicator({ course }: { course: Course }) {
   const totalFields = REQUIRED_FIELDS.length;
   const progressPercentage = (filledFields / totalFields) * 100;
   return (
-    <div className="space-y-2 mb-4 bg-card p-4 rounded-md shadow">
+    <div className="mb-4 space-y-2">
       <p className="font-medium">
         Complete all fields ({filledFields}/{totalFields})
       </p>

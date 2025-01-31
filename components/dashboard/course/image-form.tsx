@@ -42,7 +42,7 @@ export default function CourseImageUpload({
   };
   return (
     <div className="border bg-card rounded-md p-4 my-4 transition-[height] animate-accordion-down ease-in-out shadow dark:shadow-indigo-500">
-      <h2 className="font-semibold flex items-center gap-2 text-muted-foreground mb-2">
+      <h2 className="font-semibold flex items-center gap-2 mb-2">
         Course image
       </h2>
       <div className="flex gap-6">
@@ -67,10 +67,10 @@ export default function CourseImageUpload({
               Upload your course image here. It must meet our course image
               quality standards to be accepted.
             </p>
-            <p className="text-sm text-muted-foreground">
+            <small className="text-muted-foreground">
               Important guidelines: 1280 x 720 pixels; .jpg, .jpeg, .gif, or
               .png. no text on the image. 16/9 recommended aspect ratio.
-            </p>
+            </small>
           </div>
           <div className="space-y-4 my-2 border-2 border-dashed bg-gray-100 dark:bg-gray-900 flex items-center justify-center p-4 rounded-md">
             <ImageUploadButton
