@@ -25,6 +25,7 @@ import { toast } from "sonner";
 import { updateCourse } from "@/lib/actions/courses";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
+import { CustomOverlay } from "@/components/custom/overlay";
 interface PricingFormProps {
   initialData: Course;
   courseId: string;
@@ -75,7 +76,8 @@ export default function PricingForm({
   const { isSubmitting, isValid } = form.formState;
 
   return (
-    <div className="border bg-card rounded-md p-4 mb-2 shadow dark:shadow-indigo-500">
+    <div className="border bg-card rounded-md p-4 mb-2 shadow dark:shadow-indigo-500 relative">
+      {isSubmitting && <CustomOverlay />}
       <div className="font-medium flex items-center justify-between">
         <label
           htmlFor="title"

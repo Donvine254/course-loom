@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { updateCourse } from "@/lib/actions/courses";
+import { CustomOverlay } from "@/components/custom/overlay";
 
 interface TitleFormProps {
   initialData: {
@@ -71,7 +72,8 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
   };
 
   return (
-    <div className="border bg-card rounded-md p-4 mb-2 shadow dark:shadow-indigo-500">
+    <div className="border bg-card rounded-md p-4 mb-2 shadow dark:shadow-indigo-500 relative">
+      {isSubmitting && <CustomOverlay />}
       <div className="font-medium flex items-center justify-between">
         <label
           htmlFor="title"
@@ -127,16 +129,16 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
           {isEditing && (
             <div className="flex items-center gap-x-2">
               <Button
-                  size="sm"
-                  title="save changes"
-                  disabled={!isValid || isSubmitting}
-                  type="submit">
-                  {isSubmitting ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    "Save"
-                  )}
-                </Button>
+                size="sm"
+                title="save changes"
+                disabled={!isValid || isSubmitting}
+                type="submit">
+                {isSubmitting ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  "Save"
+                )}
+              </Button>
             </div>
           )}
         </form>
