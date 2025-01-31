@@ -72,7 +72,7 @@ export default function CourseImageUpload({
               .png. no text on the image. 16/9 recommended aspect ratio.
             </small>
           </div>
-          <div className="space-y-4 my-2 border-2 border-dashed bg-gray-100 dark:bg-gray-900 flex items-center justify-center p-4 rounded-md">
+          <div className="space-y-4 my-2 border-2 border-dashed   flex items-center justify-center p-4 rounded-md">
             <ImageUploadButton
               endpoint="imageUploader"
               className={`w-full ${!showUploadBtn ? "hidden" : ""}`}
