@@ -34,7 +34,7 @@ const formSchema = z.object({
       z.object({
         value: z
           .string()
-          .min(30, "Objective cannot be less than 30 characters")
+          .min(20, "Objective cannot be less than 30 characters")
           .max(160, "Objective cannot be longer than 160 characters")
           .regex(/^[a-zA-Z0-9 ]+$/, "No special characters allowed"),
       })
@@ -102,7 +102,16 @@ export const ObjectivesForm = ({
       toast.error("Something went wrong");
     }
   };
-
+  const placeholders = {
+    objectives: [
+      "Example: Understand HTML structure and semantics",
+      "Example: Style webpages using CSS and frameworks",
+      "Example: Write interactive JavaScript code",
+      "Example: Work with APIs and fetch data",
+    ],
+    getPlaceholder: (index: number) =>
+      placeholders.objectives[index] || "Add another objective",
+  };
   return (
     <div className="border bg-card rounded-md p-4 my-4 transition-[height] animate-accordion-down ease-in-out">
       <div className="font-medium flex items-center justify-between">
@@ -155,7 +164,7 @@ export const ObjectivesForm = ({
                       <FormControl>
                         <Input
                           disabled={!isEditing}
-                          placeholder={`Objective ${index + 1}`}
+                          placeholder={placeholders.getPlaceholder(index)}
                           {...field}
                         />
                       </FormControl>
