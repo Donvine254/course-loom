@@ -22,6 +22,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { updateCourse } from "@/lib/actions/courses";
 interface SummaryFormProps {
   initialData: Course;
   courseId: string;
@@ -62,10 +63,14 @@ export const SummaryForm = ({ initialData, courseId }: SummaryFormProps) => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      console.log(courseId, values);
-      toast.success("Course updated");
-      toggleEdit();
-      router.refresh();
+      const res = await updateCourse(courseId, values);
+      if (res.success) {
+        toast.success("Course summary updated successfully");
+        toggleEdit();
+        router.refresh();
+      } else {
+        toast.error(res.error || "Something went wrong");
+      }
     } catch {
       toast.error("Something went wrong");
     }

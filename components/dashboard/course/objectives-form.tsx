@@ -21,6 +21,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { updateCourse } from "@/lib/actions/courses";
 
 interface ObjectivesFormProps {
   initialData: Course;
@@ -36,7 +37,7 @@ const formSchema = z.object({
           .string()
           .min(20, "Objective cannot be less than 30 characters")
           .max(160, "Objective cannot be longer than 160 characters")
-          .regex(/^[a-zA-Z0-9 ]+$/, "No special characters allowed"),
+          .regex(/^[a-zA-Z0-9 ,.:!?&]+$/, "No special characters allowed"),
       })
     )
     .refine(
@@ -60,7 +61,7 @@ export const ObjectivesForm = ({
     defaultValues: {
       objectives: initialData.objectives
         ? initialData.objectives
-            .split(",")
+            .split(";")
             .map((obj) => ({ value: obj.trim() }))
         : [{ value: "" }, { value: "" }, { value: "" }, { value: "" }],
     },
@@ -81,7 +82,7 @@ export const ObjectivesForm = ({
         "objectives",
         initialData.objectives
           ? initialData.objectives
-              .split(",")
+              .split(";")
               .map((obj) => ({ value: obj.trim() }))
           : [{ value: "" }, { value: "" }, { value: "" }, { value: "" }]
       );
@@ -93,11 +94,18 @@ export const ObjectivesForm = ({
     try {
       const formattedObjectives = values.objectives
         .map((obj) => obj.value)
-        .join(", ");
-      console.log(courseId, formattedObjectives);
-      toast.success("Course updated");
-      toggleEdit();
-      router.refresh();
+        .join("; ");
+
+      const res = await updateCourse(courseId, {
+        objectives: formattedObjectives,
+      });
+      if (res.success) {
+        toast.success("Course objectives updated successfully");
+        toggleEdit();
+        router.refresh();
+      } else {
+        toast.error(res.error || "Something went wrong");
+      }
     } catch {
       toast.error("Something went wrong");
     }

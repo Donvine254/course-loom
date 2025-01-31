@@ -23,6 +23,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { updateCourse } from "@/lib/actions/courses";
 interface DescriptionFormProps {
   initialData: Course;
   courseId: string;
@@ -64,14 +65,18 @@ export const DescriptionForm = ({
     },
   });
 
-  const { isSubmitting, isValid } = form.formState;
+  const { isSubmitting } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      console.log(courseId, values);
-      toast.success("Course updated");
-      toggleEdit();
-      router.refresh();
+      const res = await updateCourse(courseId, values);
+      if (res.success) {
+        toast.success("Course description updated successfully");
+        toggleEdit();
+        router.refresh();
+      } else {
+        toast.error(res.error || "Something went wrong");
+      }
     } catch {
       toast.error("Something went wrong");
     }
@@ -148,10 +153,7 @@ export const DescriptionForm = ({
           />
           {isEditing && (
             <div className="flex items-center gap-x-2">
-              <Button
-                disabled={!isValid || isSubmitting}
-                type="submit"
-                size="sm">
+              <Button disabled={isSubmitting} type="submit" size="sm">
                 Save
               </Button>
             </div>

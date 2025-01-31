@@ -21,6 +21,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { updateCourse } from "@/lib/actions/courses";
 
 interface PrerequisitesFormProps {
   initialData: Course;
@@ -36,7 +37,7 @@ const formSchema = z.object({
           .string()
           .min(30, "Objective cannot be less than 30 characters")
           .max(160, "Objective cannot be longer than 160 characters")
-          .regex(/^[a-zA-Z0-9 ]+$/, "No special characters allowed"),
+          .regex(/^[a-zA-Z0-9 ,.:!?&]+$/, "No special characters allowed"),
       })
     )
     .refine(
@@ -62,7 +63,7 @@ export const PrerequisitesForm = ({
     defaultValues: {
       prerequisites: initialData.prerequisites
         ? initialData.prerequisites
-            .split(",")
+            .split(";")
             .map((obj) => ({ value: obj.trim() }))
         : [{ value: "" }],
     },
@@ -83,7 +84,7 @@ export const PrerequisitesForm = ({
         "prerequisites",
         initialData.prerequisites
           ? initialData.prerequisites
-              .split(",")
+              .split(";")
               .map((obj) => ({ value: obj.trim() }))
           : [{ value: "" }]
       );
@@ -95,11 +96,18 @@ export const PrerequisitesForm = ({
     try {
       const formattedPrerequisites = values.prerequisites
         .map((obj) => obj.value)
-        .join(", ");
+        .join("; ");
       console.log(courseId, formattedPrerequisites);
-      toast.success("Course updated");
-      toggleEdit();
-      router.refresh();
+      const res = await updateCourse(courseId, {
+        prerequisites: formattedPrerequisites,
+      });
+      if (res.success) {
+        toast.success("Course objectives successfully");
+        toggleEdit();
+        router.refresh();
+      } else {
+        toast.error(res.error || "Something went wrong");
+      }
     } catch {
       toast.error("Something went wrong");
     }
