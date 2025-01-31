@@ -45,7 +45,7 @@ export const CategoryForm = ({
   const [isEditing, setIsEditing] = useState(false);
   const toggleEdit = () => {
     if (isEditing) {
-      form.reset(initialData);
+      form.setValue("categoryId", initialData.categoryId || "");
     }
     setIsEditing((current) => !current);
   };

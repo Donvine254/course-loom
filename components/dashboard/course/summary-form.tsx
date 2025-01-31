@@ -3,11 +3,10 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { HelpCircle, Pencil } from "lucide-react";
-import { useState } from "react";
+import { HelpCircle, Pencil, PlusCircle } from "lucide-react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Course } from "@prisma/client";
-
 import {
   Form,
   FormControl,
@@ -24,7 +23,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-interface DescriptionFormProps {
+interface SummaryFormProps {
   initialData: Course;
   courseId: string;
 }
@@ -36,11 +35,8 @@ const formSchema = z.object({
     .max(250, "Summary must be within 250 characters"),
 });
 
-export const DescriptionForm = ({
-  initialData,
-  courseId,
-}: DescriptionFormProps) => {
-  const [isEditing, setIsEditing] = useState(false);
+export const SummaryForm = ({ initialData, courseId }: SummaryFormProps) => {
+  const [isEditing, setIsEditing] = useState(!initialData.summary);
 
   const toggleEdit = () => {
     if (isEditing) {
@@ -48,6 +44,11 @@ export const DescriptionForm = ({
     }
     setIsEditing((current) => !current);
   };
+  useEffect(() => {
+    if (initialData && initialData.summary === "") {
+      setIsEditing(true);
+    }
+  }, [initialData]);
 
   const router = useRouter();
 
@@ -72,7 +73,7 @@ export const DescriptionForm = ({
   };
 
   return (
-    <div className="mt-6 border bg-slate-100 rounded-md p-4">
+    <div className="border bg-card rounded-md p-4 my-2 transition-[height] animate-accordion-down ease-in-out">
       <div className="font-medium flex items-center justify-between">
         <label
           htmlFor="description"
@@ -100,23 +101,32 @@ export const DescriptionForm = ({
             <>Cancel</>
           ) : (
             <>
-              <Pencil className="h-4 w-4 mr-2" />
-              Edit description
+              {initialData && !initialData.summary ? (
+                <>
+                  <PlusCircle className="h-4 w-4 mr-2" />
+                  Add Summary
+                </>
+              ) : (
+                <>
+                  <Pencil className="h-4 w-4 mr-2" />
+                  Edit Summary
+                </>
+              )}
             </>
           )}
         </Button>
       </div>
-      <small>
-        A short summary on what students will learn in this course. Summary
-        should be attention-grabbing!
+      <small className="text-muted-foreground">
+        Provide a short summary on what students will learn in this course.
+        Summary should be attention-grabbing!
       </small>
       {!isEditing && (
         <p
           className={cn(
             "text-sm mt-2",
-            !initialData.summary && "text-slate-500 italic"
+            !initialData.summary && "text-muted-foreground italic"
           )}>
-          {initialData.summary || "No Summary"}
+          {initialData.summary || "You have not written the summary yet."}
         </p>
       )}
       {isEditing && (
