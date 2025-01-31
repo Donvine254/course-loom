@@ -4,7 +4,13 @@ import { Button } from "@/components/ui/button";
 import { InfoIcon, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-export const Header = ({ id }: { id: string }) => {
+export const Header = ({
+  id,
+  isCompleted,
+}: {
+  id: string;
+  isCompleted: boolean;
+}) => {
   const pathname = usePathname();
   return (
     <div>
@@ -41,7 +47,7 @@ export const Header = ({ id }: { id: string }) => {
         </div>
         <div className="flex gap-5 items-start">
           {/* TODO: Add publish and delete buttons */}
-          <Button disabled variant="ghost" size="sm">
+          <Button disabled={!isCompleted} variant="ghost" size="sm">
             Publish
           </Button>
           <Button
