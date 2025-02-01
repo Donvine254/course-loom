@@ -57,7 +57,7 @@ export default function CourseImageUpload({
               style={{ objectFit: "cover" }}
             />
           ) : (
-            <div className="flex items-center justify-center h-60 bg-none border rounded-md mt-2">
+            <div className="flex items-center justify-center h-full bg-none  rounded-md">
               <ImageIcon className="h-10 w-10 text-slate-500" />
             </div>
           )}
