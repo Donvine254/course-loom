@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Image from "next/image";
 import { ImageIcon } from "lucide-react";
 import { updateCourse } from "@/lib/actions/courses";
 import { Course } from "@prisma/client";
@@ -40,6 +39,7 @@ export default function CourseImageUpload({
       toast.error("Something went wrong");
     }
   };
+
   return (
     <div className="border bg-card rounded-md p-4 my-4 transition-[height] animate-accordion-down ease-in-out shadow dark:shadow-indigo-500">
       <h2 className="font-semibold flex items-center gap-2 mb-2">
@@ -48,12 +48,11 @@ export default function CourseImageUpload({
       <div className="flex flex-col md:roup-has-[[data-collapsible=icon]]/sidebar-wrapper:flex-row lg:flex-row gap-6">
         <div className="flex-1 aspect-[16/9] relative bg-muted rounded-lg overflow-hidden">
           {image ? (
-            <Image
+            // eslint-disable-next-line
+            <img
               src={image || "/placeholder.jpg"}
               alt="Course preview"
               className="bg-neutral italic"
-              fill
-              priority
               style={{ objectFit: "cover" }}
             />
           ) : (
@@ -76,6 +75,7 @@ export default function CourseImageUpload({
           <div className="space-y-4 my-2 border-2 border-dashed   flex items-center justify-center p-4 rounded-md">
             <ImageUploadButton
               endpoint="imageUploader"
+              title={initialData.title}
               className={`w-full ${!showUploadBtn ? "hidden" : ""}`}
               onChange={(url) => {
                 if (url) {
