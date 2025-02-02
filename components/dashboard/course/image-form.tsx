@@ -18,6 +18,7 @@ type FormSchema = {
   imageUrl: string;
 };
 
+// TODO: change image uploads to work with cloudinary due to image compression
 export default function CourseImageUpload({
   initialData,
   courseId,
