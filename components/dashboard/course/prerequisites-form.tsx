@@ -44,9 +44,9 @@ const formSchema = z.object({
       z.object({
         value: z
           .string()
-          .min(30, "Objective cannot be less than 30 characters")
+          .min(20, "Objective cannot be less than 30 characters")
           .max(160, "Objective cannot be longer than 160 characters")
-          .regex(/^[a-zA-Z0-9 ,.:!?&]+$/, "No special characters allowed"),
+          .regex(/^[a-zA-Z0-9 ,.:!?&\/-]+$/, "No special characters allowed"),
       })
     )
     .refine(
