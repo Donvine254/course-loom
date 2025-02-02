@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { ImageUploadButton } from "@/components/ui/file-upload";
+import { validateImageSize } from "@/lib/utils";
 
 interface ImageFormProps {
   initialData: Course;
@@ -25,18 +26,20 @@ export default function CourseImageUpload({
   const [showUploadBtn, setShowUploadBtn] = useState<boolean>(
     !initialData.imageUrl
   );
+  const [error, setError] = useState<string>("");
   const router = useRouter();
   const onSubmit = async (values: FormSchema) => {
+    setError("");
     try {
       const res = await updateCourse(courseId, values);
       if (res.success) {
         toast.success("Course image updated successfully");
         router.refresh();
       } else {
-        toast.error("Something went wrong");
+        setError("Something went wrong");
       }
     } catch {
-      toast.error("Something went wrong");
+      setError("Something went wrong");
     }
   };
 
@@ -77,11 +80,16 @@ export default function CourseImageUpload({
               endpoint="imageUploader"
               title={initialData.title}
               className={`w-full ${!showUploadBtn ? "hidden" : ""}`}
-              onChange={(url) => {
+              onChange={async (url) => {
                 if (url) {
-                  setImage(url);
-                  setShowUploadBtn(false);
-                  onSubmit({ imageUrl: url });
+                  const res = await validateImageSize(url);
+                  if (res.success) {
+                    setImage(url);
+                    setShowUploadBtn(false);
+                    onSubmit({ imageUrl: url });
+                  } else {
+                    setError(res.error || "Something went wrong");
+                  }
                 }
               }}
             />
@@ -91,6 +99,7 @@ export default function CourseImageUpload({
               </Button>
             )}
           </div>
+          {error && <small className="text-xs text-destructive">{error}</small>}
         </div>
       </div>
     </div>

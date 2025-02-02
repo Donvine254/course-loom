@@ -12,3 +12,34 @@ export function slugify(title: string) {
     .replace(/-+/g, "-")
     .replace(/^-+|-+$/g, "");
 }
+
+export function validateImageSize(
+  url: string
+): Promise<{ success: boolean; message?: string; error?: string }> {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.src = url;
+
+    img.onload = () => {
+      const { width, height } = img;
+      const aspectRatio = width / height;
+
+      if (width >= 1280 && height >= 720 && aspectRatio === 16 / 9) {
+        resolve({ success: true, message: "Image is in valid aspect ratio" });
+      } else {
+        resolve({
+          success: false,
+          error:
+            "Image must be at least 1280x720 pixels with a 16:9 aspect ratio.",
+        });
+      }
+
+      URL.revokeObjectURL(url); // Cleanup object URL after validation
+    };
+
+    img.onerror = () => {
+      resolve({ success: false, error: "Invalid image file" });
+      URL.revokeObjectURL(url);
+    };
+  });
+}
