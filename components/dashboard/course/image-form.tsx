@@ -25,7 +25,9 @@ export default function CourseImageUpload({
   initialData,
   courseId,
 }: ImageFormProps) {
-  const [image, setImage] = useState<string>(initialData.imageUrl || "");
+  const [image, setImage] = useState<string>(
+    imageUrlConstructor(initialData.imageUrl || "") || ""
+  );
   const [showUploadBtn, setShowUploadBtn] = useState<boolean>(
     !initialData.imageUrl
   );
@@ -45,7 +47,10 @@ export default function CourseImageUpload({
   };
   async function handleImageChange() {
     setShowUploadBtn(!showUploadBtn);
-    if (initialData.imageUrl) deleteCloudinaryImage(initialData.imageUrl);
+    if (initialData.imageUrl) {
+      deleteCloudinaryImage(initialData.imageUrl);
+      setImage("");
+    }
   }
   return (
     <div className="border bg-card rounded-md p-4 my-4 transition-[height] animate-accordion-down ease-in-out shadow dark:shadow-indigo-500">
@@ -56,7 +61,7 @@ export default function CourseImageUpload({
         <div className="flex-1 aspect-[16/9] relative bg-muted rounded-lg overflow-hidden">
           {image ? (
             <Image
-              src={imageUrlConstructor(image) || "/placeholder.jpg"}
+              src={image || "/placeholder.jpg"}
               alt="Course preview"
               className="bg-neutral italic"
               fill

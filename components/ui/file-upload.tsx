@@ -129,14 +129,17 @@ export const ImageUploadButton = ({
         {isUploading ? (
           <Button
             className="flex-1 text-xs text-muted-foreground"
+            type="button"
+            disabled
             style={{
-              background: `linear-gradient(to right, #4f46e5 ${uploadProgress}%, #e0e7ff ${uploadProgress}%)`,
+              background: `linear-gradient(to right, #4f46e5 ${uploadProgress}%, #fff ${uploadProgress}%)`,
             }}>
             Uploading... {Math.round(uploadProgress)}%
           </Button>
         ) : (
           <Button
             className="flex-1 truncate text-sm items-center justify-between gap-2"
+            type="button"
             disabled={isUploading}
             onClick={() => fileInputRef.current?.click()}>
             <span className="truncate">
