@@ -1,3 +1,5 @@
+import { baseUrl } from "./utils";
+
 export async function uploadToCloudinary(image: File) {
   const newImage = new FormData();
   newImage.append("file", image);
@@ -22,5 +24,21 @@ export async function uploadToCloudinary(image: File) {
   } catch (error) {
     console.error("Error uploading image:", error);
     return { success: false, message: "Something went wrong" };
+  }
+}
+
+export async function deleteCloudinaryImage(publicId: string) {
+  try {
+    await fetch(`${baseUrl}/api/cloudinary`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ public_id: publicId }),
+    });
+
+    console.log(`Deleted Cloudinary image: ${publicId}`);
+  } catch (error) {
+    console.error(`Failed to delete Cloudinary image: ${publicId}`, error);
   }
 }

@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { ImageUploadButton } from "@/components/ui/file-upload";
 import Image from "next/image";
 import { imageUrlConstructor } from "@/lib/utils";
+import { deleteCloudinaryImage } from "@/lib/cloudinary";
 
 interface ImageFormProps {
   initialData: Course;
@@ -42,7 +43,10 @@ export default function CourseImageUpload({
       toast.error("Something went wrong");
     }
   };
-
+  async function handleImageChange() {
+    setShowUploadBtn(!showUploadBtn);
+    if (initialData.imageUrl) deleteCloudinaryImage(initialData.imageUrl);
+  }
   return (
     <div className="border bg-card rounded-md p-4 my-4 transition-[height] animate-accordion-down ease-in-out shadow dark:shadow-indigo-500">
       <h2 className="font-semibold flex items-center gap-2 mb-2">
@@ -86,10 +90,15 @@ export default function CourseImageUpload({
             )}
             {!showUploadBtn && (
               <div className="flex items-center justify-between gap-4">
-                <Button className="flex-1 text-xs text-white bg-indigo-600 hover:bg-indigo-600">
+                <Button
+                  className="flex-1 text-xs text-white bg-indigo-600 hover:bg-indigo-600"
+                  type="button">
                   100%
                 </Button>
-                <Button onClick={() => setShowUploadBtn(!showUploadBtn)}>
+                <Button
+                  onClick={handleImageChange}
+                  type="button"
+                  title="This will delete the existing image!">
                   Change
                   {/* delete the image from cloudinary */}
                 </Button>
