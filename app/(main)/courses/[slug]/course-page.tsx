@@ -375,25 +375,6 @@ export default function CoursePage({ course }: Props) {
               <p className="text-muted-foreground text-xs text-center">
                 Full Lifetime Access & Offline download
               </p>
-              {/* <Separator className="mb-2" />
-              <div className="space-y-4 text-muted-foreground">
-                <div className="flex items-center">
-                  <Clock className="w-5 h-5 mr-3" />
-                  <span>Lifetime Access</span>
-                </div>
-                <div className="flex items-center">
-                  <BookOpen className="w-5 h-5 mr-3" />
-                  <span>{course.totalChapters} chapters</span>
-                </div>
-                <div className="flex items-center">
-                  <Download className="w-5 h-5 mr-3" />
-                  <span>Downloadable resources</span>
-                </div>
-                <div className="flex items-center">
-                  <Award className="w-5 h-5 mr-3" />
-                  <span>Certificate of completion</span>
-                </div>
-              </div> */}
               <div className="flex gap-2 mt-6">
                 <Button
                   variant="outline"

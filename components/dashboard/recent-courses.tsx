@@ -85,7 +85,7 @@ export function CourseTable({ courses }: CourseTableProps) {
                       variant="ghost"
                       className="w-full justify-start gap-2"
                       asChild>
-                      <Link href={`/instructor/courses/preview/${course.id}`}>
+                      <Link href={`/courses/draft/${course.id}`}>
                         <Eye className=" h-4 w-4" />
                         Preview
                       </Link>
