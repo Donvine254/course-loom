@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { ImageUploadButton } from "@/components/ui/file-upload";
 import Image from "next/image";
-import { imageUrlConstructor } from "@/lib/utils";
 import { deleteCloudinaryImage } from "@/lib/cloudinary";
+import { useRouter } from "next/navigation";
 
 interface ImageFormProps {
   initialData: Course;
@@ -24,7 +24,13 @@ export default function CourseImageUpload({
   initialData,
   courseId,
 }: ImageFormProps) {
-  const [image, setImage] = useState<string>(initialData.imageUrl || "");
+  const [image, setImage] = useState<string>(
+    initialData.imageUrl
+      ? `https://res.cloudinary.com/dipkbpinx/image/upload/${initialData.imageUrl}.webp`
+      : ""
+  );
+  const router = useRouter();
+
   const [showUploadBtn, setShowUploadBtn] = useState<boolean>(
     !initialData.imageUrl
   );
@@ -34,6 +40,7 @@ export default function CourseImageUpload({
       if (res.success) {
         toast.success("Course image updated successfully");
         setShowUploadBtn(false);
+        router.refresh();
       } else {
         toast.error("Something went wrong");
       }
@@ -57,11 +64,7 @@ export default function CourseImageUpload({
         <div className="aspect-[16/9] relative bg-muted rounded-lg overflow-hidden">
           {image ? (
             <Image
-              src={
-                initialData.imageUrl
-                  ? imageUrlConstructor(initialData.imageUrl)
-                  : image
-              }
+              src={image || "/placeholder.jpg"}
               alt="Course banner image"
               className="bg-neutral italic"
               fill
