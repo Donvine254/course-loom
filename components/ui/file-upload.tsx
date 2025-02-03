@@ -96,6 +96,7 @@ export const ImageUploadButton = ({
       if (res.success) {
         onUpload({ imageUrl: res.image });
         setUploadProgress(100);
+        clearFileInput();
       } else {
         setUploadProgress(100);
         toast.error("Something went wrong!");
