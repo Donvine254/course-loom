@@ -1,3 +1,4 @@
+import { updateCourse } from "./actions/courses";
 import { baseUrl } from "./utils";
 
 export async function uploadToCloudinary(image: File) {
@@ -15,7 +16,6 @@ export async function uploadToCloudinary(image: File) {
       }
     );
     const data = await response.json();
-    console.log(data);
     return {
       success: true,
       message: "Image saved successfully",
@@ -27,7 +27,10 @@ export async function uploadToCloudinary(image: File) {
   }
 }
 
-export async function deleteCloudinaryImage(publicId: string) {
+export async function deleteCloudinaryImage(
+  publicId: string,
+  courseId: string
+) {
   try {
     await fetch(`${baseUrl}/api/cloudinary`, {
       method: "POST",
@@ -36,6 +39,7 @@ export async function deleteCloudinaryImage(publicId: string) {
       },
       body: JSON.stringify({ public_id: publicId }),
     });
+    await updateCourse(courseId, { imageUrl: "" });
 
     console.log(`Deleted Cloudinary image: ${publicId}`);
   } catch (error) {

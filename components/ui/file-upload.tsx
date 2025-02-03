@@ -73,6 +73,7 @@ export const ImageUploadButton = ({
       URL.revokeObjectURL(imageUrl);
       return false;
     }
+    return true;
   };
 
   const handleImageUpload = async () => {

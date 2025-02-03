@@ -5,7 +5,6 @@ import { updateCourse } from "@/lib/actions/courses";
 import { Course } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import { ImageUploadButton } from "@/components/ui/file-upload";
 import Image from "next/image";
 import { imageUrlConstructor } from "@/lib/utils";
@@ -29,13 +28,12 @@ export default function CourseImageUpload({
   const [showUploadBtn, setShowUploadBtn] = useState<boolean>(
     !initialData.imageUrl
   );
-  const router = useRouter();
   const onSubmit = async (values: FormSchema) => {
     try {
       const res = await updateCourse(courseId, values);
       if (res.success) {
         toast.success("Course image updated successfully");
-        router.refresh();
+        setShowUploadBtn(false);
       } else {
         toast.error("Something went wrong");
       }
@@ -47,7 +45,7 @@ export default function CourseImageUpload({
     setShowUploadBtn(!showUploadBtn);
     setImage("");
     if (initialData.imageUrl) {
-      await deleteCloudinaryImage(initialData.imageUrl);
+      await deleteCloudinaryImage(initialData.imageUrl, initialData.id);
     }
   }
   return (
@@ -64,7 +62,7 @@ export default function CourseImageUpload({
                   ? imageUrlConstructor(initialData.imageUrl)
                   : image
               }
-              alt="Course preview"
+              alt="Course banner image"
               className="bg-neutral italic"
               fill
               priority
