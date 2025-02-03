@@ -12,9 +12,22 @@ export default async function Page({
     include: {
       category: true,
       chapters: true,
-      instructor: true,
+      instructor: {
+        include: {
+          courses: {
+            select: {
+              id: true,
+              title: true,
+              slug: true,
+              isPublished: true,
+            },
+          },
+        },
+      },
+      attachments: true,
     },
   });
+
   if (!course) {
     redirect("/not-found");
   }
