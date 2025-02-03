@@ -13,6 +13,7 @@ export async function uploadToCloudinary(image: File) {
       }
     );
     const data = await response.json();
+    console.log(data);
     return {
       success: true,
       message: "Image saved successfully",
