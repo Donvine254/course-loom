@@ -109,6 +109,7 @@ export const ImageUploadButton = ({
       setIsUploading(false);
     }
   };
+
   function clearFileInput() {
     if (fileInputRef.current) {
       (fileInputRef.current as HTMLInputElement).value = "";
@@ -130,7 +131,6 @@ export const ImageUploadButton = ({
           <Button
             className="flex-1 text-xs text-muted-foreground"
             type="button"
-            disabled
             style={{
               background: `linear-gradient(to right, #4f46e5 ${uploadProgress}%, #fff ${uploadProgress}%)`,
             }}>

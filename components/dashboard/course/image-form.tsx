@@ -25,9 +25,7 @@ export default function CourseImageUpload({
   initialData,
   courseId,
 }: ImageFormProps) {
-  const [image, setImage] = useState<string>(
-    imageUrlConstructor(initialData.imageUrl || "") || ""
-  );
+  const [image, setImage] = useState<string>(initialData.imageUrl || "");
   const [showUploadBtn, setShowUploadBtn] = useState<boolean>(
     !initialData.imageUrl
   );
@@ -47,9 +45,9 @@ export default function CourseImageUpload({
   };
   async function handleImageChange() {
     setShowUploadBtn(!showUploadBtn);
+    setImage("");
     if (initialData.imageUrl) {
-      deleteCloudinaryImage(initialData.imageUrl);
-      setImage("");
+      await deleteCloudinaryImage(initialData.imageUrl);
     }
   }
   return (
@@ -57,11 +55,15 @@ export default function CourseImageUpload({
       <h2 className="font-semibold flex items-center gap-2 mb-2">
         Course image
       </h2>
-      <div className="flex flex-col md:roup-has-[[data-collapsible=icon]]/sidebar-wrapper:flex-row lg:flex-row gap-6">
-        <div className="flex-1 aspect-[16/9] relative bg-muted rounded-lg overflow-hidden">
+      <div className="grid grid-cols-1  md:group-has-[[data-collapsible=icon]]/sidebar-wrapper:grid-cols-2 lg:grid-cols-2  gap-6">
+        <div className="aspect-[16/9] relative bg-muted rounded-lg overflow-hidden">
           {image ? (
             <Image
-              src={image || "/placeholder.jpg"}
+              src={
+                initialData.imageUrl
+                  ? imageUrlConstructor(initialData.imageUrl)
+                  : image
+              }
               alt="Course preview"
               className="bg-neutral italic"
               fill
@@ -74,7 +76,7 @@ export default function CourseImageUpload({
             </div>
           )}
         </div>
-        <div className="flex-1 flex flex-col justify-between">
+        <div className="flex flex-col justify-between">
           <div>
             <p className="mb-2">
               Upload your course image here. It must meet our course image
