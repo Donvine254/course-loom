@@ -32,6 +32,7 @@ model Instructor {
   clerkId        String              @unique
   email          String              @unique
   username       String
+  image          String              @default("https://ui-avatars.com/api/?background=random&name=john+doe")
   bio            String
   expertise      String
   specialization String

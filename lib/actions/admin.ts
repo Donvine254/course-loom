@@ -76,6 +76,9 @@ export async function createInstructorAccount(data: InstructorData) {
         email: user.email,
         username: `${user.firstName} ${user.lastName}`,
         bio: data.bio,
+        image:
+          user.profileImage ||
+          `https://ui-avatars.com/api/?background=random&name=${user.firstName} ${user.lastName}`,
         expertise: data.expertise,
         specialization: data.specialization,
       },
