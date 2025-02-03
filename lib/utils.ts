@@ -19,11 +19,9 @@ export function validateImageSize(
   return new Promise((resolve) => {
     const img = new Image();
     img.src = url;
-
     img.onload = () => {
       const { width, height } = img;
       const aspectRatio = width / height;
-
       if (width >= 1280 && height >= 720 && aspectRatio === 16 / 9) {
         resolve({ success: true, message: "Image is in valid aspect ratio" });
       } else {
@@ -43,3 +41,12 @@ export function validateImageSize(
     };
   });
 }
+
+export const isValidImageFile = (image: File) => {
+  const validateImageSize = 5 * 1024 * 1024;
+  const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/avif"];
+  if (!allowedTypes.includes(image.type) || image.size > validateImageSize) {
+    return false;
+  }
+  return true;
+};
