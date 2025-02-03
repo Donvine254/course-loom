@@ -22,6 +22,7 @@ import {
   Clock,
   LockOpen,
   CirclePlay,
+  TriangleAlert,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -44,6 +45,13 @@ type FullCourse = Course & {
   attachments: Attachment[];
 };
 export default function DraftCourse({ course }: { course: FullCourse }) {
+  const ratingsBreakdown = {
+    5: 100,
+    4: 0,
+    3: 0,
+    2: 0,
+    1: 0,
+  };
   return (
     <div>
       {/* header section */}
@@ -133,6 +141,13 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
                 className="w-full h-full object-cover rounded-md"
                 controls
               />
+              <p
+                role="alert"
+                className="py-4 px-3 bg-gray-200 text-destructive text-sm xsm:text-xs my-2 inline-flex items-center gap-2 w-full">
+                <TriangleAlert className="h-4 w-4" /> This course is in draft
+                mode. For further information contact{" "}
+                {course.instructor.username} directly.
+              </p>
             </div>
           </div>
         </div>
@@ -314,7 +329,7 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
                     {course.instructor.email}
                   </a>
                   <p className="text-sm text-muted-foreground">
-                    {course.instructor.courses.length + 1} Courses
+                    {course.instructor.courses.length} Courses
                   </p>
                 </div>
               </div>
@@ -342,23 +357,74 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
                 </h4>
                 <ul className="space-y-2">
                   {course.instructor.courses &&
-                    course.instructor.courses.length > 0 &&
-                    course.instructor.courses.map((course: Partial<Course>) => (
-                      <li
-                        key={course.id}
-                        className="flex items-center text-muted-foreground">
-                        <CirclePlay className="w-4 h-4 text-blue-600 mr-2" />
-                        <Link
-                          href={`/courses/${course.slug}`}
-                          className="underline text-blue-500">
-                          {course.title}
-                        </Link>
-                      </li>
-                    ))}
+                    course.instructor.courses.length > 1 &&
+                    course.instructor.courses
+                      .filter((c: Partial<Course>) => c.id !== course.id)
+                      .map((c: Partial<Course>) => (
+                        <li
+                          key={c.id}
+                          className="flex items-center text-muted-foreground">
+                          <CirclePlay className="w-4 h-4 text-blue-600 mr-2" />
+                          <Link
+                            href={
+                              c.isPublished
+                                ? `/courses/${c.slug}`
+                                : `/courses/draft/${c.id}`
+                            }
+                            className="underline text-blue-500">
+                            {c.title}
+                          </Link>
+                        </li>
+                      ))}
                 </ul>
               </div>
             </div>
+            {/* Student Reviews */}
+            <Separator className="my-2 bg-gray-400" />
+            <div className="p-2 sm:p-4 bg-card dark:bg-inherit rounded-xl shadow">
+              <h2 className="text-2xl font-bold mb-6">Student Feedback</h2>
+              <div className="space-y-2">
+                <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6 mb-4">
+                  <div className="bg-gray-50 rounded-sm dark:bg-gray-950 space-y-2 p-6 border shadow">
+                    <h2 className="text-5xl font-bold text-center">{0}</h2>
+                    <div className="flex justify-center">
+                      {renderStars(Math.floor(0))}
+                    </div>
+                    <p className="text-center text-muted-foreground">
+                      0 Reviews
+                    </p>
+                  </div>
+                  <div className="space-y-2 md:flex-1 w-full xsm:px-2">
+                    {Object.entries(ratingsBreakdown)
+                      .reverse()
+                      .map(([rating, percentage]) => (
+                        <div key={rating} className="flex items-center gap-2">
+                          <div className="flex items-center w-[20%]">
+                            {renderStars(parseInt(rating))}
+                          </div>
+                          <div className="w-[70%] h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div
+                              className="h-full bg-blue-600 rounded-full"
+                              style={{ width: `${percentage}%` }}></div>
+                          </div>
+                          <div className="w-[10%] text-right text-muted-foreground">
+                            {percentage as number}%
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+                <h2 className="text-lg font-semibold my-6">Reviews (0)</h2>
+                <div className="space-y-6 xsm:p-2">
+                  <p className="text-muted-foreground">
+                    No reviews yet. Students will be able to review this course
+                    once they purchase it.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
+
           {/* Sidebar */}
           <div
             className="md:col-span-1 xsm:w-full sm:max-w-sm sm:mx-auto"
