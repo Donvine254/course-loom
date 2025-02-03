@@ -1,15 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { imageUrlConstructor } from "@/lib/utils";
 import { Category, Chapter, Course, Instructor } from "@prisma/client";
-import {
-  BadgeInfo,
-  Globe,
-  GraduationCap,
-  InfoIcon,
-  Play,
-  Users,
-} from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { BadgeInfo, Globe, GraduationCap, Play, Users } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { renderStars } from "@/lib/render-stars";
@@ -55,7 +47,11 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
                     <BadgeInfo className="w-4 h-4 rotate-180" />
                     <span>
                       Last updated on{" "}
-                      {new Date(course.updatedAt).toLocaleDateString()}
+                      {new Date(course.updatedAt).toLocaleDateString("en-US", {
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                      })}
                     </span>
                   </div>
                   <div className="flex items-center gap-1">
@@ -108,15 +104,6 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
           </div>
         </div>
       </div>
-      <Alert variant="destructive">
-        <InfoIcon className="h-4 w-4" />
-        <AlertTitle>This course is in draft mode</AlertTitle>
-        <AlertDescription className="xsm:text-xs">
-          For further information, please contact{" "}
-          <span className="capitalize">{course.instructor.username}</span>{" "}
-          directly.
-        </AlertDescription>
-      </Alert>
     </div>
   );
 }
