@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { ImageUploadButton } from "@/components/ui/file-upload";
 import Image from "next/image";
+import { imageUrlConstructor } from "@/lib/utils";
 
 interface ImageFormProps {
   initialData: Course;
@@ -51,7 +52,7 @@ export default function CourseImageUpload({
         <div className="flex-1 aspect-[16/9] relative bg-muted rounded-lg overflow-hidden">
           {image ? (
             <Image
-              src={image || "/placeholder.jpg"}
+              src={imageUrlConstructor(image) || "/placeholder.jpg"}
               alt="Course preview"
               className="bg-neutral italic"
               fill
@@ -90,6 +91,7 @@ export default function CourseImageUpload({
                 </Button>
                 <Button onClick={() => setShowUploadBtn(!showUploadBtn)}>
                   Change
+                  {/* delete the image from cloudinary */}
                 </Button>
               </div>
             )}

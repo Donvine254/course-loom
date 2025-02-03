@@ -21,8 +21,8 @@ export function validateImageSize(
     img.src = url;
     img.onload = () => {
       const { width, height } = img;
-      const aspectRatio = width / height;
-      if (width >= 1280 && height >= 720 && aspectRatio === 16 / 9) {
+      const aspectRatio = Math.round((width / height) * 100) / 100;
+      if (width >= 1280 && height >= 720 && aspectRatio === 1.78) {
         resolve({ success: true, message: "Image is in valid aspect ratio" });
       } else {
         resolve({
@@ -49,4 +49,8 @@ export const isValidImageFile = (image: File) => {
     return false;
   }
   return true;
+};
+
+export const imageUrlConstructor = (public_id: string) => {
+  return `https://res.cloudinary.com/dipkbpinx/image/upload/${public_id}.webp`;
 };

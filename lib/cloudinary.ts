@@ -17,7 +17,7 @@ export async function uploadToCloudinary(image: File) {
     return {
       success: true,
       message: "Image saved successfully",
-      image: data.secure_url,
+      image: data.public_id,
     };
   } catch (error) {
     console.error("Error uploading image:", error);
