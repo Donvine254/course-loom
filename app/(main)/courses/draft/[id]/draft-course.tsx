@@ -108,11 +108,12 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
           </div>
         </div>
       </div>
-      <Alert>
+      <Alert variant="destructive">
         <InfoIcon className="h-4 w-4" />
         <AlertTitle>This course is in draft mode</AlertTitle>
         <AlertDescription className="xsm:text-xs">
-          For further information, please contact {course.instructor.username}{" "}
+          For further information, please contact{" "}
+          <span className="capitalize">{course.instructor.username}</span>{" "}
           directly.
         </AlertDescription>
       </Alert>
