@@ -1,5 +1,5 @@
 import React from "react";
-import { Category, Course } from "@prisma/client";
+import { Category, Chapter, Course } from "@prisma/client";
 import { TitleForm } from "@/components/dashboard/course/title-form";
 import { CategoryForm } from "@/components/dashboard/course/category-form";
 import { SummaryForm } from "@/components/dashboard/course/summary-form";
@@ -9,9 +9,10 @@ import { PrerequisitesForm } from "@/components/dashboard/course/prerequisites-f
 import CourseImageUpload from "@/components/dashboard/course/image-form";
 import PricingForm from "@/components/dashboard/course/pricing-form";
 import { CircleDollarSign } from "lucide-react";
-import ProgressIndicator from "@/components/dashboard/course/progress-indicator";
+
 type courseWithCategory = Course & {
   category: Category;
+  chapters: Chapter[];
 };
 export const EditCourseForm = ({
   course,
@@ -22,8 +23,6 @@ export const EditCourseForm = ({
 }) => {
   return (
     <div className="p-2 sm:p-4 md:px-6 mx-auto max-w-4xl ">
-      {/* first section */}
-      <ProgressIndicator course={course} />
       {/* First section */}
       <section className="space-y-4">
         <TitleForm initialData={course} courseId={course.id} />

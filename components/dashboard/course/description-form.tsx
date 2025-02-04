@@ -2,7 +2,7 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { HelpCircle, Pencil, PlusCircle } from "lucide-react";
+import { HelpCircle, Loader2, Pencil, PlusCircle } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Course } from "@prisma/client";
@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/tooltip";
 import { updateCourse } from "@/lib/actions/courses";
 import { cn } from "@/lib/utils";
+import { CustomOverlay } from "@/components/custom/overlay";
 interface DescriptionFormProps {
   initialData: Course;
   courseId: string;
@@ -84,7 +85,8 @@ export const DescriptionForm = ({
   };
 
   return (
-    <div className="border bg-card rounded-md p-4 my-4 transition-[height] animate-accordion-down ease-in-out shadow dark:shadow-indigo-500">
+    <div className="border bg-card rounded-md p-4 my-4 transition-[height] animate-accordion-down ease-in-out shadow dark:shadow-indigo-500 relative">
+      {isSubmitting && <CustomOverlay />}
       <div className="font-medium flex items-center justify-between">
         <label
           htmlFor="description"
@@ -168,8 +170,16 @@ export const DescriptionForm = ({
           />
 
           <div className="flex items-center gap-x-2">
-            <Button disabled={isSubmitting} type="submit" size="sm">
-              Save
+            <Button
+              size="sm"
+              title="save changes"
+              disabled={isSubmitting}
+              type="submit">
+              {isSubmitting ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                "Save"
+              )}
             </Button>
           </div>
         </form>

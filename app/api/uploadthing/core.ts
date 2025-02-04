@@ -4,10 +4,10 @@ const uploadThing = createUploadthing();
 
 export const ourFileRouter = {
   imageUploader: uploadThing({
-    image: {
-      maxFileSize: "4MB",
-      maxFileCount: 1,
-    },
+    "image/jpeg": { maxFileSize: "4MB", maxFileCount: 1 },
+    "image/png": { maxFileSize: "4MB", maxFileCount: 1 },
+    "image/webp": { maxFileSize: "4MB", maxFileCount: 1 },
+    "image/avif": { maxFileSize: "4MB", maxFileCount: 1 },
   }).onUploadComplete(async ({ file }) => {
     return { file: file.url };
   }),

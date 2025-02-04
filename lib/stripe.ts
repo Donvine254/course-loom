@@ -1,10 +1,8 @@
 "use server";
 import Stripe from "stripe";
+import { baseUrl } from "./utils";
 
-const baseUrl =
-  process.env.NODE_ENV !== "production"
-    ? "http://localhost:3000"
-    : "https://courseloom.vercel.app";
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2024-12-18.acacia",
 });

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { HelpCircle, LockIcon, Pencil } from "lucide-react";
+import { HelpCircle, Loader2, LockIcon, Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Course } from "@prisma/client";
 import {
@@ -25,12 +25,13 @@ import { toast } from "sonner";
 import { updateCourse } from "@/lib/actions/courses";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
+import { CustomOverlay } from "@/components/custom/overlay";
 interface PricingFormProps {
   initialData: Course;
   courseId: string;
 }
 const formSchema = z.object({
-  price: z
+  price: z.coerce
     .number()
     .min(19.99, "Minimum price is $19.99")
     .max(199.99, "Maximum price is $199.99"),
@@ -72,10 +73,11 @@ export default function PricingForm({
     }
   };
 
-  const { isSubmitting, isValid } = form.formState;
+  const { isSubmitting } = form.formState;
 
   return (
-    <div className="border bg-card rounded-md p-4 mb-2 shadow dark:shadow-indigo-500">
+    <div className="border bg-card rounded-md p-4 mb-2 shadow dark:shadow-indigo-500 relative">
+      {isSubmitting && <CustomOverlay />}
       <div className="font-medium flex items-center justify-between">
         <label
           htmlFor="title"
@@ -127,12 +129,8 @@ export default function PricingForm({
                     type="number"
                     disabled={isSubmitting || !isEditing}
                     step="0.01"
-                    placeholder="29.99"
+                    placeholder="Set a price for your course"
                     {...field}
-                    onChange={(event) => {
-                      const value = event.target.value;
-                      field.onChange(Number(value));
-                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -171,10 +169,15 @@ export default function PricingForm({
           {isEditing && (
             <div className="flex items-center gap-x-2">
               <Button
-                disabled={!isValid || isSubmitting}
-                type="submit"
-                size="sm">
-                Save
+                size="sm"
+                title="save changes"
+                disabled={isSubmitting}
+                type="submit">
+                {isSubmitting ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  "Save"
+                )}
               </Button>
             </div>
           )}

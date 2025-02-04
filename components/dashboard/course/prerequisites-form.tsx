@@ -7,8 +7,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import {
-  Grip,
   HelpCircle,
+  Loader2,
   Pencil,
   Plus,
   PlusCircle,
@@ -30,6 +30,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { updateCourse } from "@/lib/actions/courses";
+import { CustomOverlay } from "@/components/custom/overlay";
 
 interface PrerequisitesFormProps {
   initialData: Course;
@@ -43,9 +44,9 @@ const formSchema = z.object({
       z.object({
         value: z
           .string()
-          .min(30, "Objective cannot be less than 30 characters")
+          .min(20, "Objective cannot be less than 30 characters")
           .max(160, "Objective cannot be longer than 160 characters")
-          .regex(/^[a-zA-Z0-9 ,.:!?&]+$/, "No special characters allowed"),
+          .regex(/^[a-zA-Z0-9 ,.:!?&\/-]+$/, "No special characters allowed"),
       })
     )
     .refine(
@@ -122,7 +123,8 @@ export const PrerequisitesForm = ({
   };
 
   return (
-    <div className="border bg-card rounded-md p-4 my-4 transition-[height] animate-accordion-down ease-in-out shadow dark:shadow-indigo-500">
+    <div className="border bg-card rounded-md p-4 my-4 transition-[height] animate-accordion-down ease-in-out shadow dark:shadow-indigo-500 relative">
+      {isSubmitting && <CustomOverlay />}
       <div className="font-medium flex items-center justify-between">
         <label className="font-semibold flex items-center gap-2 t">
           Prerequisites
@@ -192,15 +194,6 @@ export const PrerequisitesForm = ({
                         className="shrink-0 text-red-500 bg-gray-100 dark:bg-red-100 hover:bg-destructive hover:text-destructive-foreground dark:hover:text-red-800">
                         <Trash2 className="h-4 w-4 " />
                       </Button>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        title="drag to re-order items"
-                        disabled={fields.length <= 4 || !isEditing}
-                        size="icon"
-                        className="shrink-0">
-                        <Grip className="h-4 w-4 " />
-                      </Button>
                     </div>
                     <FormMessage />
                   </FormItem>
@@ -228,7 +221,11 @@ export const PrerequisitesForm = ({
                   title="save changes"
                   disabled={isSubmitting}
                   type="submit">
-                  Save
+                  {isSubmitting ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    "Save"
+                  )}
                 </Button>
               </div>
             )}

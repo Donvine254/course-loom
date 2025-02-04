@@ -3,7 +3,7 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { HelpCircle, Pencil } from "lucide-react";
+import { HelpCircle, Loader2, Pencil } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -24,6 +24,7 @@ import { toast } from "sonner";
 import { Category } from "@prisma/client";
 import ComboBox from "@/components/custom/combobox";
 import { updateCourse } from "@/lib/actions/courses";
+import { CustomOverlay } from "@/components/custom/overlay";
 
 interface CategoryProps {
   initialData: {
@@ -56,7 +57,7 @@ export const CategoryForm = ({
     defaultValues: initialData,
   });
 
-  const { isSubmitting, isValid } = form.formState;
+  const { isSubmitting } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
@@ -74,7 +75,8 @@ export const CategoryForm = ({
   };
 
   return (
-    <div className="border bg-card rounded-md p-4 my-2 shadow dark:shadow-indigo-500">
+    <div className="border bg-card rounded-md p-4 my-2 shadow dark:shadow-indigo-500 relative">
+      {isSubmitting && <CustomOverlay />}
       <div className="font-medium flex items-center justify-between">
         <label
           htmlFor="category"
@@ -138,11 +140,15 @@ export const CategoryForm = ({
           {isEditing && (
             <div className="flex items-center gap-x-2">
               <Button
-                disabled={!isValid || isSubmitting}
-                type="submit"
                 size="sm"
-                className="py-0.5">
-                Save
+                title="save changes"
+                disabled={isSubmitting}
+                type="submit">
+                {isSubmitting ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  "Save"
+                )}
               </Button>
             </div>
           )}

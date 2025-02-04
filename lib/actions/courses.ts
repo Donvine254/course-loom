@@ -7,25 +7,10 @@ type CourseData = {
   userId: string;
 };
 export async function createCourse(formData: CourseData) {
-  const instructor = await prisma.instructor.findUnique({
-    where: {
-      clerkId: formData.userId,
-    },
-    select: {
-      id: true,
-    },
-  });
-
-  if (!instructor) {
-    return {
-      success: false,
-      error: "Only registered instructors can create courses",
-    };
-  }
   const data = {
     categoryId: formData.categoryId,
     title: formData.title,
-    instructorId: instructor?.id,
+    instructorId: formData.userId,
     slug: slugify(formData.title),
   };
 
@@ -40,11 +25,18 @@ export async function createCourse(formData: CourseData) {
     };
     // eslint-disable-next-line
   } catch (error: any) {
-    console.error(error);
+    if (error.code === "P2002") {
+      return {
+        success: false,
+        error: "A course with this title already exists.",
+      };
+    }
     return {
       success: false,
       error: error.message || "An error occurred while creating the course.",
     };
+  } finally {
+    await prisma.$disconnect();
   }
 }
 
@@ -78,7 +70,14 @@ export const updateCourse = async (
     return { success: true, message: "Course updated successfully" };
     // eslint-disable-next-line
   } catch (error: any) {
-    console.error("Error updating course:", error);
+    if (error.code === "P2002") {
+      return {
+        success: false,
+        error: "A course with this title already exists.",
+      };
+    }
     return { success: false, error: error.message || "Something went wrong" };
+  } finally {
+    await prisma.$disconnect();
   }
 };

@@ -32,6 +32,7 @@ model Instructor {
   clerkId        String              @unique
   email          String              @unique
   username       String
+  image          String              @default("https://ui-avatars.com/api/?background=random&name=john+doe")
   bio            String
   expertise      String
   specialization String
@@ -65,7 +66,7 @@ model Course {
   reviews       Review[]
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
-  Instructor    Instructor   @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  instructor    Instructor   @relation(fields: [instructorId], references: [clerkId], onDelete: Cascade)
 
   @@index([categoryId, slug, instructorId])
 }
