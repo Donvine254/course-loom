@@ -92,8 +92,8 @@ model Chapter {
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
 
-  @@unique([courseId, title]) // Title must be unique within a specific course
-  @@unique([courseId, position]) // Position must be unique within a specific course
+  @@unique([courseId, title])
+  @@unique([courseId, position])
 }
 
 // TODO: Add quizzes for each chapter (maybe ten questions with possible responses and correct answers)
