@@ -1,10 +1,10 @@
 generator client {
-  provider = "prisma-client-js"
-  // previewFeatures = ["fullTextSearchPostgres", "relationJoins"]
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearchPostgres", "relationJoins"]
 }
 
 datasource db {
-  provider  = "sqlite" //update to postgresql in production
+  provider  = "postgresql"
   url       = env("DATABASE_URL")
   directUrl = env("DATABASE_DIRECT_URL")
 }
@@ -84,7 +84,7 @@ model Chapter {
   course       Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId     String
   videoUrl     String?
-  position     Int
+  position     Int            @default(autoincrement())
   isPublished  Boolean        @default(false)
   UserProgress UserProgress[]
   MuxData      MuxData?
