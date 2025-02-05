@@ -19,7 +19,11 @@ export default async function page({
     where: { id: id, instructorId: user.id },
     include: {
       category: true,
-      chapters: true,
+      chapters: {
+        orderBy: {
+          position: "asc",
+        },
+      },
       instructor: {
         select: {
           clerkId: true,
