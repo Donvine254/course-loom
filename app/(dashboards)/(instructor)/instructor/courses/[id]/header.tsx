@@ -50,11 +50,11 @@ export const Header = ({ course }: { course: CourseWithChapter }) => {
               Basic Information
             </Button>
           </Link>
-          <Link href={`/instructor/courses/${course.id}/sections`}>
+          <Link href={`/instructor/courses/${course.id}/curriculum`}>
             <Button
               size="sm"
               variant={
-                pathname === `/instructor/courses/${course.id}/sections`
+                pathname === `/instructor/courses/${course.id}/curriculum`
                   ? "default"
                   : "outline"
               }>
@@ -76,7 +76,10 @@ export const Header = ({ course }: { course: CourseWithChapter }) => {
           </Button>
         </div>
       </div>
-      <ProgressIndicator total={requiredFieldsCount} current={missingFieldsCount} />
+      <ProgressIndicator
+        total={requiredFieldsCount}
+        current={missingFieldsCount}
+      />
     </div>
   );
 };

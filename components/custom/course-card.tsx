@@ -1,4 +1,3 @@
-import React from "react";
 import Image from "next/image";
 import { ArrowRight, BookOpen } from "lucide-react";
 import Link from "next/link";
@@ -18,15 +17,17 @@ export default function CourseCard({ course }: { course: CourseCardProps }) {
   return (
     <div className="w-fit border dark:border-gray-900 shadow bg-card dark:bg-gray-950 dark:text-white rounded-md dark:shadow-indigo-700">
       <div className="aspect-video w-full relative overflow-hidden">
-        <Image
-          alt={title}
-          src={image}
-          fill
-          placeholder="blur"
-          blurDataURL="/placeholder.jpg"
-          className="rounded-t-md object-cover  cursor-pointer"
-          priority
-        />
+        <Link href={`/courses/${slugify(title)}`}>
+          <Image
+            alt={title}
+            src={image}
+            fill
+            placeholder="blur"
+            blurDataURL="/placeholder.jpg"
+            className="rounded-t-md object-cover  cursor-pointer"
+            priority
+          />
+        </Link>
       </div>
       <div className="py-6 px-3 space-y-2">
         <div className="flex items-center justify-between">
