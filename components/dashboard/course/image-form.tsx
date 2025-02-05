@@ -9,6 +9,7 @@ import { ImageUploadButton } from "@/components/ui/file-upload";
 import Image from "next/image";
 import { deleteCloudinaryImage } from "@/lib/cloudinary";
 import { useRouter } from "next/navigation";
+import { imageUrlConstructor } from "@/lib/utils";
 
 interface ImageFormProps {
   initialData: Course;
@@ -25,9 +26,7 @@ export default function CourseImageUpload({
   courseId,
 }: ImageFormProps) {
   const [image, setImage] = useState<string>(
-    initialData.imageUrl
-      ? `https://res.cloudinary.com/dipkbpinx/image/upload/${initialData.imageUrl}.webp`
-      : ""
+    initialData.imageUrl ? imageUrlConstructor(initialData.imageUrl) : ""
   );
   const router = useRouter();
 
@@ -61,15 +60,14 @@ export default function CourseImageUpload({
         Course image
       </h2>
       <div className="grid grid-cols-1  md:group-has-[[data-collapsible=icon]]/sidebar-wrapper:grid-cols-2 lg:grid-cols-2  gap-6">
-        <div className="aspect-[16/9] relative bg-muted rounded-lg overflow-hidden">
+        <div className="aspect-video relative bg-muted rounded-lg overflow-hidden">
           {image ? (
             <Image
               src={image || "/placeholder.jpg"}
               alt="Course banner image"
-              className="bg-neutral italic"
+              className="bg-neutral italic object-cover cursor-pointer"
               fill
               priority
-              style={{ objectFit: "cover" }}
             />
           ) : (
             <div className="flex items-center justify-center h-full bg-none  rounded-md">

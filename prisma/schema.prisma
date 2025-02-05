@@ -1,10 +1,10 @@
 generator client {
-  provider = "prisma-client-js"
-  // previewFeatures = ["fullTextSearchPostgres", "relationJoins"]
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearchPostgres", "relationJoins"]
 }
 
 datasource db {
-  provider  = "sqlite" //update to postgresql in production
+  provider  = "postgresql"
   url       = env("DATABASE_URL")
   directUrl = env("DATABASE_DIRECT_URL")
 }
@@ -84,13 +84,16 @@ model Chapter {
   course       Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId     String
   videoUrl     String?
-  position     Int            @default(0)
+  position     Int            @default(autoincrement())
   isPublished  Boolean        @default(false)
   UserProgress UserProgress[]
   MuxData      MuxData?
   isFree       Boolean        @default(false)
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
+
+  @@unique([courseId, title])
+  @@unique([courseId, position])
 }
 
 // TODO: Add quizzes for each chapter (maybe ten questions with possible responses and correct answers)
