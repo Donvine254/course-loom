@@ -94,3 +94,19 @@ export async function createInstructorAccount(data: InstructorData) {
     await setRole(data.clerkId, "instructor");
   }
 }
+
+export async function updateUser(data: Partial<userData>, id: string) {
+  try {
+    await prisma.user.update({
+      where: {
+        id: id,
+      },
+      data,
+    });
+  } catch (error) {
+    console.error("An error occurred", error);
+    throw new Error("Something went wrong");
+  } finally {
+    await prisma.$disconnect();
+  }
+}
