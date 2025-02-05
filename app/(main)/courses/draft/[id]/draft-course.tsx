@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { imageUrlConstructor } from "@/lib/utils";
+import parse from "html-react-parser";
 import {
   Attachment,
   Category,
@@ -61,7 +62,7 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
             <div>
               <div className="flex items-center gap-2 my-2 lg:mb-4">
                 <span className="text-sm font-medium text-indigo-600 bg-indigo-50 px-3 py-1 rounded-sm  ">
-                  40% Off
+                  Draft
                 </span>
                 <span className="text-sm font-medium truncate">
                   {course.category.name}
@@ -194,9 +195,19 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
                   </span>
                 </div>
               </div>
-              <p className="text-muted-foreground leading-relaxed mb-8">
-                {course.description}
-              </p>
+
+              {course.description ? (
+                <p className="text-muted-foreground leading-relaxed mb-8">
+                  {" "}
+                  {parse(course.description || "") ?? course.description}{" "}
+                </p>
+              ) : (
+                <p className="text-muted-foreground leading-relaxed mb-8">
+                  {" "}
+                  No course description provided.
+                </p>
+              )}
+
               <div className="mb-4">
                 <h3 className="text-xl font-semibold mb-4">Prerequisites</h3>
                 <ul className="space-y-2 md:grid md:grid-cols-2">
