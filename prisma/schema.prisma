@@ -79,12 +79,12 @@ model Category {
 
 model Chapter {
   id           String         @id @default(cuid())
-  title        String
+  title        String         @unique
   description  String?
   course       Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId     String
   videoUrl     String?
-  position     Int            @default(0)
+  position     Int            @unique
   isPublished  Boolean        @default(false)
   UserProgress UserProgress[]
   MuxData      MuxData?
