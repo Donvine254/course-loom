@@ -4,7 +4,6 @@ import prisma from "@/prisma/prisma";
 type ChapterData = {
   courseId: string;
   title: string;
-  position: number;
 };
 export async function createCourseChapter(formData: ChapterData) {
   try {
@@ -34,33 +33,6 @@ export async function createCourseChapter(formData: ChapterData) {
   }
 }
 
-// export async function updateChapterPositions(
-//   chapters: { id: string; position: number }[]
-// ) {
-//   try {
-//     // await Promise.all(
-//     //   chapters.map((chapter) =>
-//     //     prisma.chapter.update({
-//     //       where: { id: chapter.id },
-//     //       data: { position: chapter.position },
-//     //     })
-//     //   )
-//     // );
-//     for (const chapter of chapters) {
-//       await prisma.chapter.update({
-//         where: { id: chapter.id },
-//         data: { position: chapter.position },
-//       });
-//     }
-//     return { success: true, message: "Chapters reordered successfully" };
-//     // eslint-disable-next-line
-//   } catch (error: any) {
-//     return {
-//       success: false,
-//       error: error.message || "Failed to reorder chapters",
-//     };
-//   }
-// }
 
 export async function updateChapterPositions(
   chapters: { id: string; position: number }[]

@@ -36,7 +36,6 @@ export default function ChapterForm({ id }: { id: string }) {
       const res = await createCourseChapter({
         ...values,
         courseId: id,
-        position: 1,
       });
       if (res.success) {
         toast.success("chapter created successfully");
