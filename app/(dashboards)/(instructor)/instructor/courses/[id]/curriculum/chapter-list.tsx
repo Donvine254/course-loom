@@ -18,6 +18,8 @@ import {
 import Link from "next/link";
 import { CustomOverlay } from "@/components/custom/overlay";
 import { toast } from "sonner";
+import { updateChapterPositions } from "@/lib/actions/chapters";
+import { useRouter } from "next/navigation";
 
 export default function ChapterList({
   items,
@@ -29,6 +31,7 @@ export default function ChapterList({
   const [isMounted, setIsMounted] = useState(false);
   const [chapters, setChapters] = useState<Chapter[]>(items);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setIsMounted(true);
@@ -60,8 +63,15 @@ export default function ChapterList({
 
   const onReOrder = async (updateData: { id: string; position: number }[]) => {
     setIsLoading(true);
-    toast.loading("Reordering course chapters...");
-    console.log(updateData);
+    try {
+      await updateChapterPositions(updateData);
+      setIsLoading(false);
+    //   router.refresh();
+    } catch (error) {
+      console.log(error);
+      toast.error("Error updating course chapters");
+      setIsLoading(false);
+    }
   };
   return (
     <section className="p-2 sm:p-4 md:px-6 mx-auto max-w-4xl">

@@ -79,18 +79,21 @@ model Category {
 
 model Chapter {
   id           String         @id @default(cuid())
-  title        String         @unique
+  title        String
   description  String?
   course       Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId     String
   videoUrl     String?
-  position     Int            @unique
+  position     Int
   isPublished  Boolean        @default(false)
   UserProgress UserProgress[]
   MuxData      MuxData?
   isFree       Boolean        @default(false)
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
+
+  @@unique([courseId, title]) // Title must be unique within a specific course
+  @@unique([courseId, position]) // Position must be unique within a specific course
 }
 
 // TODO: Add quizzes for each chapter (maybe ten questions with possible responses and correct answers)

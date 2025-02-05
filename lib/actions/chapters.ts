@@ -33,3 +33,33 @@ export async function createCourseChapter(formData: ChapterData) {
     await prisma.$disconnect();
   }
 }
+
+export async function updateChapterPositions(
+  chapters: { id: string; position: number }[]
+) {
+  try {
+    // await Promise.all(
+    //   chapters.map((chapter) =>
+    //     prisma.chapter.update({
+    //       where: { id: chapter.id },
+    //       data: { position: chapter.position },
+    //     })
+    //   )
+    // );
+    for (const chapter of chapters) {
+      await prisma.chapter.update({
+        where: { id: chapter.id },
+        data: { position: chapter.position },
+      });
+    }
+    return { success: true, message: "Chapters reordered successfully" };
+    // eslint-disable-next-line
+  } catch (error: any) {
+    return {
+      success: false,
+      error: error.message || "Failed to reorder chapters",
+    };
+  } finally {
+    await prisma.$disconnect();
+  }
+}
