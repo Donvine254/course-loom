@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
-import { createUser, userData } from "@/lib/actions/admin";
+import { createUser, userData, updateUser } from "@/lib/actions/admin";
 export async function GET() {
   return NextResponse.json({ message: "This is a private route" });
 }
@@ -72,7 +72,24 @@ export async function POST(req: NextRequest) {
 
     await createUser(user as userData);
   }
+  if (eventType === "user.updated") {
+    const { id, email_addresses, first_name, last_name, image_url } = evt.data;
 
+    if (!id || !email_addresses) {
+      return new Response("Error occurred -- missing data", {
+        status: 400,
+      });
+    }
+
+    const user = {
+      email: email_addresses[0].email_address,
+      firstName: first_name,
+      lastName: last_name,
+      profileImage: image_url,
+    };
+
+    await updateUser(user as userData, id);
+  }
   return new Response("Event processed successfully", { status: 200 });
 }
 
