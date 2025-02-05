@@ -4,6 +4,7 @@ import prisma from "@/prisma/prisma";
 type ChapterData = {
   courseId: string;
   title: string;
+  position: number;
 };
 export async function createCourseChapter(formData: ChapterData) {
   try {

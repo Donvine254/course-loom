@@ -15,6 +15,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { createCourseChapter } from "@/lib/actions/chapters";
 const formSchema = z.object({
   title: z
     .string()
@@ -32,8 +33,17 @@ export default function ChapterForm({ id }: { id: string }) {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(id, values);
     try {
-      toast.success("chapter created successfully");
-      router.refresh();
+      const res = await createCourseChapter({
+        ...values,
+        courseId: id,
+        position: 1,
+      });
+      if (res.success) {
+        toast.success("chapter created successfully");
+        router.refresh();
+      } else {
+        toast.error(res.error || "Error creating chapter");
+      }
     } catch {
       toast.error("Something went wrong");
     }
