@@ -9,7 +9,7 @@ import {
   Draggable,
   DropResult,
 } from "@hello-pangea/dnd";
-import { Grip, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { Grip, MoreHorizontal, Pencil } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -18,8 +18,8 @@ import {
 import Link from "next/link";
 import { CustomOverlay } from "@/components/custom/overlay";
 import { toast } from "sonner";
-import { updateChapterPositions } from "@/lib/actions/chapters";
-import { useRouter } from "next/navigation";
+import deleteChapter, { updateChapterPositions } from "@/lib/actions/chapters";
+import DeleteButton from "@/components/custom/delete-dialog";
 
 export default function ChapterList({
   items,
@@ -31,8 +31,6 @@ export default function ChapterList({
   const [isMounted, setIsMounted] = useState(false);
   const [chapters, setChapters] = useState<Chapter[]>(items);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
-
   useEffect(() => {
     setIsMounted(true);
     setChapters(items);
@@ -66,11 +64,25 @@ export default function ChapterList({
     try {
       await updateChapterPositions(updateData);
       setIsLoading(false);
-    //   router.refresh();
     } catch (error) {
       console.log(error);
       toast.error("Error updating course chapters");
       setIsLoading(false);
+    }
+  };
+  const handleDeleteChapter = async (id: string) => {
+    setIsLoading(true);
+    try {
+      const res = await deleteChapter(id);
+      setIsLoading(false);
+      if (res.success) {
+        const updatedChapters = items.filter((item) => item.id !== courseId);
+        setChapters(updatedChapters);
+        toast.success(res.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
     }
   };
   return (
@@ -122,12 +134,11 @@ export default function ChapterList({
                                 Edit
                               </Link>
                             </Button>
-                            <Button
-                              variant="ghost"
-                              className="w-full justify-start gap-2 text-red-600 hover:text-red-700 hover:bg-red-100">
-                              <Trash2 className="h-4 w-4" />
-                              Delete
-                            </Button>
+                            <DeleteButton
+                              onDelete={handleDeleteChapter}
+                              id={chapter.id}
+                              item="course chapter"
+                            />
                           </PopoverContent>
                         </Popover>
                       </div>
