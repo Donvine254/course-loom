@@ -41,6 +41,7 @@ export default function ChapterForm({ id }: { id: string }) {
       if (res.success) {
         toast.success("chapter created successfully");
         router.refresh();
+        form.reset(); // reset the form
       } else {
         toast.error(res.error || "Error creating chapter");
       }

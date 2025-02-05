@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { currentUser } from "@clerk/nextjs/server";
 import { Header } from "../header";
 import ChapterForm from "./chapter-form";
+import ChapterList from "./chapter-list";
 export default async function page({
   params,
 }: {
@@ -29,11 +30,12 @@ export default async function page({
   if (!course || !user) {
     redirect("/instructor");
   }
- 
+
   return (
     <section>
       <Header course={course} />
       <ChapterForm id={course.id} />
+      <ChapterList items={course.chapters} courseId={course.id} />
     </section>
   );
 }
