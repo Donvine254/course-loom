@@ -1,6 +1,7 @@
 "use server";
 import prisma from "@/prisma/prisma";
 import { CreateOrUpdateMuxData } from "./mux";
+import { getVideoDuration } from "../utils";
 
 type ChapterData = {
   courseId: string;
@@ -93,15 +94,20 @@ type UpdateData = {
   title: string;
   description?: string;
   videoUrl?: string;
+  duration?: number;
   isFree: boolean;
 };
 export async function updateChapter(formData: UpdateData, chapterId: string) {
   try {
+    const updatedData = { ...formData };
+    if (formData.videoUrl) {
+      updatedData.duration = (await getVideoDuration(formData.videoUrl)) || 0;
+    }
     await prisma.chapter.update({
       where: {
         id: chapterId,
       },
-      data: formData,
+      data: updatedData,
     });
     if (formData.videoUrl) {
       await CreateOrUpdateMuxData({ videoUrl: formData.videoUrl, chapterId });
