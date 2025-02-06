@@ -20,11 +20,10 @@ import { Loader2, Lock } from "lucide-react";
 import Link from "next/link";
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
-import { FileUpload } from "@/components/ui/file-upload";
-import MuxPlayer from "@mux/mux-player-react";
 import { updateChapter } from "@/lib/actions/chapters";
-import { useRouter } from "next/navigation";
 import { CustomOverlay } from "@/components/custom/overlay";
+import { ReloadWindow } from "@/lib/utils";
+import ChapterVideoUpload from "./video-form";
 const formSchema = z.object({
   title: z
     .string()
@@ -34,9 +33,7 @@ const formSchema = z.object({
     .string()
     .min(200, "description is required and must be greater than 100 characters")
     .optional(),
-  videoUrl: z.string().optional(),
   isFree: z.boolean(),
-  duration: z.number().optional(),
 });
 type ChapterWithMuxData = Chapter & {
   MuxData?: MuxData | null;
@@ -51,12 +48,9 @@ export default function EditChapterForm({
     defaultValues: {
       title: initialData.title,
       description: initialData.description || "",
-      videoUrl: initialData.videoUrl || "",
       isFree: initialData.isFree,
-      duration: initialData.duration || 0,
     },
   });
-  const router = useRouter();
   const { isSubmitting } = form.formState;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(values);
@@ -64,7 +58,7 @@ export default function EditChapterForm({
       const res = await updateChapter(values, initialData.id);
       if (res.success) {
         toast.success("Submitted successfully");
-        router.refresh();
+        ReloadWindow();
       } else {
         toast.error(res.error || "Something went wrong");
       }
@@ -122,75 +116,7 @@ export default function EditChapterForm({
               </FormItem>
             )}
           />
-          {initialData.videoUrl && (
-            <div className="my-5 ">
-              {/* modify to remove hydration errors */}
-              <MuxPlayer
-                playbackId={
-                  initialData.MuxData?.playbackId ||
-                  "a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
-                }
-                streamType="on-demand"
-                className="w-full border dark:border-indigo-100 shadow dark:shadow-indigo-500  "
-              />
-            </div>
-          )}
-
-          <div className="grid grid-cols-1  md:group-has-[[data-collapsible=icon]]/sidebar-wrapper:grid-cols-2 lg:grid-cols-2 gap-2 md:gap-6">
-            <FormField
-              control={form.control}
-              name="videoUrl"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>
-                    Video <span className="text-red-500">*</span>
-                  </FormLabel>
-                  <FormControl>
-                    <FileUpload
-                      onChange={(url: string, duration: number) => {
-                        field.onChange(url);
-                        form.setValue("duration", duration);
-                      }}
-                      endpoint="videoUploader"
-                      title={initialData.title}
-                      className="border-2 bg-card dark:bg-secondary text-muted-foreground"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* extract this to a separate component */}
-            <div className="space-y-2 md:space-y-4 flex flex-col justify-center text-muted-foreground">
-              <p className="md:mb-2 xsm:text-sm xsm:text-center">
-                Upload your chapter video here. All videos must be at least 720p
-                and less than 1GB in size. Students are more likely to enroll if
-                your videos are of high quality.{" "}
-              </p>
-              <small className="xsm:text-center">
-                Click here to see{" "}
-                <a
-                  className="text-indigo-500 underline"
-                  href="https://riverside.fm/blog/video-production-tips"
-                  referrerPolicy="no-referrer"
-                  target="_blank">
-                  tips on how to make a good video!
-                </a>
-              </small>
-            </div>
-          </div>
-          {initialData.videoUrl && (
-            <span className="break-all my-2 text-sm">
-              Video Url:{" "}
-              <a
-                href={initialData.videoUrl}
-                target="_blank"
-                className="hover:underline"
-                referrerPolicy="no-referrer">
-                {initialData.videoUrl}
-              </a>
-            </span>
-          )}
+          <ChapterVideoUpload initialData={initialData} />
           <FormField
             control={form.control}
             name="isFree"

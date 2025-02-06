@@ -4,11 +4,12 @@ import {
   generateUploadDropzone,
 } from "@uploadthing/react";
 import { baseUrl } from "./utils";
+import { updateChapterVideo } from "./actions/chapters";
 
 export const UploadButton = generateUploadButton<OurFileRouter>();
 export const UploadDropzone = generateUploadDropzone<OurFileRouter>();
 
-export async function deleteFile(url: string) {
+export async function deleteFile(url: string, chapterId: string) {
   try {
     const response = await fetch(`${baseUrl}/api/uploadthing`, {
       method: "DELETE",
@@ -24,7 +25,7 @@ export async function deleteFile(url: string) {
         error: `Failed to delete file: ${response.statusText}`,
       };
     }
-
+    await updateChapterVideo({ videoUrl: "", duration: 0 }, chapterId);
     const data = await response.json();
     return { success: true, data };
   } catch (error) {

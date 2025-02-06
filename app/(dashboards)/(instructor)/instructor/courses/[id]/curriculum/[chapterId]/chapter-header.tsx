@@ -82,7 +82,7 @@ export const ChapterHeader = ({ chapter }: { chapter: Chapter }) => {
       )}
       {/* buttons section */}
       <div className="flex gap-2 overflow-x-auto p-4 md:px-6 mx-auto max-w-4xl w-full justify-between">
-        <Link href={`/instructor/courses/${chapter.courseId}`}>
+        <Link href={`/instructor/courses/${chapter.courseId}/curriculum`}>
           <Button size="sm" className="justify-between" variant="default">
             <MoveLeft className="h-4 w-4 mr-2" /> Back to Curriculum
           </Button>
