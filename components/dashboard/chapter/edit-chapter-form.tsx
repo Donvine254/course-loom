@@ -16,7 +16,7 @@ import { toast } from "sonner";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Loader2 } from "lucide-react";
+import { Loader2, Lock } from "lucide-react";
 import Link from "next/link";
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
@@ -48,7 +48,7 @@ export default function EditChapterForm({
       isFree: initialData.isFree,
     },
   });
-  const { isValid, isSubmitting } = form.formState;
+  const { isSubmitting } = form.formState;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(values);
     toast.success("Submitted successfully");
@@ -83,7 +83,6 @@ export default function EditChapterForm({
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="description"
@@ -102,7 +101,6 @@ export default function EditChapterForm({
               </FormItem>
             )}
           />
-
           {initialData.videoUrl && (
             <div className="my-5">
               <MuxPlayer
@@ -124,7 +122,7 @@ export default function EditChapterForm({
                     onChange={(url: string) => field.onChange(url)}
                     endpoint="videoUploader"
                     title={initialData.title}
-                    className="border bg-secondary text-muted-foreground"
+                    className="border-2 bg-card dark:bg-secondary text-muted-foreground"
                   />
                 </FormControl>
                 <FormMessage />
@@ -135,9 +133,11 @@ export default function EditChapterForm({
             control={form.control}
             name="isFree"
             render={({ field }) => (
-              <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
-                <div className="space-y-0.5">
-                  <FormLabel>Accessibility</FormLabel>
+              <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 bg-card  mb-2 shadow dark:shadow-indigo-500 relative gap-4">
+                <div className="space-y-4">
+                  <FormLabel className="flex items-center gap-2">
+                    <Lock className="h-4 w-4" /> Accessibility
+                  </FormLabel>
                   <FormDescription>
                     Everyone can access this section for FREE
                   </FormDescription>
@@ -159,7 +159,7 @@ export default function EditChapterForm({
                 Cancel
               </Button>
             </Link>
-            <Button type="submit" disabled={!isValid || isSubmitting}>
+            <Button type="submit" disabled={isSubmitting}>
               {isSubmitting ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
