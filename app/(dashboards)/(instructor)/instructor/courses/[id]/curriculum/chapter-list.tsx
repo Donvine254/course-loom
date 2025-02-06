@@ -114,7 +114,7 @@ export default function ChapterList({
                         </div>
                         <div className="w-[75%] xsm:max-w-[65%] sm:flex-1 inline-flex flex-wrap items-center justify-between rounded-md border bg-gray-100 dark:bg-input  px-3 py-2   md:text-sm">
                           <p className="truncate xsm:text-xs text-sm">
-                            {chapter.title}
+                            {index + 1}. {chapter.title}
                           </p>
                           <div className=" gap-2 items-center hidden md:group-has-[[data-collapsible=icon]]/sidebar-wrapper:flex lg:flex">
                             {chapter.isFree && (
@@ -150,6 +150,7 @@ export default function ChapterList({
                               <DeleteButton
                                 onDelete={handleDeleteChapter}
                                 id={chapter.id}
+                                text="Delete"
                                 item="course chapter"
                               />
                               <Separator />
