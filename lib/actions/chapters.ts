@@ -1,5 +1,6 @@
 "use server";
 import prisma from "@/prisma/prisma";
+import { CreateOrUpdateMuxData } from "./mux";
 
 type ChapterData = {
   courseId: string;
@@ -32,7 +33,6 @@ export async function createCourseChapter(formData: ChapterData) {
     await prisma.$disconnect();
   }
 }
-
 
 export async function updateChapterPositions(
   chapters: { id: string; position: number }[]
@@ -84,6 +84,61 @@ export default async function deleteChapter(chapterId: string) {
       success: false,
       error: error.message || "Failed to delete chapters",
     };
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+type UpdateData = {
+  title: string;
+  description?: string;
+  videoUrl?: string;
+  duration?: number;
+  isFree: boolean;
+};
+export async function updateChapter(formData: UpdateData, chapterId: string) {
+  try {
+    await prisma.chapter.update({
+      where: {
+        id: chapterId,
+      },
+      data: formData,
+    });
+    if (formData.videoUrl) {
+      await CreateOrUpdateMuxData({ videoUrl: formData.videoUrl, chapterId });
+    }
+    return { success: true, message: "Chapter updated successfully" };
+    // eslint-disable-next-line
+  } catch (error: any) {
+    if (error.code === "P2002") {
+      return {
+        success: false,
+        error: "A chapter with this title already exists.",
+      };
+    }
+    return {
+      success: false,
+      error: error.message || "An error occurred while creating the chapter.",
+    };
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+export async function PublishChapter(chapterId: string) {
+  try {
+    await prisma.chapter.update({
+      where: {
+        id: chapterId,
+      },
+      data: {
+        isPublished: true,
+      },
+    });
+    return { success: true, message: "Chapter published successfully" };
+    // eslint-disable-next-line
+  } catch (error: any) {
+    return { success: false, error: error.message || "Something went wrong" };
   } finally {
     await prisma.$disconnect();
   }

@@ -11,7 +11,11 @@ export default async function Page({
     where: { id: id },
     include: {
       category: true,
-      chapters: true,
+      chapters: {
+        orderBy: {
+          position: "asc",
+        },
+      },
       instructor: {
         include: {
           courses: {

@@ -1,7 +1,6 @@
 "use client";
 import { Chapter } from "@prisma/client";
 import React, { useState, useEffect } from "react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   DragDropContext,
@@ -20,6 +19,9 @@ import { CustomOverlay } from "@/components/custom/overlay";
 import { toast } from "sonner";
 import deleteChapter, { updateChapterPositions } from "@/lib/actions/chapters";
 import DeleteButton from "@/components/custom/delete-dialog";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
 
 export default function ChapterList({
   items,
@@ -82,6 +84,7 @@ export default function ChapterList({
       }
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
       toast.error("Something went wrong");
     }
   };
@@ -103,44 +106,80 @@ export default function ChapterList({
                       <div
                         ref={provided.innerRef}
                         {...provided.draggableProps}
-                        className="flex w-full items-center space-x-2 my-4">
+                        className="flex w-full items-center justify-between space-x-2 my-4">
                         <div
-                          title="Drag to re-order items"
-                          className="shrink-0 px-2 py-3 rounded-md h-10 w-10 border border-input bg-background inline-flex items-center justify-center hover:text-primary-foreground hover:bg-primary cursor-grab"
+                          title="Drag to re-order chapters"
+                          className="shrink-0 px-2 py-3 rounded-md h-10  border border-input bg-background inline-flex items-center justify-center hover:text-primary-foreground hover:bg-primary cursor-grab w-10"
                           {...provided.dragHandleProps}>
                           <Grip className="h-4 w-4" />
                         </div>
-                        <Input
-                          defaultValue={chapter.title}
-                          disabled
-                          className="w-full flex-1 truncate xsm:text-xs"
-                        />
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <Button variant="ghost" size="icon">
-                              <MoreHorizontal className="h-4 w-4" />
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent
-                            className="w-40 space-y-2"
-                            align="end">
-                            <Button
-                              variant="ghost"
-                              className="w-full justify-start gap-2"
-                              asChild>
-                              <Link
-                                href={`/instructor/courses/${courseId}/curriculum/${chapter.id}`}>
-                                <Pencil className="h-4 w-4" />
-                                Edit
-                              </Link>
-                            </Button>
-                            <DeleteButton
-                              onDelete={handleDeleteChapter}
-                              id={chapter.id}
-                              item="course chapter"
-                            />
-                          </PopoverContent>
-                        </Popover>
+                        <div className="w-[75%] xsm:max-w-[65%] sm:flex-1 inline-flex flex-wrap items-center justify-between rounded-md border bg-gray-100 dark:bg-input  px-3 py-2   md:text-sm">
+                          <p className="truncate xsm:text-xs text-sm">
+                            {index + 1}. {chapter.title}
+                          </p>
+                          <div className=" gap-2 items-center hidden md:group-has-[[data-collapsible=icon]]/sidebar-wrapper:flex lg:flex">
+                            {chapter.isFree && (
+                              <Badge variant="default">Free</Badge>
+                            )}
+                            <Badge
+                              variant="outline"
+                              className={cn(
+                                chapter.isPublished
+                                  ? "bg-green-500 text-white w-full flex items-center justify-center border border-green-500"
+                                  : "bg-indigo-500 text-white w-full flex items-center justify-center border border-indigo-500"
+                              )}>
+                              {chapter.isPublished ? "Published" : "Draft"}
+                            </Badge>
+                          </div>
+                        </div>
+                        <div>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent
+                              className="w-40 space-y-2"
+                              align="end">
+                              <Button
+                                variant="ghost"
+                                className="w-full justify-start gap-2"
+                                asChild>
+                                <Link
+                                  href={`/instructor/courses/${courseId}/curriculum/${chapter.id}`}>
+                                  <Pencil className="h-4 w-4" />
+                                  Edit
+                                </Link>
+                              </Button>
+                              <DeleteButton
+                                onDelete={handleDeleteChapter}
+                                id={chapter.id}
+                                text="Delete"
+                                item="course chapter"
+                              />
+                              <Separator />
+                              <div className="flex flex-col gap-2 items-center md:group-has-[[data-collapsible=icon]]/sidebar-wrapper:hidden  lg:hidden">
+                                {chapter.isFree && (
+                                  <Badge
+                                    variant="default"
+                                    className="w-full flex items-center justify-center">
+                                    Free
+                                  </Badge>
+                                )}
+                                <Badge
+                                  variant="outline"
+                                  className={cn(
+                                    chapter.isPublished
+                                      ? "bg-green-500 text-white w-full flex items-center justify-center border border-green-500"
+                                      : "bg-indigo-500 text-white w-full flex items-center justify-center border border-indigo-500"
+                                  )}>
+                                  {chapter.isPublished ? "Published" : "Draft"}
+                                </Badge>
+                              </div>
+                            </PopoverContent>
+                          </Popover>
+                        </div>
                       </div>
                     )}
                   </Draggable>

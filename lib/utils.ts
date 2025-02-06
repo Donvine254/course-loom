@@ -60,3 +60,27 @@ export const imageUrlConstructor = (public_id: string) => {
     return `https://res.cloudinary.com/dipkbpinx/image/upload/${public_id}.webp`;
   } else return public_id;
 };
+
+export function formatMuxDuration(seconds: number): string {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = Math.floor(seconds % 60);
+
+  return `${hours}hr ${minutes}min ${remainingSeconds}s`;
+}
+
+export const getVideoDuration = async (videoUrl: string): Promise<number> => {
+  return new Promise((resolve, reject) => {
+    const videoElement = document.createElement("video");
+    videoElement.preload = "metadata";
+    videoElement.onloadedmetadata = () => {
+      const duration = videoElement.duration;
+      resolve(duration);
+      window.URL.revokeObjectURL(videoElement.src);
+    };
+    videoElement.onerror = () => {
+      reject(new Error("Failed to load video metadata"));
+    };
+    videoElement.src = videoUrl;
+  });
+};

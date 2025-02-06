@@ -3,7 +3,7 @@ import prisma from "@/prisma/prisma";
 import { redirect } from "next/navigation";
 import { currentUser } from "@clerk/nextjs/server";
 import { Header } from "../header";
-import ChapterForm from "./chapter-form";
+import ChapterForm from "./create-chapter-form";
 import ChapterList from "./chapter-list";
 export default async function page({
   params,

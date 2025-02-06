@@ -16,9 +16,10 @@ interface DeleteProps {
   id: string;
   item: string;
   onDelete: (id: string) => void;
+  text?: string;
 }
 
-const DeleteButton = ({ id, onDelete, item }: DeleteProps) => {
+const DeleteButton = ({ id, onDelete, item, text }: DeleteProps) => {
   const [open, setOpen] = useState(false);
   async function handleDelete() {
     onDelete(id);
@@ -29,9 +30,10 @@ const DeleteButton = ({ id, onDelete, item }: DeleteProps) => {
       <DialogTrigger asChild>
         <Button
           variant="ghost"
+          type="button"
+          title="Delete"
           className="w-full justify-start gap-2 text-red-600 hover:text-red-700 hover:bg-red-100">
-          <Trash2 className="h-4 w-4" />
-          Delete
+          <Trash2 className="h-4 w-4" /> {text}
         </Button>
       </DialogTrigger>
       <DialogContent>

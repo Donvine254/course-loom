@@ -81,3 +81,23 @@ export const updateCourse = async (
     await prisma.$disconnect();
   }
 };
+
+export async function PublishCourse(courseId: string) {
+  try {
+    await prisma.course.update({
+      where: {
+        id: courseId,
+      },
+      data: {
+        isPublished: true,
+        status: "PUBLISHED",
+      },
+    });
+    return { success: true, message: "Course published successfully" };
+    // eslint-disable-next-line
+  } catch (error: any) {
+    return { success: false, error: error.message || "Something went wrong" };
+  } finally {
+    await prisma.$disconnect();
+  }
+}

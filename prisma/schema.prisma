@@ -84,6 +84,7 @@ model Chapter {
   course       Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId     String
   videoUrl     String?
+  duration     Int?           @default(0)
   position     Int            @default(autoincrement())
   isPublished  Boolean        @default(false)
   UserProgress UserProgress[]

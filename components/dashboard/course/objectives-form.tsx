@@ -240,7 +240,7 @@ export const ObjectivesForm = ({
                             </Button>
                             <div
                               title="drag to re-order items"
-                              className="shrink-0 px-2 py-3 rounded-md h-10 w-10 border border-input bg-background inline-flex items-center justify-center hover:text-accent-foreground"
+                              className="shrink-0 px-2 py-3 rounded-md h-10 w-10 border border-input bg-background inline-flex items-center justify-center hover:text-primary-foreground hover:bg-primary cursor-grab"
                               {...provided.dragHandleProps}>
                               <Grip className="h-4 w-4" />
                             </div>

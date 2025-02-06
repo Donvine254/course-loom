@@ -15,7 +15,7 @@ export default function ProgressIndicator({
       <p className="font-medium">
         Complete all fields ({progress}/{total})
       </p>
-      <div className="w-full bg-secondary h-2 rounded-full">
+      <div className="w-full bg-indigo-200  h-2 rounded-full">
         <div
           className="bg-indigo-500 h-2 rounded-full transition-all duration-300"
           style={{ width: `${progressPercentage}%` }}

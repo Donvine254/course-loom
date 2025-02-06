@@ -5,11 +5,15 @@ import { toast } from "sonner";
 import { Button } from "./button";
 import { useRef, useState } from "react";
 import { Loader2, X } from "lucide-react";
-import { isValidImageFile, validateImageSize } from "@/lib/utils";
+import {
+  getVideoDuration,
+  isValidImageFile,
+  validateImageSize,
+} from "@/lib/utils";
 import { uploadToCloudinary } from "@/lib/cloudinary";
 
 interface FileUploadProps {
-  onChange: (url?: string) => void;
+  onChange: (url: string, duration: number) => void;
   endpoint: keyof typeof ourFileRouter;
   className?: string;
   title: string;
@@ -19,13 +23,26 @@ export const FileUpload = ({
   onChange,
   endpoint,
   className,
+  title,
 }: FileUploadProps) => {
   return (
     <UploadDropzone
       endpoint={endpoint}
       className={className}
-      onClientUploadComplete={(res) => {
-        onChange(res?.[0].url);
+      appearance={{
+        label: "text-muted-foreground",
+        allowedContent: "text-muted-foreground",
+        button: "bg-indigo-500 cursor-pointer",
+      }}
+      onBeforeUploadBegin={(files: File[]) => {
+        return files.map(
+          (f) => new File([f], title + f.name, { type: f.type })
+        );
+      }}
+      onClientUploadComplete={async (res) => {
+        const url = res?.[0].url;
+        const duration = await getVideoDuration(url);
+        onChange(url, duration);
       }}
       onUploadError={(error: Error) => {
         toast.error(`${error?.message}`);

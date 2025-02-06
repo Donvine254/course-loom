@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { imageUrlConstructor } from "@/lib/utils";
+import { imageUrlConstructor, formatMuxDuration } from "@/lib/utils";
 import parse from "html-react-parser";
 import {
   Attachment,
@@ -24,6 +24,7 @@ import {
   LockOpen,
   CirclePlay,
   TriangleAlert,
+  LockOpenIcon,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -36,6 +37,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+
 type InstructorWithCourses = Instructor & {
   courses: { id: string; title: string; slug: string; isPublished: boolean }[];
 };
@@ -53,6 +55,12 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
     2: 0,
     1: 0,
   };
+  const totalDuration = course.chapters.reduce((accumulator, chapter) => {
+    if (chapter && chapter.duration) {
+      return accumulator + chapter.duration;
+    }
+    return accumulator;
+  }, 0);
   return (
     <div>
       {/* header section */}
@@ -167,7 +175,9 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
                   <span className="text-sm text-muted-foreground">
                     Duration
                   </span>
-                  <span className="font-semibold">24 hours</span>
+                  <span className="font-semibold">
+                    {formatMuxDuration(totalDuration)}
+                  </span>
                 </div>
                 <div className="flex flex-col items-center p-4 bg-card border shadow rounded-lg">
                   <BookOpen className="w-6 h-6 text-indigo-600 mb-2" />
@@ -259,9 +269,16 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
                                   <h3 className="font-semibold">
                                     {chapter.title}
                                   </h3>
-                                  <div className="text-sm text-muted-foreground mt-1"></div>
                                 </div>
-                                <Lock className="w-4 h-4 text-indigo-600" />
+                                {chapter.isFree ? (
+                                  <LockOpenIcon className="w-4 h-4 text-indigo-600" />
+                                ) : (
+                                  <Lock className="w-4 h-4 text-indigo-600" />
+                                )}
+                              </div>
+                              <div className="text-sm text-muted-foreground mt-1">
+                                1 lesson •{" "}
+                                {formatMuxDuration(chapter.duration || 0)}
                               </div>
                             </div>
                           ))}
@@ -286,10 +303,17 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
                                           {chapter.title}
                                         </h3>
                                         <div className="text-sm text-muted-foreground mt-1">
-                                          {chapter.description}
+                                          {/* add chapter duration */}1 lesson •{" "}
+                                          {formatMuxDuration(
+                                            chapter.duration || 0
+                                          )}
                                         </div>
                                       </div>
-                                      <Lock className="w-4 h-4 text-indigo-600" />
+                                      {chapter.isFree ? (
+                                        <LockOpenIcon className="w-4 h-4 text-indigo-600" />
+                                      ) : (
+                                        <Lock className="w-4 h-4 text-indigo-600" />
+                                      )}
                                     </div>
                                   </div>
                                 ))}
