@@ -36,6 +36,7 @@ const formSchema = z.object({
     .optional(),
   videoUrl: z.string().optional(),
   isFree: z.boolean(),
+  duration: z.number().optional(),
 });
 type ChapterWithMuxData = Chapter & {
   MuxData?: MuxData | null;
@@ -52,13 +53,13 @@ export default function EditChapterForm({
       description: initialData.description || "",
       videoUrl: initialData.videoUrl || "",
       isFree: initialData.isFree,
+      duration: initialData.duration || 0,
     },
   });
   const router = useRouter();
   const { isSubmitting } = form.formState;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(values);
-    toast.success("Submitted successfully");
     try {
       const res = await updateChapter(values, initialData.id);
       if (res.success) {
@@ -146,7 +147,10 @@ export default function EditChapterForm({
                   </FormLabel>
                   <FormControl>
                     <FileUpload
-                      onChange={(url: string) => field.onChange(url)}
+                      onChange={(url: string, duration: number) => {
+                        field.onChange(url);
+                        form.setValue("duration", duration);
+                      }}
                       endpoint="videoUploader"
                       title={initialData.title}
                       className="border-2 bg-card dark:bg-secondary text-muted-foreground"
