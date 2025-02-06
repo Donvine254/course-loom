@@ -4,9 +4,10 @@ import { Chapter } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { updateChapterVideo } from "@/lib/actions/chapters";
-import { deleteFile } from "@/lib/upload-thing";
 import { ReloadWindow } from "@/lib/utils";
 import { FileUpload } from "@/components/ui/file-upload";
+import { CustomOverlay } from "@/components/custom/overlay";
+import { deleteFile } from "@/lib/actions/delete-files";
 
 interface VideoFormProps {
   initialData: Chapter;
@@ -21,21 +22,25 @@ export default function ChapterVideoUpload({ initialData }: VideoFormProps) {
     video: initialData.videoUrl || "",
     duration: initialData.duration || 0,
   });
+  const [isLoading, setIsLoading] = useState(false);
   const [showUploadBtn, setShowUploadBtn] = useState<boolean>(
     !initialData.videoUrl
   );
   const onSubmit = async (values: VideoData) => {
+    setShowUploadBtn(false);
     try {
       const res = await updateChapterVideo(values, initialData.id);
+      console.log(res);
       if (res.success) {
         toast.success("Chapter video uploaded successfully");
-        setShowUploadBtn(false);
         ReloadWindow();
       } else {
         toast.error("Something went wrong");
+        setShowUploadBtn(true);
       }
     } catch {
       toast.error("Something went wrong");
+      setShowUploadBtn(true);
     }
   };
   async function handleVideoChange() {
@@ -45,16 +50,20 @@ export default function ChapterVideoUpload({ initialData }: VideoFormProps) {
       duration: 0,
     });
     if (initialData.videoUrl) {
+      setIsLoading(true);
+      toast.success("Deleting current video...");
       await deleteFile(initialData.videoUrl, initialData.id);
+      setIsLoading(false);
     }
   }
   return (
-    <div className="border bg-card rounded-md p-4 my-4 transition-[height] animate-accordion-down ease-in-out shadow dark:shadow-indigo-500">
+    <div className="border bg-card rounded-md p-4 my-4 transition-[height] animate-accordion-down ease-in-out shadow dark:shadow-indigo-500 relative ">
+      {isLoading && <CustomOverlay />}
       <h2 className="font-semibold flex items-center gap-2 mb-2">
         Chapter Video <span className="text-red-500">*</span>
       </h2>
       <div className="grid grid-cols-1  md:group-has-[[data-collapsible=icon]]/sidebar-wrapper:grid-cols-2 lg:grid-cols-2  gap-6">
-        <div className="aspect-video relative bg-muted rounded-lg overflow-hidden">
+        <div className="aspect-video relative bg-muted rounded-lg overflow-hidden outline outline-input">
           {data.video ? (
             <video
               src={data.video}
@@ -66,12 +75,8 @@ export default function ChapterVideoUpload({ initialData }: VideoFormProps) {
             />
           ) : (
             <FileUpload
-              onChange={(url: string, duration: number) => {
-                setData({
-                  video: url,
-                  duration: duration,
-                });
-                onSubmit({
+              onChange={async (url: string, duration: number) => {
+                await onSubmit({
                   video: url,
                   duration: duration,
                 });
@@ -101,12 +106,7 @@ export default function ChapterVideoUpload({ initialData }: VideoFormProps) {
             </small>
           </div>
           <div className="space-y-4 mt-2 border-2 border-dashed  p-4 rounded-md">
-            {showUploadBtn && (
-              <Button type="button" className="w-full">
-                No video uploaded
-              </Button>
-            )}
-            {!showUploadBtn && (
+            {!showUploadBtn ? (
               <div className="flex items-center justify-between gap-4">
                 <Button
                   className="flex-1 text-xs text-white bg-indigo-600 hover:bg-indigo-600"
@@ -121,6 +121,10 @@ export default function ChapterVideoUpload({ initialData }: VideoFormProps) {
                   {/* delete the image from upload thing */}
                 </Button>
               </div>
+            ) : (
+              <Button type="button" className="w-full">
+                No video uploaded
+              </Button>
             )}
           </div>
         </div>

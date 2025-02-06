@@ -127,6 +127,7 @@ export async function updateChapterVideo(
   formData: VideoData,
   chapterId: string
 ) {
+  console.log(formData);
   try {
     await prisma.chapter.update({
       where: {
@@ -140,6 +141,7 @@ export async function updateChapterVideo(
     return { success: true, message: "Chapter video updated successfully" };
     // eslint-disable-next-line
   } catch (error: any) {
+    console.log(error);
     return {
       success: false,
       error: error.message || "An error occurred while creating the chapter.",
