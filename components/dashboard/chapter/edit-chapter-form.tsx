@@ -51,9 +51,9 @@ export default function EditChapterForm({
       isFree: initialData.isFree,
     },
   });
-  const { isSubmitting } = form.formState;
+  const { isSubmitting, dirtyFields } = form.formState;
+  const hasChanges = Object.keys(dirtyFields).length > 0;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
     try {
       const res = await updateChapter(values, initialData.id);
       if (res.success) {
@@ -110,12 +110,14 @@ export default function EditChapterForm({
                   <RichEditor
                     placeholder="What is this chapter about?"
                     {...field}
+                    className="rounded-md"
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+
           <ChapterVideoUpload initialData={initialData} />
           <FormField
             control={form.control}
@@ -161,7 +163,7 @@ export default function EditChapterForm({
               type="submit"
               size="sm"
               title="submit"
-              disabled={isSubmitting}>
+              disabled={isSubmitting || !hasChanges}>
               {isSubmitting ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
