@@ -23,7 +23,7 @@ export default function ChapterVideoUpload({ initialData }: VideoFormProps) {
     duration: initialData.duration || 0,
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
+  const [isUploading, setIsUploading] = useState(true);
   const [showUploadBtn, setShowUploadBtn] = useState<boolean>(
     !initialData.videoUrl
   );
@@ -64,31 +64,30 @@ export default function ChapterVideoUpload({ initialData }: VideoFormProps) {
         Chapter Video <span className="text-red-500">*</span>
       </h2>
       <div className="grid grid-cols-1  md:group-has-[[data-collapsible=icon]]/sidebar-wrapper:grid-cols-2 lg:grid-cols-2  gap-6">
-        <div className="aspect-video relative bg-muted rounded-lg overflow-hidden outline outline-input">
-          {data.videoUrl ? (
-            <video
-              src={data.videoUrl}
-              poster={data.videoUrl}
-              className="w-full h-full"
-              controls
-              autoPlay
-              preload="metadata"
-            />
-          ) : (
-            <FileUpload
-              setIsUploading={setIsUploading}
-              onChange={async (url: string, duration: number) => {
-                await onSubmit({
-                  videoUrl: url,
-                  duration: duration,
-                });
-              }}
-              endpoint="videoUploader"
-              title={initialData.title}
-              className="border-2 bg-card dark:bg-secondary text-muted-foreground"
-            />
-          )}
-        </div>
+        {data.videoUrl ? (
+          <video
+            src={data.videoUrl}
+            poster={data.videoUrl}
+            className="w-full h-full"
+            controls
+            autoPlay
+            preload="metadata"
+          />
+        ) : (
+          <FileUpload
+            setIsUploading={setIsUploading}
+            onChange={async (url: string, duration: number) => {
+              await onSubmit({
+                videoUrl: url,
+                duration: duration,
+              });
+            }}
+            endpoint="videoUploader"
+            title={initialData.title}
+            className="border-2 bg-card dark:bg-secondary text-muted-foreground  rounded-lg "
+          />
+        )}
+
         <div className="flex flex-col justify-between">
           <div className="space-y-2 md:space-y-4 flex flex-col justify-center text-muted-foreground">
             <p className="md:mb-2 xsm:text-sm xsm:text-center">
@@ -124,15 +123,16 @@ export default function ChapterVideoUpload({ initialData }: VideoFormProps) {
                 </Button>
               </div>
             ) : (
-              <Button type="button" className="w-full" disabled={!isUploading}>
-                {!isUploading ? (
-                  <>
-                    Uploading
-                    <span className="loader" />
-                  </>
-                ) : (
-                  " No video uploaded"
-                )}
+              <Button
+                type="button"
+                className={`w-full relative overflow-hidden transition-all
+                    ${
+                      isUploading
+                        ? "bg-gradient-to-r from-indigo-500 to-indigo-500 bg-[length:0%_100%] animate-fill"
+                        : "bg-primary"
+                    }`}
+                disabled={!isUploading}>
+                {isUploading ? <>Uploading</> : " No video uploaded"}
               </Button>
             )}
           </div>
