@@ -55,6 +55,12 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
     2: 0,
     1: 0,
   };
+  const totalDuration = course.chapters.reduce((accumulator, chapter) => {
+    if (chapter && chapter.duration) {
+      return accumulator + chapter.duration;
+    }
+    return accumulator;
+  }, 0);
   return (
     <div>
       {/* header section */}
@@ -169,7 +175,9 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
                   <span className="text-sm text-muted-foreground">
                     Duration
                   </span>
-                  <span className="font-semibold">24 hours</span>
+                  <span className="font-semibold">
+                    {formatMuxDuration(totalDuration)}
+                  </span>
                 </div>
                 <div className="flex flex-col items-center p-4 bg-card border shadow rounded-lg">
                   <BookOpen className="w-6 h-6 text-indigo-600 mb-2" />
