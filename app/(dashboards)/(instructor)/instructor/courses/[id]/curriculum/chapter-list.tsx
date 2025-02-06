@@ -21,6 +21,7 @@ import deleteChapter, { updateChapterPositions } from "@/lib/actions/chapters";
 import DeleteButton from "@/components/custom/delete-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
 
 export default function ChapterList({
   items,
@@ -122,7 +123,11 @@ export default function ChapterList({
                             )}
                             <Badge
                               variant="outline"
-                              className="bg-indigo-500 text-white">
+                              className={cn(
+                                chapter.isPublished
+                                  ? "bg-green-500 text-white w-full flex items-center justify-center border border-green-500"
+                                  : "bg-indigo-500 text-white w-full flex items-center justify-center border border-indigo-500"
+                              )}>
                               {chapter.isPublished ? "Published" : "Draft"}
                             </Badge>
                           </div>
@@ -164,7 +169,11 @@ export default function ChapterList({
                                 )}
                                 <Badge
                                   variant="outline"
-                                  className="bg-indigo-500 text-white w-full flex items-center justify-center">
+                                  className={cn(
+                                    chapter.isPublished
+                                      ? "bg-green-500 text-white w-full flex items-center justify-center border border-green-500"
+                                      : "bg-indigo-500 text-white w-full flex items-center justify-center border border-indigo-500"
+                                  )}>
                                   {chapter.isPublished ? "Published" : "Draft"}
                                 </Badge>
                               </div>

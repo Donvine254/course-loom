@@ -3,7 +3,7 @@ import DeleteButton from "@/components/custom/delete-dialog";
 import ProgressIndicator from "@/components/dashboard/course/progress-indicator";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import deleteChapter from "@/lib/actions/chapters";
+import deleteChapter, { PublishChapter } from "@/lib/actions/chapters";
 import { Chapter } from "@prisma/client";
 import { InfoIcon, MoveLeft } from "lucide-react";
 import Link from "next/link";
@@ -23,12 +23,28 @@ export const ChapterHeader = ({ chapter }: { chapter: Chapter }) => {
         toast.success(res.message);
         router.refresh();
         router.replace(`/instructor/courses/${chapter.courseId}/curriculum`);
+      } else {
+        toast.error(res.error);
       }
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong");
     }
   };
+  async function handlePublish() {
+    try {
+      const res = await PublishChapter(chapter.id);
+      if (res.success) {
+        toast.success(res.message);
+        router.refresh();
+      } else {
+        toast.error(res.error);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
+  }
   return (
     <div>
       {" "}
@@ -54,7 +70,8 @@ export const ChapterHeader = ({ chapter }: { chapter: Chapter }) => {
             disabled={!isCompleted}
             variant="ghost"
             size="sm"
-            title="complete all sections to publish this chapter">
+            title="complete all sections to publish this chapter"
+            onClick={handlePublish}>
             Publish
           </Button>
           <DeleteButton

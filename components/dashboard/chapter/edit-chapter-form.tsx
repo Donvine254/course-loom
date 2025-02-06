@@ -122,7 +122,10 @@ export default function EditChapterForm({
             <div className="my-5 ">
               {/* modify to remove hydration errors */}
               <MuxPlayer
-                playbackId={initialData.MuxData?.playbackId || ""}
+                playbackId={
+                  initialData.MuxData?.playbackId ||
+                  "a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
+                }
                 className="w-full border dark:border-indigo-100 shadow dark:shadow-indigo-500  "
               />
             </div>

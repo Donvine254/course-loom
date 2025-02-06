@@ -123,3 +123,22 @@ export async function updateChapter(formData: UpdateData, chapterId: string) {
     await prisma.$disconnect();
   }
 }
+
+export async function PublishChapter(chapterId: string) {
+  try {
+    await prisma.chapter.update({
+      where: {
+        id: chapterId,
+      },
+      data: {
+        isPublished: true,
+      },
+    });
+    return { success: true, message: "Chapter published successfully" };
+    // eslint-disable-next-line
+  } catch (error: any) {
+    return { success: false, error: error.message || "Something went wrong" };
+  } finally {
+    await prisma.$disconnect();
+  }
+}
