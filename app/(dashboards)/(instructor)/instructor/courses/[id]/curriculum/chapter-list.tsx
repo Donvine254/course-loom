@@ -118,7 +118,7 @@ export default function ChapterList({
                           </p>
                           <div className=" gap-2 items-center hidden md:group-has-[[data-collapsible=icon]]/sidebar-wrapper:flex lg:flex">
                             {chapter.isFree && (
-                              <Badge variant="outline">Free</Badge>
+                              <Badge variant="default">Free</Badge>
                             )}
                             <Badge
                               variant="outline"
@@ -157,7 +157,7 @@ export default function ChapterList({
                               <div className="flex flex-col gap-2 items-center md:group-has-[[data-collapsible=icon]]/sidebar-wrapper:hidden  lg:hidden">
                                 {chapter.isFree && (
                                   <Badge
-                                    variant="outline"
+                                    variant="default"
                                     className="w-full flex items-center justify-center">
                                     Free
                                   </Badge>
