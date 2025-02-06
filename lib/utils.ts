@@ -68,3 +68,19 @@ export function formatMuxDuration(seconds: number): string {
 
   return `${hours}hr ${minutes}min ${remainingSeconds}s`;
 }
+
+export const getVideoDuration = async (videoUrl: string): Promise<number> => {
+  return new Promise((resolve, reject) => {
+    const videoElement = document.createElement("video");
+    videoElement.preload = "metadata";
+    videoElement.onloadedmetadata = () => {
+      const duration = videoElement.duration;
+      resolve(duration);
+      window.URL.revokeObjectURL(videoElement.src);
+    };
+    videoElement.onerror = () => {
+      reject(new Error("Failed to load video metadata"));
+    };
+    videoElement.src = videoUrl;
+  });
+};

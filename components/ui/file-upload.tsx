@@ -13,6 +13,7 @@ interface FileUploadProps {
   endpoint: keyof typeof ourFileRouter;
   className?: string;
   title: string;
+  setDuration: (value: number) => void;
 }
 
 export const FileUpload = ({

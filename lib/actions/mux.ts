@@ -34,8 +34,6 @@ export async function CreateOrUpdateMuxData(data: Data) {
       playback_policy: ["public"],
       test: false,
     });
-    // await for the asset creation
-    const assetDetails = await video.assets.retrieve(asset.id);
     await prisma.muxData.create({
       data: {
         assetId: asset.id,
@@ -43,14 +41,6 @@ export async function CreateOrUpdateMuxData(data: Data) {
         playbackId: asset.playback_ids?.[0]?.id,
       },
     });
-    while (assetDetails.status === "ready") {
-      await prisma.chapter.update({
-        where: {
-          id: data.chapterId,
-        },
-        data: { duration: assetDetails.duration },
-      });
-    }
     // eslint-disable-next-line
   } catch (error: any) {
     return {
