@@ -101,34 +101,54 @@ export default function EditChapterForm({
               </FormItem>
             )}
           />
-          {initialData.videoUrl && (
-            <div className="my-5">
+          {!initialData.videoUrl && (
+            <div className="my-5 ">
               <MuxPlayer
                 playbackId={initialData.MuxData?.playbackId || ""}
-                className="md:max-w-[600px]"
+                className="w-full border dark:border-indigo-100 shadow dark:shadow-indigo-500  "
               />
             </div>
           )}
-          <FormField
-            control={form.control}
-            name="videoUrl"
-            render={({ field }) => (
-              <FormItem className="flex flex-col">
-                <FormLabel>
-                  Video <span className="text-red-500">*</span>
-                </FormLabel>
-                <FormControl>
-                  <FileUpload
-                    onChange={(url: string) => field.onChange(url)}
-                    endpoint="videoUploader"
-                    title={initialData.title}
-                    className="border-2 bg-card dark:bg-secondary text-muted-foreground"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+
+          <div className="grid grid-cols-2 gap-x-2">
+            <FormField
+              control={form.control}
+              name="videoUrl"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>
+                    Video <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <FileUpload
+                      onChange={(url: string) => field.onChange(url)}
+                      endpoint="videoUploader"
+                      title={initialData.title}
+                      className="border-2 bg-card dark:bg-secondary text-muted-foreground"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="space-y-4 flex flex-col justify-center text-muted-foreground">
+              <p className="mb-2">
+                Upload your chapter video here. All videos must be at least 720p
+                and less than 1GB in size. Students are more likely to enroll if
+                your videos are of high quality.{" "}
+              </p>
+              <small>
+                Click here to see{" "}
+                <a
+                  href="https://riverside.fm/blog/video-production-tips"
+                  referrerPolicy="no-referrer"
+                  target="_blank">
+                  tips on how to make a good video!
+                </a>
+              </small>
+            </div>
+          </div>
+
           <FormField
             control={form.control}
             name="isFree"
@@ -151,6 +171,11 @@ export default function EditChapterForm({
               </FormItem>
             )}
           />
+          {form.getValues("isFree") && (
+            <small className="text-red-500">
+              Warning: This chapter is free and can be viewed by anyone.
+            </small>
+          )}
 
           <div className="flex gap-5">
             <Link
