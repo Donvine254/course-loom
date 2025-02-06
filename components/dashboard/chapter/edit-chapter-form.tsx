@@ -123,6 +123,7 @@ export default function EditChapterForm({
                   <FileUpload
                     onChange={(url: string) => field.onChange(url)}
                     endpoint="videoUploader"
+                    title={initialData.title}
                     className="border bg-secondary text-muted-foreground"
                   />
                 </FormControl>
