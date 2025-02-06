@@ -37,10 +37,13 @@ const formSchema = z.object({
   videoUrl: z.string().optional(),
   isFree: z.boolean(),
 });
+type ChapterWithMuxData = Chapter & {
+  MuxData?: MuxData | null;
+};
 export default function EditChapterForm({
   initialData,
 }: {
-  initialData: Chapter & { MuxData: MuxData };
+  initialData: ChapterWithMuxData;
 }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -126,6 +129,7 @@ export default function EditChapterForm({
                   initialData.MuxData?.playbackId ||
                   "a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M"
                 }
+                streamType="on-demand"
                 className="w-full border dark:border-indigo-100 shadow dark:shadow-indigo-500  "
               />
             </div>

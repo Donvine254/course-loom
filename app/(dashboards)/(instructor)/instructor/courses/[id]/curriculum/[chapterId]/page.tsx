@@ -16,6 +16,9 @@ export default async function Page({
   }
   const chapter = await prisma.chapter.findUnique({
     where: { id: chapterId },
+    include: {
+      MuxData: true,
+    },
   });
   if (!chapter || !user) {
     redirect("/instructor");
