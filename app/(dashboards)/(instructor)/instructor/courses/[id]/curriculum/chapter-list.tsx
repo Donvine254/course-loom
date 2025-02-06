@@ -152,7 +152,7 @@ export default function ChapterList({
                                 item="course chapter"
                               />
                               <Separator />
-                              <div className="flex flex-col gap-2 items-center md:group-has-[[data-collapsible=icon]]/sidebar-wrapper:hidden lg:hidden">
+                              <div className="flex flex-col gap-2 items-center md:group-has-[[data-collapsible=icon]]/sidebar-wrapper:hidden  lg:hidden">
                                 {chapter.isFree && (
                                   <Badge
                                     variant="outline"
