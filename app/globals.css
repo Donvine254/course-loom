@@ -139,3 +139,18 @@ input::-webkit-inner-spin-button {
 .ql-toolbar {
   @apply dark:bg-gray-400;
 }
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 120px;
+  height: 10px;
+  -webkit-mask: linear-gradient(90deg, #4f46e5 70%, #0000 0) 0/20%;
+  mask: linear-gradient(90deg, #4f46e5 70%, #0000 0) 0/20%;
+  background: linear-gradient(#4f46e5 0 0) 0/0% no-repeat #ddd;
+  animation: l4 2s infinite steps(6);
+}
+@keyframes l4 {
+  100% {
+    background-size: 120%;
+  }
+}

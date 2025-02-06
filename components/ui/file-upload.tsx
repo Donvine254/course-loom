@@ -17,6 +17,7 @@ interface FileUploadProps {
   endpoint: keyof typeof ourFileRouter;
   className?: string;
   title: string;
+  setIsUploading: (isUploading: boolean) => void;
 }
 
 export const FileUpload = ({
@@ -24,6 +25,7 @@ export const FileUpload = ({
   endpoint,
   className,
   title,
+  setIsUploading,
 }: FileUploadProps) => {
   return (
     <UploadDropzone
@@ -39,6 +41,7 @@ export const FileUpload = ({
           (f) => new File([f], title + f.name, { type: f.type })
         );
       }}
+      onUploadBegin={() => setIsUploading(true)}
       onClientUploadComplete={async (res) => {
         const url = res?.[0].url;
         const duration = await getVideoDuration(url);

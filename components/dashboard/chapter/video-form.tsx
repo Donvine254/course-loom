@@ -13,16 +13,17 @@ interface VideoFormProps {
   initialData: Chapter;
 }
 type VideoData = {
-  video: string;
+  videoUrl: string;
   duration: number;
 };
 
 export default function ChapterVideoUpload({ initialData }: VideoFormProps) {
   const [data, setData] = useState<VideoData>({
-    video: initialData.videoUrl || "",
+    videoUrl: initialData.videoUrl || "",
     duration: initialData.duration || 0,
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const [showUploadBtn, setShowUploadBtn] = useState<boolean>(
     !initialData.videoUrl
   );
@@ -46,7 +47,7 @@ export default function ChapterVideoUpload({ initialData }: VideoFormProps) {
   async function handleVideoChange() {
     setShowUploadBtn(!showUploadBtn);
     setData({
-      video: "",
+      videoUrl: "",
       duration: 0,
     });
     if (initialData.videoUrl) {
@@ -64,10 +65,10 @@ export default function ChapterVideoUpload({ initialData }: VideoFormProps) {
       </h2>
       <div className="grid grid-cols-1  md:group-has-[[data-collapsible=icon]]/sidebar-wrapper:grid-cols-2 lg:grid-cols-2  gap-6">
         <div className="aspect-video relative bg-muted rounded-lg overflow-hidden outline outline-input">
-          {data.video ? (
+          {data.videoUrl ? (
             <video
-              src={data.video}
-              poster={data.video}
+              src={data.videoUrl}
+              poster={data.videoUrl}
               className="w-full h-full"
               controls
               autoPlay
@@ -75,9 +76,10 @@ export default function ChapterVideoUpload({ initialData }: VideoFormProps) {
             />
           ) : (
             <FileUpload
+              setIsUploading={setIsUploading}
               onChange={async (url: string, duration: number) => {
                 await onSubmit({
-                  video: url,
+                  videoUrl: url,
                   duration: duration,
                 });
               }}
@@ -122,8 +124,15 @@ export default function ChapterVideoUpload({ initialData }: VideoFormProps) {
                 </Button>
               </div>
             ) : (
-              <Button type="button" className="w-full">
-                No video uploaded
+              <Button type="button" className="w-full" disabled={!isUploading}>
+                {!isUploading ? (
+                  <>
+                    Uploading
+                    <span className="loader" />
+                  </>
+                ) : (
+                  " No video uploaded"
+                )}
               </Button>
             )}
           </div>
