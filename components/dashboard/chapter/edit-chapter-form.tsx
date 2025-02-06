@@ -120,6 +120,7 @@ export default function EditChapterForm({
           />
           {initialData.videoUrl && (
             <div className="my-5 ">
+              {/* modify to remove hydration errors */}
               <MuxPlayer
                 playbackId={initialData.MuxData?.playbackId || ""}
                 className="w-full border dark:border-indigo-100 shadow dark:shadow-indigo-500  "
@@ -167,7 +168,18 @@ export default function EditChapterForm({
               </small>
             </div>
           </div>
-
+          {initialData.videoUrl && (
+            <span className="break-all my-2 text-sm">
+              Video Url:{" "}
+              <a
+                href={initialData.videoUrl}
+                target="_blank"
+                className="hover:underline"
+                referrerPolicy="no-referrer">
+                {initialData.videoUrl}
+              </a>
+            </span>
+          )}
           <FormField
             control={form.control}
             name="isFree"
