@@ -9,6 +9,8 @@ import { InfoIcon, MoveLeft } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+// eslint-disable-next-line
+declare const confetti: any;
 export const ChapterHeader = ({ chapter }: { chapter: Chapter }) => {
   const router = useRouter();
   const requiredFields = [chapter.title, chapter.description, chapter.videoUrl];
@@ -21,6 +23,11 @@ export const ChapterHeader = ({ chapter }: { chapter: Chapter }) => {
       const res = await deleteChapter(id);
       if (res.success) {
         toast.success(res.message);
+        confetti({
+          particleCount: 4000,
+          spread: 100,
+          origin: { y: 0.3 },
+        });
         router.refresh();
         router.replace(`/instructor/courses/${chapter.courseId}/curriculum`);
       } else {

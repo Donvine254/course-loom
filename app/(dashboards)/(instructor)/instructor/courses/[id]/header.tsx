@@ -8,6 +8,8 @@ import { InfoIcon, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
+// eslint-disable-next-line
+declare const confetti: any;
 type CourseWithChapter = Course & {
   chapters: Chapter[];
 };
@@ -34,6 +36,11 @@ export const Header = ({ course }: { course: CourseWithChapter }) => {
       const res = await PublishCourse(course.id);
       if (res.success) {
         toast.success(res.message);
+        confetti({
+          particleCount: 4000,
+          spread: 100,
+          origin: { y: 0.3 },
+        });
         router.refresh();
       } else {
         toast.error(res.error);
