@@ -24,6 +24,7 @@ import {
   LockOpen,
   CirclePlay,
   TriangleAlert,
+  LockOpenIcon,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -259,9 +260,15 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
                                   <h3 className="font-semibold">
                                     {chapter.title}
                                   </h3>
-                                  <div className="text-sm text-muted-foreground mt-1"></div>
                                 </div>
-                                <Lock className="w-4 h-4 text-indigo-600" />
+                                {chapter.isFree ? (
+                                  <LockOpenIcon className="w-4 h-4 text-indigo-600" />
+                                ) : (
+                                  <Lock className="w-4 h-4 text-indigo-600" />
+                                )}
+                              </div>
+                              <div className="text-sm text-muted-foreground mt-1">
+                                1 lesson • {chapter.duration || "0hr 0min 0s"}
                               </div>
                             </div>
                           ))}
@@ -286,10 +293,15 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
                                           {chapter.title}
                                         </h3>
                                         <div className="text-sm text-muted-foreground mt-1">
-                                          {chapter.description}
+                                          {/* add chapter duration */}1 lesson •{" "}
+                                          {chapter.duration || "0hr 0min 0s"}
                                         </div>
                                       </div>
-                                      <Lock className="w-4 h-4 text-indigo-600" />
+                                      {chapter.isFree ? (
+                                        <LockOpenIcon className="w-4 h-4 text-indigo-600" />
+                                      ) : (
+                                        <Lock className="w-4 h-4 text-indigo-600" />
+                                      )}
                                     </div>
                                   </div>
                                 ))}
