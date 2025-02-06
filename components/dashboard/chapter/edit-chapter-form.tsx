@@ -22,6 +22,9 @@ import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 import { FileUpload } from "@/components/ui/file-upload";
 import MuxPlayer from "@mux/mux-player-react";
+import { updateChapter } from "@/lib/actions/chapters";
+import { useRouter } from "next/navigation";
+import { CustomOverlay } from "@/components/custom/overlay";
 const formSchema = z.object({
   title: z
     .string()
@@ -32,7 +35,7 @@ const formSchema = z.object({
     .min(200, "description is required and must be greater than 100 characters")
     .optional(),
   videoUrl: z.string().optional(),
-  isFree: z.boolean().optional(),
+  isFree: z.boolean(),
 });
 export default function EditChapterForm({
   initialData,
@@ -48,14 +51,28 @@ export default function EditChapterForm({
       isFree: initialData.isFree,
     },
   });
+  const router = useRouter();
   const { isSubmitting } = form.formState;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(values);
     toast.success("Submitted successfully");
+    try {
+      const res = await updateChapter(values, initialData.id);
+      if (res.success) {
+        toast.success("Submitted successfully");
+        router.refresh();
+      } else {
+        toast.error(res.error || "Something went wrong");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Error while submitting");
+    }
   };
   return (
     <div className="p-4 md:px-6 mx-auto max-w-4xl w-full relative">
       {/* section for loading overlay */}
+      {isSubmitting && <CustomOverlay />}
       <div>
         <h1 className="font-bold text-xl md:text-2xl">Chapter Details</h1>
         <p className="text-muted-foreground my-2 text-sm">
