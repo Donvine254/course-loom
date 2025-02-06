@@ -94,7 +94,7 @@ export default function EditChapterForm({
                 </FormLabel>
                 <FormControl>
                   <RichEditor
-                    placeholder="What is this section about?"
+                    placeholder="What is this chapter about?"
                     {...field}
                   />
                 </FormControl>
@@ -121,10 +121,9 @@ export default function EditChapterForm({
                 </FormLabel>
                 <FormControl>
                   <FileUpload
-                    value={field.value || ""}
                     onChange={(url: string) => field.onChange(url)}
-                    endpoint="VideoUploader"
-                    page="Edit Section"
+                    endpoint="videoUploader"
+                    className="border bg-secondary text-muted-foreground"
                   />
                 </FormControl>
                 <FormMessage />

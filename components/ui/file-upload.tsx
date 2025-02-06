@@ -7,12 +7,12 @@ import { useRef, useState } from "react";
 import { Loader2, X } from "lucide-react";
 import { isValidImageFile, validateImageSize } from "@/lib/utils";
 import { uploadToCloudinary } from "@/lib/cloudinary";
+import { useRouter } from "next/navigation";
 
 interface FileUploadProps {
-  onChange: (url?: string) => void;
+  onChange: (url: string) => void;
   endpoint: keyof typeof ourFileRouter;
   className?: string;
-  title: string;
 }
 
 export const FileUpload = ({
@@ -20,15 +20,22 @@ export const FileUpload = ({
   endpoint,
   className,
 }: FileUploadProps) => {
+  const router = useRouter();
   return (
     <UploadDropzone
       endpoint={endpoint}
       className={className}
+      appearance={{
+        label: "text-muted-foreground",
+        allowedContent: "text-muted-foreground",
+        button: "bg-indigo-500 cursor-pointer",
+      }}
       onClientUploadComplete={(res) => {
         onChange(res?.[0].url);
       }}
       onUploadError={(error: Error) => {
         toast.error(`${error?.message}`);
+        router.refresh();
       }}
     />
   );
