@@ -27,19 +27,28 @@ export async function CreateOrUpdateMuxData(data: Data) {
           id: existingMuxData.id,
         },
       });
-    } else {
-      // create the asset if it doesn't exist
-      const asset = await video.assets.create({
-        input: [{ url: data.videoUrl }],
-        playback_policy: ["public"],
-        test: false,
-      });
-      await prisma.muxData.create({
-        data: {
-          assetId: asset.id,
-          chapterId: data.chapterId,
-          playbackId: asset.playback_ids?.[0]?.id,
+    }
+    // create the asset if it doesn't exist
+    const asset = await video.assets.create({
+      input: [{ url: data.videoUrl }],
+      playback_policy: ["public"],
+      test: false,
+    });
+    // await for the asset creation
+    const assetDetails = await video.assets.retrieve(asset.id);
+    await prisma.muxData.create({
+      data: {
+        assetId: asset.id,
+        chapterId: data.chapterId,
+        playbackId: asset.playback_ids?.[0]?.id,
+      },
+    });
+    while (assetDetails.status === "ready") {
+      await prisma.chapter.update({
+        where: {
+          id: data.chapterId,
         },
+        data: { duration: assetDetails.duration },
       });
     }
     // eslint-disable-next-line
@@ -49,13 +58,4 @@ export async function CreateOrUpdateMuxData(data: Data) {
       error: error.message || "An error occurred.",
     };
   }
-}
-
-
-export function formatMuxDuration(seconds: number): string {
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  const remainingSeconds = Math.floor(seconds % 60);
-
-  return `${hours}hr ${minutes}min ${remainingSeconds}s`;
 }

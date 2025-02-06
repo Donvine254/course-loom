@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { imageUrlConstructor } from "@/lib/utils";
+import { imageUrlConstructor, formatMuxDuration } from "@/lib/utils";
 import parse from "html-react-parser";
 import {
   Attachment,
@@ -37,6 +37,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+
 type InstructorWithCourses = Instructor & {
   courses: { id: string; title: string; slug: string; isPublished: boolean }[];
 };
@@ -268,7 +269,8 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
                                 )}
                               </div>
                               <div className="text-sm text-muted-foreground mt-1">
-                                1 lesson • {chapter.duration || "0hr 0min 0s"}
+                                1 lesson •{" "}
+                                {formatMuxDuration(chapter.duration || 0)}
                               </div>
                             </div>
                           ))}
@@ -294,7 +296,9 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
                                         </h3>
                                         <div className="text-sm text-muted-foreground mt-1">
                                           {/* add chapter duration */}1 lesson •{" "}
-                                          {chapter.duration || "0hr 0min 0s"}
+                                          {formatMuxDuration(
+                                            chapter.duration || 0
+                                          )}
                                         </div>
                                       </div>
                                       {chapter.isFree ? (
