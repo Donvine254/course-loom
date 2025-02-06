@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 
 import { currentUser } from "@clerk/nextjs/server";
 import { ChapterHeader } from "./chapter-header";
+import EditChapterForm from "@/components/dashboard/chapter/edit-chapter-form";
 export default async function Page({
   params,
 }: {
@@ -22,6 +23,7 @@ export default async function Page({
   return (
     <section>
       <ChapterHeader chapter={chapter} />
+      <EditChapterForm initialData={chapter} />
     </section>
   );
 }
