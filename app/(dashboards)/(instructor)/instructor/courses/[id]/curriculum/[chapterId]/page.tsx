@@ -2,21 +2,26 @@ import prisma from "@/prisma/prisma";
 import { redirect } from "next/navigation";
 
 import { currentUser } from "@clerk/nextjs/server";
+import { ChapterHeader } from "./chapter-header";
 export default async function Page({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ chapterId: string }>;
 }) {
-  const { id } = await params;
+  const { chapterId } = await params;
   const user = await currentUser();
   if (!user) {
     redirect("/instructor");
   }
   const chapter = await prisma.chapter.findUnique({
-    where: { id: id },
+    where: { id: chapterId },
   });
   if (!chapter || !user) {
     redirect("/instructor");
   }
-  return <div>page</div>;
+  return (
+    <section>
+      <ChapterHeader chapter={chapter} />
+    </section>
+  );
 }

@@ -64,7 +64,11 @@ export const Header = ({ course }: { course: CourseWithChapter }) => {
         </div>
         <div className="flex gap-5 items-start">
           {/* TODO: Add publish and delete buttons */}
-          <Button disabled={!isCompleted} variant="ghost" size="sm">
+          <Button
+            disabled={!isCompleted}
+            variant="ghost"
+            size="sm"
+            title="complete all sections to publish this course">
             Publish
           </Button>
           <Button

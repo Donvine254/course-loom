@@ -83,6 +83,7 @@ export default function ChapterList({
       }
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
       toast.error("Something went wrong");
     }
   };

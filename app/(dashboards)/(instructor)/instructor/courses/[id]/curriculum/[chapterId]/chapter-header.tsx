@@ -1,0 +1,73 @@
+"use client";
+import DeleteButton from "@/components/custom/delete-dialog";
+import ProgressIndicator from "@/components/dashboard/course/progress-indicator";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import deleteChapter from "@/lib/actions/chapters";
+import { Chapter } from "@prisma/client";
+import { InfoIcon, MoveLeft } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+export const ChapterHeader = ({ chapter }: { chapter: Chapter }) => {
+  const router = useRouter();
+  const requiredFields = [chapter.title, chapter.description, chapter.videoUrl];
+  const requiredFieldsCount = requiredFields.length;
+  const missingFields = requiredFields.filter((field) => !Boolean(field));
+  const missingFieldsCount = missingFields.length;
+  const isCompleted = requiredFields.every(Boolean);
+  const handleDeleteChapter = async (id: string) => {
+    try {
+      const res = await deleteChapter(id);
+      if (res.success) {
+        toast.success(res.message);
+        router.refresh();
+        router.replace(`/instructor/courses/${chapter.courseId}/curriculum`);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
+  };
+  return (
+    <div>
+      {" "}
+      {!chapter.isPublished && (
+        <Alert variant="warning">
+          <InfoIcon className="h-4 w-4" />
+          <AlertDescription className="xsm:text-xs">
+            This chapter is unpublished. It will not be visible to students
+          </AlertDescription>
+        </Alert>
+      )}
+      {/* buttons section */}
+      <div className="flex gap-2 overflow-x-auto p-4 md:px-6 mx-auto max-w-4xl w-full justify-between">
+        <Link href={`/instructor/courses/${chapter.courseId}`}>
+          <Button size="sm" className="justify-between" variant="default">
+            <MoveLeft className="h-4 w-4 mr-2" /> Back to Curriculum
+          </Button>
+        </Link>
+
+        <div className="flex gap-5 items-start">
+          {/* TODO: Add publish and delete buttons */}
+          <Button
+            disabled={!isCompleted}
+            variant="ghost"
+            size="sm"
+            title="complete all sections to publish this chapter">
+            Publish
+          </Button>
+          <DeleteButton
+            onDelete={handleDeleteChapter}
+            id={chapter.id}
+            item="course chapter"
+          />
+        </div>
+      </div>
+      <ProgressIndicator
+        total={requiredFieldsCount}
+        current={missingFieldsCount}
+      />
+    </div>
+  );
+};
