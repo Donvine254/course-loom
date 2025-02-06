@@ -2,15 +2,18 @@
 import ProgressIndicator from "@/components/dashboard/course/progress-indicator";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import { PublishCourse } from "@/lib/actions/courses";
 import { Course, Chapter } from "@prisma/client";
 import { InfoIcon, Trash2 } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { toast } from "sonner";
 type CourseWithChapter = Course & {
   chapters: Chapter[];
 };
 export const Header = ({ course }: { course: CourseWithChapter }) => {
   const pathname = usePathname();
+  const router = useRouter();
   const requiredFields = [
     course.title,
     course.description,
@@ -25,6 +28,21 @@ export const Header = ({ course }: { course: CourseWithChapter }) => {
   const missingFields = requiredFields.filter((field) => !Boolean(field));
   const missingFieldsCount = missingFields.length;
   const isCompleted = requiredFields.every(Boolean);
+
+  async function handlePublish() {
+    try {
+      const res = await PublishCourse(course.id);
+      if (res.success) {
+        toast.success(res.message);
+        router.refresh();
+      } else {
+        toast.error(res.error);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
+  }
   return (
     <div>
       {" "}
@@ -68,8 +86,9 @@ export const Header = ({ course }: { course: CourseWithChapter }) => {
             disabled={!isCompleted}
             variant="ghost"
             size="sm"
+            onClick={handlePublish}
             title="complete all sections to publish this course">
-            Publish
+            {course.isPublished ? "Unpublish" : "Publish"}
           </Button>
           <Button
             size="icon"

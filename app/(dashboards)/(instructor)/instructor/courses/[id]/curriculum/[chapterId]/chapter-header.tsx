@@ -72,7 +72,7 @@ export const ChapterHeader = ({ chapter }: { chapter: Chapter }) => {
             size="sm"
             title="complete all sections to publish this chapter"
             onClick={handlePublish}>
-            Publish
+            {chapter.isPublished ? "Unpublish" : "Publish"}
           </Button>
           <DeleteButton
             onDelete={handleDeleteChapter}
