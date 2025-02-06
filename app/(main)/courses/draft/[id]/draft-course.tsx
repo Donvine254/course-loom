@@ -195,15 +195,12 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
                   </span>
                 </div>
               </div>
-
               {course.description ? (
-                <p className="text-muted-foreground leading-relaxed mb-8">
-                  {" "}
-                  {parse(course.description || "") ?? course.description}{" "}
-                </p>
+                <div className="text-muted-foreground leading-relaxed mb-8">
+                  {parse(course.description || "") ?? course.description}
+                </div>
               ) : (
                 <p className="text-muted-foreground leading-relaxed mb-8">
-                  {" "}
                   No course description provided.
                 </p>
               )}
