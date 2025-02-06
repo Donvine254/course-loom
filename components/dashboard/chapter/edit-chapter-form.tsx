@@ -101,7 +101,7 @@ export default function EditChapterForm({
               </FormItem>
             )}
           />
-          {!initialData.videoUrl && (
+          {initialData.videoUrl && (
             <div className="my-5 ">
               <MuxPlayer
                 playbackId={initialData.MuxData?.playbackId || ""}
@@ -110,7 +110,7 @@ export default function EditChapterForm({
             </div>
           )}
 
-          <div className="grid grid-cols-2 gap-x-2">
+          <div className="grid grid-cols-1  md:group-has-[[data-collapsible=icon]]/sidebar-wrapper:grid-cols-2 lg:grid-cols-2 gap-2 md:gap-6">
             <FormField
               control={form.control}
               name="videoUrl"
@@ -131,15 +131,17 @@ export default function EditChapterForm({
                 </FormItem>
               )}
             />
-            <div className="space-y-4 flex flex-col justify-center text-muted-foreground">
-              <p className="mb-2">
+            {/* extract this to a separate component */}
+            <div className="space-y-2 md:space-y-4 flex flex-col justify-center text-muted-foreground">
+              <p className="md:mb-2 xsm:text-sm xsm:text-center">
                 Upload your chapter video here. All videos must be at least 720p
                 and less than 1GB in size. Students are more likely to enroll if
                 your videos are of high quality.{" "}
               </p>
-              <small>
+              <small className="xsm:text-center">
                 Click here to see{" "}
                 <a
+                  className="text-indigo-500 underline"
                   href="https://riverside.fm/blog/video-production-tips"
                   referrerPolicy="no-referrer"
                   target="_blank">
@@ -179,12 +181,21 @@ export default function EditChapterForm({
 
           <div className="flex gap-5">
             <Link
-              href={`/instructor/courses/${initialData.courseId}/curriculum`}>
-              <Button variant="outline" type="button">
+              href={`/instructor/courses/${initialData.courseId}/curriculum`}
+              passHref>
+              <Button
+                variant="outline"
+                size="sm"
+                type="button"
+                disabled={isSubmitting}>
                 Cancel
               </Button>
             </Link>
-            <Button type="submit" disabled={isSubmitting}>
+            <Button
+              type="submit"
+              size="sm"
+              title="submit"
+              disabled={isSubmitting}>
               {isSubmitting ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
