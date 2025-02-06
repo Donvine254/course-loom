@@ -99,7 +99,7 @@ export async function updateUser(data: Partial<userData>, id: string) {
   try {
     await prisma.user.update({
       where: {
-        id: id,
+        clerkId: id,
       },
       data,
     });
