@@ -25,6 +25,7 @@
     "@radix-ui/react-slot": "^1.1.1",
     "@radix-ui/react-switch": "^1.1.2",
     "@radix-ui/react-tooltip": "^1.1.7",
+    "@types/video.js": "^7.3.58",
     "@uploadthing/react": "^7.1.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -46,6 +47,7 @@
     "tailwindcss-animate": "^1.0.7",
     "uploadthing": "^7.4.4",
     "vaul": "^1.1.2",
+    "video.js": "^8.21.0",
     "zod": "^3.24.1"
   },
   "devDependencies": {
