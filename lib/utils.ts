@@ -84,3 +84,9 @@ export const getVideoDuration = async (videoUrl: string): Promise<number> => {
     videoElement.src = videoUrl;
   });
 };
+
+export function ReloadWindow() {
+  if (typeof window !== "undefined" && window) {
+    window.location.reload();
+  }
+}

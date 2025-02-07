@@ -4,7 +4,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { PublishCourse } from "@/lib/actions/courses";
 import { Course, Chapter } from "@prisma/client";
-import { InfoIcon, Trash2 } from "lucide-react";
+import { AlertTriangle, CircleCheck, InfoIcon, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -53,11 +53,28 @@ export const Header = ({ course }: { course: CourseWithChapter }) => {
   return (
     <div>
       {" "}
-      {!course.isPublished && (
-        <Alert variant="warning">
-          <InfoIcon className="h-4 w-4" />
+      {!course.isPublished ? (
+        isCompleted ? (
+          <Alert variant="info">
+            <InfoIcon className="h-4 w-4" />
+            <AlertDescription className="xsm:text-xs">
+              This course is complete but not yet published. Consider publishing
+              it to make it visible to students.
+            </AlertDescription>
+          </Alert>
+        ) : (
+          <Alert variant="warning">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertDescription className="xsm:text-xs">
+              This course is unpublished. It will not be visible to students.
+            </AlertDescription>
+          </Alert>
+        )
+      ) : (
+        <Alert variant="success">
+          <CircleCheck className="h-4 w-4" />
           <AlertDescription className="xsm:text-xs">
-            This course is unpublished. It will not be visible to students
+            This course is published. It will be visible to all students.
           </AlertDescription>
         </Alert>
       )}

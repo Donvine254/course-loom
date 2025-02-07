@@ -92,8 +92,6 @@ export default async function deleteChapter(chapterId: string) {
 type UpdateData = {
   title: string;
   description?: string;
-  videoUrl?: string;
-  duration?: number;
   isFree: boolean;
 };
 export async function updateChapter(formData: UpdateData, chapterId: string) {
@@ -104,9 +102,6 @@ export async function updateChapter(formData: UpdateData, chapterId: string) {
       },
       data: formData,
     });
-    if (formData.videoUrl) {
-      await CreateOrUpdateMuxData({ videoUrl: formData.videoUrl, chapterId });
-    }
     return { success: true, message: "Chapter updated successfully" };
     // eslint-disable-next-line
   } catch (error: any) {
@@ -116,6 +111,36 @@ export async function updateChapter(formData: UpdateData, chapterId: string) {
         error: "A chapter with this title already exists.",
       };
     }
+    return {
+      success: false,
+      error: error.message || "An error occurred while creating the chapter.",
+    };
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+type VideoData = {
+  videoUrl?: string | null;
+  duration?: number;
+};
+export async function updateChapterVideo(
+  formData: VideoData,
+  chapterId: string
+) {
+  try {
+    await prisma.chapter.update({
+      where: {
+        id: chapterId,
+      },
+      data: formData,
+    });
+    if (formData.videoUrl) {
+      await CreateOrUpdateMuxData({ videoUrl: formData.videoUrl, chapterId });
+    }
+    return { success: true, message: "Chapter video updated successfully" };
+    // eslint-disable-next-line
+  } catch (error: any) {
+    console.error(error.stack);
     return {
       success: false,
       error: error.message || "An error occurred while creating the chapter.",

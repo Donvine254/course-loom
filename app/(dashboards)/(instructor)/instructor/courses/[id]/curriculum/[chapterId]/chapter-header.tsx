@@ -5,7 +5,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import deleteChapter, { PublishChapter } from "@/lib/actions/chapters";
 import { Chapter } from "@prisma/client";
-import { InfoIcon, MoveLeft } from "lucide-react";
+import { InfoIcon, MoveLeft, CircleCheck, AlertTriangle } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -55,17 +55,34 @@ export const ChapterHeader = ({ chapter }: { chapter: Chapter }) => {
   return (
     <div>
       {" "}
-      {!chapter.isPublished && (
-        <Alert variant="warning">
-          <InfoIcon className="h-4 w-4" />
+      {!chapter.isPublished ? (
+        isCompleted ? (
+          <Alert variant="info">
+            <InfoIcon className="h-4 w-4" />
+            <AlertDescription className="xsm:text-xs">
+              This chapter is complete but not yet published. Consider
+              publishing it to make it visible to students.
+            </AlertDescription>
+          </Alert>
+        ) : (
+          <Alert variant="warning">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertDescription className="xsm:text-xs">
+              This chapter is unpublished. It will not be visible to students.
+            </AlertDescription>
+          </Alert>
+        )
+      ) : (
+        <Alert variant="success">
+          <CircleCheck className="h-4 w-4" />
           <AlertDescription className="xsm:text-xs">
-            This chapter is unpublished. It will not be visible to students
+            This chapter is published. It will be visible to all students.
           </AlertDescription>
         </Alert>
       )}
       {/* buttons section */}
       <div className="flex gap-2 overflow-x-auto p-4 md:px-6 mx-auto max-w-4xl w-full justify-between">
-        <Link href={`/instructor/courses/${chapter.courseId}`}>
+        <Link href={`/instructor/courses/${chapter.courseId}/curriculum`}>
           <Button size="sm" className="justify-between" variant="default">
             <MoveLeft className="h-4 w-4 mr-2" /> Back to Curriculum
           </Button>
