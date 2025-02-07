@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { imageUrlConstructor, formatMuxDuration } from "@/lib/utils";
+import { imageUrlConstructor, formatVideoDuration } from "@/lib/utils";
 import parse from "html-react-parser";
 import {
   Attachment,
@@ -176,7 +176,7 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
                     Duration
                   </span>
                   <span className="font-semibold">
-                    {formatMuxDuration(totalDuration)}
+                    {formatVideoDuration(totalDuration)}
                   </span>
                 </div>
                 <div className="flex flex-col items-center p-4 bg-card border shadow rounded-lg">
@@ -278,7 +278,7 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
                               </div>
                               <div className="text-sm text-muted-foreground mt-1">
                                 1 lesson •{" "}
-                                {formatMuxDuration(chapter.duration || 0)}
+                                {formatVideoDuration(chapter.duration || 0)}
                               </div>
                             </div>
                           ))}
@@ -304,7 +304,7 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
                                         </h3>
                                         <div className="text-sm text-muted-foreground mt-1">
                                           {/* add chapter duration */}1 lesson •{" "}
-                                          {formatMuxDuration(
+                                          {formatVideoDuration(
                                             chapter.duration || 0
                                           )}
                                         </div>

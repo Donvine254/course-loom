@@ -1,5 +1,5 @@
 "use client";
-import { Chapter, MuxData } from "@prisma/client";
+import { Chapter } from "@prisma/client";
 import React from "react";
 import RichEditor from "@/components/custom/editor";
 import {
@@ -35,13 +35,11 @@ const formSchema = z.object({
     .optional(),
   isFree: z.boolean(),
 });
-type ChapterWithMuxData = Chapter & {
-  MuxData?: MuxData | null;
-};
+
 export default function EditChapterForm({
   initialData,
 }: {
-  initialData: ChapterWithMuxData;
+  initialData: Chapter;
 }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
