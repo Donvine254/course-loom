@@ -1,6 +1,5 @@
 "use server";
 import prisma from "@/prisma/prisma";
-import { CreateOrUpdateMuxData } from "./mux";
 
 type ChapterData = {
   courseId: string;
@@ -134,9 +133,6 @@ export async function updateChapterVideo(
       },
       data: formData,
     });
-    if (formData.videoUrl) {
-      await CreateOrUpdateMuxData({ videoUrl: formData.videoUrl, chapterId });
-    }
     return { success: true, message: "Chapter video updated successfully" };
     // eslint-disable-next-line
   } catch (error: any) {

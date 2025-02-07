@@ -19,7 +19,7 @@ interface FileUploadProps {
   title: string;
   setIsUploading: (isUploading: boolean) => void;
 }
-
+// TODO: add subtitles vtt generator that saves the subtitles to uploadthing
 export const FileUpload = ({
   onChange,
   endpoint,

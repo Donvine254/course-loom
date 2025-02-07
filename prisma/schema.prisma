@@ -48,13 +48,12 @@ model Course {
   id            String       @id @default(cuid())
   slug          String       @unique
   title         String
-  summary       String? //short description about the course
-  description   String? //long description about the course, can be html
+  summary       String?
+  description   String?
   price         Float?       @default(19.99)
   imageUrl      String?
   prerequisites String?
   objectives    String?
-  attachments   Attachment[]
   purchases     Purchase[]
   status        CourseStatus @default(DRAFT)
   isPublished   Boolean      @default(false)
@@ -88,7 +87,7 @@ model Chapter {
   position     Int            @default(autoincrement())
   isPublished  Boolean        @default(false)
   UserProgress UserProgress[]
-  MuxData      MuxData?
+  attachments  Attachment[]
   isFree       Boolean        @default(false)
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
@@ -98,24 +97,17 @@ model Chapter {
 }
 
 // TODO: Add quizzes for each chapter (maybe ten questions with possible responses and correct answers)
-model MuxData {
-  id         String  @id @default(uuid())
-  assetId    String
-  playbackId String?
-  chapterId  String  @unique
-  chapter    Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
-}
 
 model Attachment {
   id        String   @id @default(uuid())
   name      String
   url       String   @unique
-  courseId  String
-  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  chapterId String
+  chapter   Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([courseId])
+  @@index([chapterId])
 }
 
 model Purchase {
@@ -125,7 +117,7 @@ model Purchase {
   course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt()
-  User      User     @relation(fields: [userId], references: [id])
+  User      User     @relation(fields: [userId], references: [clerkId])
 
   @@unique([userId, courseId])
   @@index([courseId])
@@ -138,7 +130,7 @@ model Review {
   course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId  String
   userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [clerkId], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -147,10 +139,10 @@ model InstructorReviews {
   id           String     @id @default(cuid())
   rating       Int
   comment      String
-  instructor   Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  instructor   Instructor @relation(fields: [instructorId], references: [clerkId], onDelete: Cascade)
   instructorId String
   userId       String
-  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User       @relation(fields: [userId], references: [clerkId], onDelete: Cascade)
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
 }
@@ -171,7 +163,7 @@ model UserProgress {
   isCompleted Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  User        User     @relation(fields: [userId], references: [id])
+  User        User     @relation(fields: [userId], references: [clerkId])
 
   @@unique([userId, chapterId])
   @@index([chapterId])

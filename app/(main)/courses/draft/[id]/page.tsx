@@ -12,6 +12,15 @@ export default async function Page({
     include: {
       category: true,
       chapters: {
+        include: {
+          attachments: {
+            select: {
+              id: true,
+              url: true,
+              name: true,
+            },
+          },
+        },
         orderBy: {
           position: "asc",
         },
@@ -28,7 +37,6 @@ export default async function Page({
           },
         },
       },
-      attachments: true,
     },
   });
 

@@ -1,6 +1,5 @@
 import prisma from "@/prisma/prisma";
 import { redirect } from "next/navigation";
-
 import { currentUser } from "@clerk/nextjs/server";
 import { ChapterHeader } from "./chapter-header";
 import EditChapterForm from "@/components/dashboard/chapter/edit-chapter-form";
@@ -13,16 +12,13 @@ export default async function Page({
   const { chapterId } = await params;
   const user = await currentUser();
   if (!user) {
-    redirect("/instructor");
+    redirect("/instructor/courses");
   }
   const chapter = await prisma.chapter.findUnique({
     where: { id: chapterId },
-    include: {
-      MuxData: true,
-    },
   });
   if (!chapter || !user) {
-    redirect("/instructor");
+    redirect("/instructor/courses");
   }
   return (
     <section>
