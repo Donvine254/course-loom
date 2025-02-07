@@ -1,13 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { imageUrlConstructor, formatVideoDuration } from "@/lib/utils";
 import parse from "html-react-parser";
-import {
-  Attachment,
-  Category,
-  Chapter,
-  Course,
-  Instructor,
-} from "@prisma/client";
+import { Category, Chapter, Course, Instructor } from "@prisma/client";
 import {
   BadgeInfo,
   BookmarkPlus,
@@ -41,11 +35,13 @@ import {
 type InstructorWithCourses = Instructor & {
   courses: { id: string; title: string; slug: string; isPublished: boolean }[];
 };
+type ChapterWithAttachments = Chapter & {
+  attachments: { id: string; name: string; url: string }[];
+};
 type FullCourse = Course & {
   category: Category;
   instructor: InstructorWithCourses;
-  chapters: Chapter[];
-  attachments: Attachment[];
+  chapters: ChapterWithAttachments[];
 };
 export default function DraftCourse({ course }: { course: FullCourse }) {
   const ratingsBreakdown = {
@@ -61,6 +57,12 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
     }
     return accumulator;
   }, 0);
+  const totalAttachments: number = course?.chapters.reduce(
+    (accumulator: number, chapter: ChapterWithAttachments) => {
+      return accumulator + chapter.attachments.length;
+    },
+    0
+  );
   return (
     <div>
       {/* header section */}
@@ -201,7 +203,7 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
                     Resources
                   </span>
                   <span className="font-semibold">
-                    {course.attachments.length} files
+                    {totalAttachments || 0} files
                   </span>
                 </div>
               </div>
