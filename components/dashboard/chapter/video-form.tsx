@@ -9,6 +9,7 @@ import { FileUpload } from "@/components/ui/file-upload";
 import { CustomOverlay } from "@/components/custom/overlay";
 import { deleteFile } from "@/lib/actions/delete-files";
 import { CircleCheck } from "lucide-react";
+import VideoPlayer from "@/components/custom/video-player";
 
 interface VideoFormProps {
   initialData: Chapter;
@@ -77,19 +78,15 @@ export default function ChapterVideoUpload({ initialData }: VideoFormProps) {
       <h2 className="font-semibold flex items-center gap-2">
         Chapter Video <span className="text-red-500">*</span>
       </h2>
-
       <div className="border bg-card rounded-md p-4 my-2 transition-[height] animate-accordion-down ease-in-out shadow dark:shadow-indigo-500 relative ">
         {isLoading && <CustomOverlay />}
-
         <div className="grid grid-cols-1  md:group-has-[[data-collapsible=icon]]/sidebar-wrapper:grid-cols-2 lg:grid-cols-2  gap-6">
           {data.videoUrl ? (
-            <video
-              src={data.videoUrl}
-              poster={data.videoUrl}
+            <VideoPlayer
+              url={data.videoUrl}
+              subtitles="https://cdn.jsdelivr.net/gh/PolyMeilex/SubtitleTester/test.vtt
+"
               className="w-full h-full rounded-md outline outline-indigo-500"
-              controls
-              autoPlay
-              preload="metadata"
             />
           ) : (
             <FileUpload
