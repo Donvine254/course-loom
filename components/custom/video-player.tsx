@@ -51,7 +51,13 @@ export default function VideoPlayer({ url, subtitles, className }: Props) {
   return (
     <div data-vjs-player className={cn("relative", className)}>
       {isLoading && <CustomOverlay />}
-      <video ref={videoRef} className="video-js vjs-default-skin" controls>
+      <video
+        ref={videoRef}
+        className="video-js vjs-default-skin "
+        controls
+        onContextMenu={(e) => e.preventDefault()}
+        controlsList="nodownload"
+        disablePictureInPicture>
         <source src={url} type="video/mp4" />
         {subtitles && (
           <track

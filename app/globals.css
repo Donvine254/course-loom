@@ -139,3 +139,31 @@ input::-webkit-inner-spin-button {
 .ql-toolbar {
   @apply dark:bg-gray-400;
 }
+
+/* styling for video player */
+.video-js .vjs-control-bar {
+  background-color: #6366f1 !important;
+}
+
+.video-js .vjs-play-progress {
+  background-color: #6366f1 !important;
+}
+
+.video-js .vjs-volume-level {
+  background-color: #6366f1 !important;
+}
+
+.video-js .vjs-big-play-button {
+  background-color: #6366f1 !important;
+}
+
+.video-js .vjs-menu-item:hover {
+  background-color: #6366f1 !important;
+}
+/* Video.js Progress Track (Background) */
+.video-js .vjs-progress-holder {
+  background-color: #e0e7ff !important;
+}
+.video-js .vjs-play-progress {
+  background-color: #1ee80b !important;
+}
