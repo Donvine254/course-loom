@@ -114,9 +114,10 @@ export default function FilesUploaderForm({
           <span className="hidden xsm:block">Resources</span>
         </h2>
         <Button variant="ghost" size="sm" onClick={() => setOpen(true)}>
-          <CirclePlus className="h-4 w-4 sm:mr-2" />{" "}
+          <CirclePlus className="h-4 w-4" />{" "}
           <span>
-            Add<span className="xsm:hidden">Resources</span>
+            Add {""}
+            <span className="xsm:hidden">Resources</span>
           </span>
         </Button>
       </div>
@@ -205,7 +206,7 @@ export default function FilesUploaderForm({
                 </div>
               </div>
               {/* space for file uploader */}
-              {resourceType === "url" ? (
+              {resourceType === "url" && (
                 <FormField
                   control={form.control}
                   name="url"
@@ -225,7 +226,8 @@ export default function FilesUploaderForm({
                     </FormItem>
                   )}
                 />
-              ) : (
+              )}
+              <div className={resourceType === "file" ? "block" : "hidden"}>
                 <FormField
                   control={form.control}
                   name="url"
@@ -253,7 +255,7 @@ export default function FilesUploaderForm({
                     </FormItem>
                   )}
                 />
-              )}
+              </div>
               {/* If we upload, we autosubmit the form */}
               <DialogFooter className="flex items-center gap-4">
                 <DialogClose>Cancel</DialogClose>
