@@ -128,3 +128,44 @@ export async function PublishCourse(courseId: string, isPublished: boolean) {
     await prisma.$disconnect();
   }
 }
+
+// function to delete course
+export default async function deleteCourse(courseId: string) {
+  try {
+    const course = await prisma.course.findUnique({
+      where: { id: courseId },
+      include: {
+        purchases: true,
+      },
+    });
+    if (!course) {
+      return {
+        success: false,
+        error: "Record to delete not found!",
+      };
+    }
+    if (course.purchases.length > 0) {
+      return {
+        success: false,
+        error:
+          "This course cannot be deleted as it has already been purchased by a student.",
+      };
+    }
+    await prisma.course.delete({
+      where: {
+        id: courseId,
+      },
+    });
+    return { success: true, message: "Course deleted successfully" };
+    // eslint-disable-next-line
+  } catch (error: any) {
+    return {
+      success: false,
+      error:
+        error.message ||
+        "Failed to delete course due to existing relationships",
+    };
+  } finally {
+    await prisma.$disconnect();
+  }
+}

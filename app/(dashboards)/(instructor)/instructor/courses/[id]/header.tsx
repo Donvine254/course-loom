@@ -4,7 +4,7 @@ import PublishButton from "@/components/custom/publish-button";
 import ProgressIndicator from "@/components/dashboard/course/progress-indicator";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { PublishCourse } from "@/lib/actions/courses";
+import deleteCourse, { PublishCourse } from "@/lib/actions/courses";
 import { Course, Chapter } from "@prisma/client";
 import { AlertTriangle, CircleCheck, InfoIcon } from "lucide-react";
 import Link from "next/link";
@@ -59,9 +59,21 @@ export const Header = ({ course }: { course: CourseWithChapter }) => {
     setIsPublishing(false);
   }
 
-  async function handleDeleteCourse() {
-    toast.error("I am not so sure about this");
-  }
+  const handleDeleteCourse = async (id: string) => {
+    try {
+      const res = await deleteCourse(id);
+      if (res.success) {
+        toast.success(res.message);
+        router.refresh();
+        router.replace(`/instructor/courses`);
+      } else {
+        toast.error(res.error);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
+  };
   return (
     <div>
       {" "}
@@ -129,7 +141,7 @@ export const Header = ({ course }: { course: CourseWithChapter }) => {
           <DeleteButton
             onDelete={handleDeleteCourse}
             id={course.id}
-            item="course. A course cannot be deleted if you already have students enrolled."
+            item="course. A course cannot be deleted if you already have students enrolled. You should archive it instead."
           />
         </div>
       </div>
