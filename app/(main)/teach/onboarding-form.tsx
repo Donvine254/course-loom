@@ -15,6 +15,7 @@ import { DialogTitle } from "@radix-ui/react-dialog";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 // eslint-disable-next-line
 declare const confetti: any;
@@ -110,6 +111,7 @@ export default function OnboardingForm({
 }) {
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [errors, setErrors] = useState<Errors>(initialErrors);
   const router = useRouter();
@@ -165,6 +167,7 @@ export default function OnboardingForm({
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (validateStep(4)) {
+      setIsSubmitting(true);
       const res = await createInstructorAccount({
         clerkId: id,
         bio: formData.bio,
@@ -185,6 +188,7 @@ export default function OnboardingForm({
         }, 2000);
       } else {
         toast.error("something went wrong, try again later");
+        setIsSubmitting(false);
       }
     }
   };
@@ -372,8 +376,16 @@ export default function OnboardingForm({
                 {step === 4 && (
                   <Button
                     type="submit"
+                    disabled={isSubmitting}
                     className="bg-indigo-500 text-white hover:bg-indigo-600 hover:text-white">
-                    Submit
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" />{" "}
+                        Submitting..
+                      </>
+                    ) : (
+                      "Submit"
+                    )}
                   </Button>
                 )}
               </div>
