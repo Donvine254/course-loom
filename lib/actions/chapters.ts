@@ -180,13 +180,18 @@ export async function PublishChapter(
 
     return {
       success: true,
+      status: isPublished,
       message: isPublished
         ? "Chapter published successfully"
         : "Chapter unpublished successfully",
     };
     // eslint-disable-next-line
   } catch (error: any) {
-    return { success: false, error: error.message || "Something went wrong" };
+    return {
+      success: false,
+      error: error.message || "Something went wrong",
+      status: isPublished,
+    };
   } finally {
     await prisma.$disconnect();
   }

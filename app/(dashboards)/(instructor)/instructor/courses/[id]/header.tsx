@@ -1,12 +1,15 @@
 "use client";
+import DeleteButton from "@/components/custom/delete-dialog";
+import PublishButton from "@/components/custom/publish-button";
 import ProgressIndicator from "@/components/dashboard/course/progress-indicator";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { PublishCourse } from "@/lib/actions/courses";
 import { Course, Chapter } from "@prisma/client";
-import { AlertTriangle, CircleCheck, InfoIcon, Trash2 } from "lucide-react";
+import { AlertTriangle, CircleCheck, InfoIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import { toast } from "sonner";
 // eslint-disable-next-line
 declare const confetti: any;
@@ -14,6 +17,7 @@ type CourseWithChapter = Course & {
   chapters: Chapter[];
 };
 export const Header = ({ course }: { course: CourseWithChapter }) => {
+  const [isPublishing, setIsPublishing] = useState<boolean>(false);
   const pathname = usePathname();
   const router = useRouter();
   const requiredFields = [
@@ -31,16 +35,19 @@ export const Header = ({ course }: { course: CourseWithChapter }) => {
   const missingFieldsCount = missingFields.length;
   const isCompleted = requiredFields.every(Boolean);
 
-  async function handlePublish() {
+  async function handlePublish(isPublished: boolean) {
+    setIsPublishing(true);
     try {
-      const res = await PublishCourse(course.id);
+      const res = await PublishCourse(course.id, isPublished);
       if (res.success) {
         toast.success(res.message);
-        confetti({
-          particleCount: 4000,
-          spread: 100,
-          origin: { y: 0.3 },
-        });
+        if (res.status === true) {
+          confetti({
+            particleCount: 4000,
+            spread: 100,
+            origin: { y: 0.3 },
+          });
+        }
         router.refresh();
       } else {
         toast.error(res.error);
@@ -49,6 +56,11 @@ export const Header = ({ course }: { course: CourseWithChapter }) => {
       console.log(error);
       toast.error("Something went wrong");
     }
+    setIsPublishing(false);
+  }
+
+  async function handleDeleteCourse() {
+    toast.error("I am not so sure about this");
   }
   return (
     <div>
@@ -106,22 +118,19 @@ export const Header = ({ course }: { course: CourseWithChapter }) => {
         </div>
         <div className="flex gap-5 items-start">
           {/* TODO: Add publish and delete buttons */}
-          <Button
-            disabled={!isCompleted}
-            variant="ghost"
-            size="sm"
-            onClick={handlePublish}
-            title="complete all sections to publish this course">
-            {course.isPublished ? "Unpublish" : "Publish"}
-          </Button>
+          <PublishButton
+            type="course"
+            isCompleted={isCompleted}
+            isPublished={course.isPublished}
+            isPublishing={isPublishing}
+            handlePublish={handlePublish}
+          />
           {/* replace this with delete button */}
-          <Button
-            size="icon"
-            title="delete course"
-            type="button"
-            className="bg-red-100 text-destructive hover:bg-destructive hover:text-destructive-foreground">
-            <Trash2 className="h-5 w-5" />
-          </Button>
+          <DeleteButton
+            onDelete={handleDeleteCourse}
+            id={course.id}
+            item="course. A course cannot be deleted if you already have students enrolled."
+          />
         </div>
       </div>
       <ProgressIndicator

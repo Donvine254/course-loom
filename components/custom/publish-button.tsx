@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "../ui/button";
 import {
   TooltipProvider,
@@ -5,18 +6,21 @@ import {
   TooltipContent,
   Tooltip,
 } from "../ui/tooltip";
+import { Loader2 } from "lucide-react";
 
 interface PublishButtonProps {
   type: "course" | "chapter";
   handlePublish: (isPublished: boolean) => void;
   isCompleted: boolean;
   isPublished: boolean;
+  isPublishing: boolean;
 }
 
 export default function PublishButton({
   handlePublish,
   isCompleted,
   isPublished,
+  isPublishing,
   type,
 }: PublishButtonProps) {
   const publishMessage =
@@ -31,14 +35,22 @@ export default function PublishButton({
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger className="hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none h-10 px-4 py-2">
+        <TooltipTrigger asChild>
           <Button
-            disabled={!isCompleted}
+            disabled={!isCompleted || isPublishing}
             variant="ghost"
             size="sm"
-            title="complete all sections to publish"
-            onClick={() => handlePublish(!isPublished)}>
-            {isPublished ? "Unpublish" : "Publish"}
+            type="button"
+            onClick={() => {
+              handlePublish(!isPublished);
+            }}>
+            {isPublishing ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : isPublished ? (
+              "Unpublish"
+            ) : (
+              "Publish"
+            )}
           </Button>
         </TooltipTrigger>
         <TooltipContent
