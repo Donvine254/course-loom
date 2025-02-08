@@ -24,7 +24,7 @@ import { ReloadWindow } from "@/lib/utils";
 export const uploadSchema = z.object({
   name: z.string().min(1, "Filename is required"),
   resourceType: z.enum(["url", "file"]),
-  url: z.string(),
+  url: z.string().url("Url is required"),
 });
 
 export default function FilesUploderForm({ chapterId }: { chapterId: string }) {
@@ -133,23 +133,32 @@ export default function FilesUploderForm({ chapterId }: { chapterId: string }) {
               )}
             />
           ) : (
-            <FileUploader
-              endpoint="fileUploader"
-              className="border-2 bg-card dark:bg-secondary text-muted-foreground  rounded-lg "
-              title={form.getValues("name")}
-              onChange={async (url: string) => {
-                if (!form.getValues("name")) {
-                  toast.error("Please enter a file name first!");
-                  return;
-                }
+            <FormField
+              control={form.control}
+              name="url"
+              render={() => (
+                <FormItem>
+                  <FileUploader
+                    endpoint="fileUploader"
+                    className="border-2 bg-card dark:bg-secondary text-muted-foreground  rounded-lg "
+                    title={form.getValues("name")}
+                    onChange={async (url: string) => {
+                      if (!form.getValues("name")) {
+                        toast.error("Please enter a file name first!");
+                        return;
+                      }
 
-                // Save uploaded file info in form
-                form.setValue("url", url);
-                setUploadedFile(url);
-                form.setValue("resourceType", "file");
-                // Auto-submit the form
-                form.handleSubmit(onSubmit)();
-              }}
+                      // Save uploaded file info in form
+                      form.setValue("url", url);
+                      setUploadedFile(url);
+                      form.setValue("resourceType", "file");
+                      // Auto-submit the form
+                      form.handleSubmit(onSubmit)();
+                    }}
+                  />
+                  <FormMessage />
+                </FormItem>
+              )}
             />
           )}
           {/* If we upload, we autosubmit the form */}

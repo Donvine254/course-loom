@@ -172,6 +172,9 @@ export async function createChapterAttachment(
   chapterId: string,
   attachment: { name: string; url: string }
 ) {
+  if (attachment.url === "") {
+    return { success: false, message: "Provide a valid file url" };
+  }
   try {
     await prisma.attachment.create({
       data: {
