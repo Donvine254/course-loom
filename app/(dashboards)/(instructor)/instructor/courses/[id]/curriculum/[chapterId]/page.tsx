@@ -16,6 +16,15 @@ export default async function Page({
   }
   const chapter = await prisma.chapter.findUnique({
     where: { id: chapterId },
+    include: {
+      attachments: {
+        select: {
+          id: true,
+          name: true,
+          url: true,
+        },
+      },
+    },
   });
   if (!chapter || !user) {
     redirect("/instructor/courses");

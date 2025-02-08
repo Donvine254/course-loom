@@ -25,7 +25,7 @@ import { CustomOverlay } from "@/components/custom/overlay";
 import { ReloadWindow } from "@/lib/utils";
 import ChapterVideoUpload from "./video-form";
 import { Separator } from "@/components/ui/separator";
-import FilesUploderForm from "./resources-form";
+import FilesUploaderForm from "./resources-form";
 const formSchema = z.object({
   title: z
     .string()
@@ -37,12 +37,17 @@ const formSchema = z.object({
     .optional(),
   isFree: z.boolean(),
 });
-
-export default function EditChapterForm({
-  initialData,
-}: {
-  initialData: Chapter;
-}) {
+type Attachment = {
+  id: string;
+  name: string;
+  url: string;
+};
+interface Props {
+  initialData: Chapter & {
+    attachments: Attachment[] | null;
+  };
+}
+export default function EditChapterForm({ initialData }: Props) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -178,7 +183,7 @@ export default function EditChapterForm({
         </Form>
         <Separator className="my-2" />
       </div>
-      <FilesUploderForm chapterId={initialData.id} />
+      <FilesUploaderForm initialData={initialData} />
     </section>
   );
 }

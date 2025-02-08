@@ -23,11 +23,6 @@ export const ChapterHeader = ({ chapter }: { chapter: Chapter }) => {
       const res = await deleteChapter(id);
       if (res.success) {
         toast.success(res.message);
-        confetti({
-          particleCount: 4000,
-          spread: 100,
-          origin: { y: 0.3 },
-        });
         router.refresh();
         router.replace(`/instructor/courses/${chapter.courseId}/curriculum`);
       } else {
@@ -43,6 +38,11 @@ export const ChapterHeader = ({ chapter }: { chapter: Chapter }) => {
       const res = await PublishChapter(chapter.id);
       if (res.success) {
         toast.success(res.message);
+        confetti({
+          particleCount: 4000,
+          spread: 100,
+          origin: { y: 0.3 },
+        });
         router.refresh();
       } else {
         toast.error(res.error);
