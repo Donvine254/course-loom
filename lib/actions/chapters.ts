@@ -147,6 +147,8 @@ export async function updateChapterVideo(
 }
 
 export async function PublishChapter(chapterId: string) {
+  // TODO: change this to publish and unpublish the chapter
+  // Update to check if the required fields are complete
   try {
     await prisma.chapter.update({
       where: {
@@ -160,6 +162,61 @@ export async function PublishChapter(chapterId: string) {
     // eslint-disable-next-line
   } catch (error: any) {
     return { success: false, error: error.message || "Something went wrong" };
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+// Functions to handle chapter attachments
+export async function createChapterAttachment(
+  chapterId: string,
+  attachment: { name: string; url: string }
+) {
+  try {
+    await prisma.attachment.create({
+      data: {
+        chapterId,
+        ...attachment,
+      },
+    });
+    return { success: true, message: "Attachment created successfully" };
+    // eslint-disable-next-line
+  } catch (error: any) {
+    console.error(error.stack);
+    if (error.code === "P2002") {
+      return {
+        success: false,
+        error: "An file with this name already exists.",
+      };
+    }
+    return {
+      success: false,
+      error:
+        error.message || "An error occurred while creating course attachment.",
+    };
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+export async function deleteChapterAttachment(id: string) {
+  try {
+    await prisma.attachment.delete({
+      where: {
+        id,
+      },
+    });
+    return { success: true, message: "Attachment deleted successfully" };
+    // eslint-disable-next-line
+  } catch (error: any) {
+    if (error.code === "P2025") {
+      return { success: false, message: "Attachment to delete not found" };
+    }
+    return {
+      success: false,
+      message: "An error occurred",
+      error: error.message,
+    };
   } finally {
     await prisma.$disconnect();
   }

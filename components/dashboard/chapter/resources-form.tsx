@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { CustomOverlay } from "@/components/custom/overlay";
 import { Loader2, File } from "lucide-react";
 import { FileUploader } from "@/components/custom/file-upload";
+import { createChapterAttachment } from "@/lib/actions/chapters";
 // declare a schema
 export const uploadSchema = z.object({
   name: z.string().min(1, "Filename is required"),
@@ -37,9 +38,18 @@ export default function FilesUploderForm({ chapterId }: { chapterId: string }) {
     },
   });
   const onSubmit = async (values: z.infer<typeof uploadSchema>) => {
-    const { name, url } = values;
-    console.log(name, url);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    try {
+      const { name, url } = values;
+      const res = await createChapterAttachment(chapterId, { name, url });
+      if (res.success) {
+        toast.success("Attached added successfully");
+      } else {
+        toast.error(res.error);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("An error occurred while creating a new attachment");
+    }
   };
   const resourceType = form.watch("resourceType");
   const { isSubmitting } = form.formState;
