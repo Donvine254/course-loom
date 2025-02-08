@@ -155,7 +155,7 @@ export default function EditChapterForm({ initialData }: Props) {
               </small>
             )}
 
-            <div className="flex gap-5">
+            <div className="flex gap-5 pb-4">
               <Link
                 href={`/instructor/courses/${initialData.courseId}/curriculum`}
                 passHref>

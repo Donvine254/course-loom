@@ -8,9 +8,20 @@ import { cn, ReloadWindow } from "@/lib/utils";
 import { CustomOverlay } from "@/components/custom/overlay";
 import { deleteFile } from "@/lib/actions/delete-files";
 import { CircleCheck } from "lucide-react";
-import VideoPlayer from "@/components/custom/video-player";
 import { VideoUploader } from "@/components/custom/file-upload";
-
+import dynamic from "next/dynamic";
+import SubtitlesUploader from "./subtitles-form";
+const DynamicVideoPlayer = dynamic(
+  () => import("@/components/custom/video-player"),
+  {
+    loading: () => (
+      <div className="relative">
+        <CustomOverlay />
+      </div>
+    ),
+    ssr: false,
+  }
+);
 interface VideoFormProps {
   initialData: Chapter;
 }
@@ -82,7 +93,7 @@ export default function ChapterVideoUpload({ initialData }: VideoFormProps) {
         {isLoading && <CustomOverlay />}
         <div className="grid grid-cols-1  md:group-has-[[data-collapsible=icon]]/sidebar-wrapper:grid-cols-2 lg:grid-cols-2  gap-6">
           {data.videoUrl ? (
-            <VideoPlayer
+            <DynamicVideoPlayer
               url={data.videoUrl}
               subtitles="https://cdn.jsdelivr.net/gh/PolyMeilex/SubtitleTester/test.vtt
 "
@@ -156,6 +167,7 @@ export default function ChapterVideoUpload({ initialData }: VideoFormProps) {
           </div>
         </div>
       </div>
+      {initialData.videoUrl && <SubtitlesUploader initialData={initialData} />}
     </section>
   );
 }

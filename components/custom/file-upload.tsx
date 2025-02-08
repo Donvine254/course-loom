@@ -57,12 +57,14 @@ export const VideoUploader = ({
 // file uploader
 type FileUploadProps = Omit<VideoUploadProps, "onChange" | "setIsUploading"> & {
   onChange: (url: string) => void;
+  handleBeforeUploadBegin?: (files: File[]) => void;
 };
 export const FileUploader = ({
   onChange,
   endpoint,
   className,
   title,
+  handleBeforeUploadBegin,
 }: FileUploadProps) => {
   return (
     <UploadDropzone
@@ -74,6 +76,9 @@ export const FileUploader = ({
         button: "bg-indigo-500 cursor-pointer",
       }}
       onBeforeUploadBegin={(files: File[]) => {
+        if (handleBeforeUploadBegin) {
+          handleBeforeUploadBegin(files);
+        }
         return files.map(
           (f) => new File([f], title + f.name, { type: f.type })
         );
