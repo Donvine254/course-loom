@@ -5,7 +5,7 @@ import { updateCourse } from "@/lib/actions/courses";
 import { Course } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { ImageUploadButton } from "@/components/ui/file-upload";
+import { ImageUploadButton } from "@/components/custom/file-upload";
 import Image from "next/image";
 import { deleteCloudinaryImage } from "@/lib/cloudinary";
 import { useRouter } from "next/navigation";
