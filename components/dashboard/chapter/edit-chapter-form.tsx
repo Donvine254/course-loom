@@ -24,6 +24,8 @@ import { updateChapter } from "@/lib/actions/chapters";
 import { CustomOverlay } from "@/components/custom/overlay";
 import { ReloadWindow } from "@/lib/utils";
 import ChapterVideoUpload from "./video-form";
+import { Separator } from "@/components/ui/separator";
+import FilesUploderForm from "./resources-form";
 const formSchema = z.object({
   title: z
     .string()
@@ -66,111 +68,117 @@ export default function EditChapterForm({
     }
   };
   return (
-    <div className="p-4 md:px-6 mx-auto max-w-4xl w-full relative">
-      {/* section for loading overlay */}
-      {isSubmitting && <CustomOverlay />}
-      <div>
-        <h1 className="font-bold text-xl md:text-2xl">Chapter Details</h1>
-        <p className="text-muted-foreground my-2 text-sm">
-          Complete this section with detailed information and a good video to
-          give your students the best learning experience.
-        </p>
-      </div>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-5">
-          <FormField
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  Title <span className="text-red-500">*</span>
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Ex: Introduction to Web Development"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  Description <span className="text-red-500">*</span>
-                </FormLabel>
-                <FormControl>
-                  <RichEditor
-                    placeholder="What is this chapter about?"
-                    {...field}
-                    className="rounded-md"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <ChapterVideoUpload initialData={initialData} />
-          <FormField
-            control={form.control}
-            name="isFree"
-            render={({ field }) => (
-              <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 bg-card  mb-2 shadow dark:shadow-indigo-500 relative gap-4">
-                <div className="space-y-4">
-                  <FormLabel className="flex items-center gap-2">
-                    <Lock className="h-4 w-4" /> Accessibility
+    <section>
+      <div className="p-4 md:px-6 mx-auto max-w-4xl w-full relative">
+        {/* section for loading overlay */}
+        {isSubmitting && <CustomOverlay />}
+        <div>
+          <h1 className="font-bold text-xl md:text-2xl">Chapter Details</h1>
+          <p className="text-muted-foreground my-2 text-sm">
+            Complete this section with detailed information and a good video to
+            give your students the best learning experience.
+          </p>
+        </div>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-8 mt-5">
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Title <span className="text-red-500">*</span>
                   </FormLabel>
-                  <FormDescription>
-                    Everyone can access this section for FREE
-                  </FormDescription>
-                </div>
-                <FormControl>
-                  <Switch
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          {form.getValues("isFree") && (
-            <small className="text-red-500">
-              Warning: This chapter is free and can be viewed by anyone.
-            </small>
-          )}
-
-          <div className="flex gap-5">
-            <Link
-              href={`/instructor/courses/${initialData.courseId}/curriculum`}
-              passHref>
-              <Button
-                variant="outline"
-                size="sm"
-                type="button"
-                disabled={isSubmitting}>
-                Cancel
-              </Button>
-            </Link>
-            <Button
-              type="submit"
-              size="sm"
-              title="submit"
-              disabled={isSubmitting || !hasChanges}>
-              {isSubmitting ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                "Save"
+                  <FormControl>
+                    <Input
+                      placeholder="Ex: Introduction to Web Development"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
               )}
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </div>
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Description <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <RichEditor
+                      placeholder="What is this chapter about?"
+                      {...field}
+                      className="rounded-md"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <ChapterVideoUpload initialData={initialData} />
+            <FormField
+              control={form.control}
+              name="isFree"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 bg-card  mb-2 shadow dark:shadow-indigo-500 relative gap-4">
+                  <div className="space-y-4">
+                    <FormLabel className="flex items-center gap-2">
+                      <Lock className="h-4 w-4" /> Accessibility
+                    </FormLabel>
+                    <FormDescription>
+                      Everyone can access this section for FREE
+                    </FormDescription>
+                  </div>
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            {form.getValues("isFree") && (
+              <small className="text-red-500">
+                Warning: This chapter is free and can be viewed by anyone.
+              </small>
+            )}
+
+            <div className="flex gap-5">
+              <Link
+                href={`/instructor/courses/${initialData.courseId}/curriculum`}
+                passHref>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  type="button"
+                  disabled={isSubmitting}>
+                  Cancel
+                </Button>
+              </Link>
+              <Button
+                type="submit"
+                size="sm"
+                title="submit"
+                disabled={isSubmitting || !hasChanges}>
+                {isSubmitting ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  "Save"
+                )}
+              </Button>
+            </div>
+          </form>
+        </Form>
+        <Separator className="my-2" />
+      </div>
+      <FilesUploderForm chapterId={initialData.id} />
+    </section>
   );
 }
