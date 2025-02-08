@@ -67,7 +67,7 @@ export default function FilesUploaderForm({
       const { name, url } = values;
       const res = await createChapterAttachment(initialData.id, { name, url });
       if (res.success) {
-        toast.success("Attached added successfully");
+        toast.success("Attachment added successfully");
         form.reset();
         setOpen(false);
         ReloadWindow();
@@ -131,7 +131,7 @@ export default function FilesUploaderForm({
               key={attachment.id}
               className="flex items-center gap-2 w-full my-2 ">
               <div className="flex flex-1 items-center gap-2 p-2 border rounded-lg bg-indigo-100 text-sm">
-                <File className="h-3 w-3 flex-shrink-0 text-indigo-570" />
+                <File className="h-4 w-4 flex-shrink-0 text-indigo-700" />
                 <a
                   href={attachment.url}
                   target="_blank"
