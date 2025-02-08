@@ -17,6 +17,7 @@ import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 import { CustomOverlay } from "@/components/custom/overlay";
 import { Loader2, File } from "lucide-react";
+import { FileUploader } from "@/components/custom/file-upload";
 // declare a schema
 export const uploadSchema = z.object({
   name: z.string().min(1, "Filename is required"),
@@ -26,8 +27,7 @@ export const uploadSchema = z.object({
 });
 
 export default function FilesUploderForm({ chapterId }: { chapterId: string }) {
-  const [isUploading, setIsUploading] = useState(false);
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [uploadedFile, setUploadedFile] = useState<string | null>(null);
   const form = useForm<z.infer<typeof uploadSchema>>({
     resolver: zodResolver(uploadSchema),
     defaultValues: {
@@ -36,8 +36,10 @@ export default function FilesUploderForm({ chapterId }: { chapterId: string }) {
       url: "",
     },
   });
-  const onSubmit = (values: z.infer<typeof uploadSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof uploadSchema>) => {
+    const { name, url } = values;
+    console.log(name, url);
+    await new Promise((resolve) => setTimeout(resolve, 2000));
   };
   const resourceType = form.watch("resourceType");
   const { isSubmitting } = form.formState;
@@ -119,7 +121,24 @@ export default function FilesUploderForm({ chapterId }: { chapterId: string }) {
               )}
             />
           ) : (
-            <></>
+            <FileUploader
+              endpoint="fileUploader"
+              className="border-2 bg-card dark:bg-secondary text-muted-foreground  rounded-lg "
+              title={form.getValues("name")}
+              onChange={async (url: string) => {
+                if (!form.getValues("name")) {
+                  toast.error("Please enter a file name first!");
+                  return;
+                }
+
+                // Save uploaded file info in form
+                form.setValue("url", url);
+                setUploadedFile(url);
+                form.setValue("resourceType", "file");
+                // Auto-submit the form
+                form.handleSubmit(onSubmit)();
+              }}
+            />
           )}
           {/* If we upload, we autosubmit the form */}
           <Button

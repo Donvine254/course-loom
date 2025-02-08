@@ -5,11 +5,11 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { updateChapterVideo } from "@/lib/actions/chapters";
 import { cn, ReloadWindow } from "@/lib/utils";
-import { FileUpload } from "@/components/ui/file-upload";
 import { CustomOverlay } from "@/components/custom/overlay";
 import { deleteFile } from "@/lib/actions/delete-files";
 import { CircleCheck } from "lucide-react";
 import VideoPlayer from "@/components/custom/video-player";
+import { VideoUploader } from "@/components/custom/file-upload";
 
 interface VideoFormProps {
   initialData: Chapter;
@@ -89,7 +89,7 @@ export default function ChapterVideoUpload({ initialData }: VideoFormProps) {
               className="w-full h-full rounded-md outline outline-indigo-500"
             />
           ) : (
-            <FileUpload
+            <VideoUploader
               setIsUploading={setIsUploading}
               onChange={async (url: string, duration: number) => {
                 await onSubmit({

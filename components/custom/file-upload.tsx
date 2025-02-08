@@ -2,7 +2,6 @@
 import { ourFileRouter } from "@/app/api/uploadthing/core";
 import { UploadDropzone } from "@/lib/upload-thing";
 import { toast } from "sonner";
-import { Button } from "./button";
 import { useRef, useState } from "react";
 import { Loader2, X } from "lucide-react";
 import {
@@ -11,8 +10,9 @@ import {
   validateImageSize,
 } from "@/lib/utils";
 import { uploadToCloudinary } from "@/lib/cloudinary";
+import { Button } from "../ui/button";
 
-interface FileUploadProps {
+interface VideoUploadProps {
   onChange: (url: string, duration: number) => void;
   endpoint: keyof typeof ourFileRouter;
   className?: string;
@@ -20,13 +20,13 @@ interface FileUploadProps {
   setIsUploading: (isUploading: boolean) => void;
 }
 // TODO: add subtitles vtt generator that saves the subtitles to uploadthing
-export const FileUpload = ({
+export const VideoUploader = ({
   onChange,
   endpoint,
   className,
   title,
   setIsUploading,
-}: FileUploadProps) => {
+}: VideoUploadProps) => {
   return (
     <UploadDropzone
       endpoint={endpoint}
@@ -46,6 +46,47 @@ export const FileUpload = ({
         const url = res?.[0].url;
         const duration = await getVideoDuration(url);
         onChange(url, duration);
+      }}
+      onUploadError={(error: Error) => {
+        toast.error(`${error?.message}`);
+      }}
+    />
+  );
+};
+
+// file uploader
+type FileUploadProps = Omit<VideoUploadProps, "onChange" | "setIsUploading"> & {
+  onChange: (url: string) => void;
+};
+export const FileUploader = ({
+  onChange,
+  endpoint,
+  className,
+  title,
+}: FileUploadProps) => {
+  return (
+    <UploadDropzone
+      endpoint={endpoint}
+      className={className}
+      appearance={{
+        label: "text-muted-foreground",
+        allowedContent: "text-muted-foreground",
+        button: "bg-indigo-500 cursor-pointer",
+      }}
+      onBeforeUploadBegin={(files: File[]) => {
+        return files.map(
+          (f) => new File([f], title + f.name, { type: f.type })
+        );
+      }}
+      onUploadBegin={() => {
+        if (!title) {
+          toast.error("Please enter a file name first!");
+          throw new Error("File name is required");
+          //abort the upload
+        }
+      }}
+      onClientUploadComplete={async (res) => {
+        onChange(res?.[0].url);
       }}
       onUploadError={(error: Error) => {
         toast.error(`${error?.message}`);
