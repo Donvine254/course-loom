@@ -125,8 +125,6 @@ export default function EditChapterForm({ initialData }: Props) {
                 </FormItem>
               )}
             />
-
-            <ChapterVideoUpload initialData={initialData} />
             <FormField
               control={form.control}
               name="isFree"
@@ -173,17 +171,21 @@ export default function EditChapterForm({ initialData }: Props) {
                 title="submit"
                 disabled={isSubmitting || !hasChanges}>
                 {isSubmitting ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <span>
+                    {" "}
+                    <Loader2 className="h-4 w-4 animate-spin" /> Saving..
+                  </span>
                 ) : (
-                  "Save"
+                  "Save Changes"
                 )}
               </Button>
             </div>
           </form>
         </Form>
         <Separator className="my-2" />
+        <ChapterVideoUpload initialData={initialData} />
+        <FilesUploaderForm initialData={initialData} />
       </div>
-      <FilesUploaderForm initialData={initialData} />
     </section>
   );
 }
