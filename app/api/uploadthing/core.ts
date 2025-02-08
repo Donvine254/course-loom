@@ -16,6 +16,11 @@ export const ourFileRouter = {
   }).onUploadComplete(async ({ file }) => {
     return { file: file.url };
   }),
+  fileUploader: uploadThing(["pdf", "text"]).onUploadComplete(
+    async ({ file }) => {
+      return { file: file.url };
+    }
+  ),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;

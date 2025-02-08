@@ -114,6 +114,7 @@ export const Header = ({ course }: { course: CourseWithChapter }) => {
             title="complete all sections to publish this course">
             {course.isPublished ? "Unpublish" : "Publish"}
           </Button>
+          {/* replace this with delete button */}
           <Button
             size="icon"
             title="delete course"

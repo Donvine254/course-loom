@@ -83,6 +83,7 @@ model Chapter {
   course       Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId     String
   videoUrl     String?
+  subtitles    String?
   duration     Int?           @default(0)
   position     Int            @default(autoincrement())
   isPublished  Boolean        @default(false)
@@ -107,6 +108,7 @@ model Attachment {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@unique([chapterId, name])
   @@index([chapterId])
 }
 

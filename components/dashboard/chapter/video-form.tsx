@@ -5,12 +5,23 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { updateChapterVideo } from "@/lib/actions/chapters";
 import { cn, ReloadWindow } from "@/lib/utils";
-import { FileUpload } from "@/components/ui/file-upload";
 import { CustomOverlay } from "@/components/custom/overlay";
 import { deleteFile } from "@/lib/actions/delete-files";
 import { CircleCheck } from "lucide-react";
-import VideoPlayer from "@/components/custom/video-player";
-
+import { VideoUploader } from "@/components/custom/file-upload";
+import dynamic from "next/dynamic";
+import SubtitlesUploader from "./subtitles-form";
+const DynamicVideoPlayer = dynamic(
+  () => import("@/components/custom/video-player"),
+  {
+    loading: () => (
+      <div className="relative">
+        <CustomOverlay />
+      </div>
+    ),
+    ssr: false,
+  }
+);
 interface VideoFormProps {
   initialData: Chapter;
 }
@@ -46,7 +57,6 @@ export default function ChapterVideoUpload({ initialData }: VideoFormProps) {
     setShowUploadBtn(false);
     try {
       const res = await updateChapterVideo(values, initialData.id);
-      console.log(res);
       if (res.success) {
         toast.success("Chapter video uploaded successfully");
         setProgress(0);
@@ -82,14 +92,13 @@ export default function ChapterVideoUpload({ initialData }: VideoFormProps) {
         {isLoading && <CustomOverlay />}
         <div className="grid grid-cols-1  md:group-has-[[data-collapsible=icon]]/sidebar-wrapper:grid-cols-2 lg:grid-cols-2  gap-6">
           {data.videoUrl ? (
-            <VideoPlayer
+            <DynamicVideoPlayer
               url={data.videoUrl}
-              subtitles="https://cdn.jsdelivr.net/gh/PolyMeilex/SubtitleTester/test.vtt
-"
+              subtitles={initialData.subtitles || ""}
               className="w-full h-full rounded-md outline outline-indigo-500"
             />
           ) : (
-            <FileUpload
+            <VideoUploader
               setIsUploading={setIsUploading}
               onChange={async (url: string, duration: number) => {
                 await onSubmit({
@@ -156,6 +165,7 @@ export default function ChapterVideoUpload({ initialData }: VideoFormProps) {
           </div>
         </div>
       </div>
+      {initialData.videoUrl && <SubtitlesUploader initialData={initialData} />}
     </section>
   );
 }
