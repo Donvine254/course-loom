@@ -16,7 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 import { CustomOverlay } from "@/components/custom/overlay";
-import { Loader2, File } from "lucide-react";
+import { Loader2, File, CirclePlus } from "lucide-react";
 import { FileUploader } from "@/components/custom/file-upload";
 import {
   createChapterAttachment,
@@ -104,7 +104,7 @@ export default function FilesUploaderForm({
         </p>
       </div>
 
-      {initialData.attachments && (
+      {initialData.attachments && initialData.attachments.length > 0 ? (
         <div className="my-2">
           {initialData.attachments.map((attachment) => (
             <div
@@ -130,8 +130,16 @@ export default function FilesUploaderForm({
             </div>
           ))}
         </div>
+      ) : (
+        <div className="border-2 border-dashed p-2 md:p-4 my-2 rounded-md">
+          <p className="text-sm text-muted-foreground text-center">
+            Your uploaded chapter resources will appear here!
+          </p>
+        </div>
       )}
-
+      <h2 className="font-bold text-base flex items-center gap-2">
+        <CirclePlus className="h-4 w-4" /> Add Resources
+      </h2>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
