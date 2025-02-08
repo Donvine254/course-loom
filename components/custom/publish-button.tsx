@@ -26,8 +26,8 @@ export default function PublishButton({
 
   const unpublishMessage =
     type === "chapter"
-      ? "Warning: If this is the only published chapter in the course, unpublishing it will also unpublish the course."
-      : "Unpublishing this course will make it inaccessible to students.";
+      ? "Warning: If this is the only published chapter in the course, un-publishing it will also unpublish the course."
+      : "Un-publishing this course will make it inaccessible to students.";
   return (
     <TooltipProvider>
       <Tooltip>
