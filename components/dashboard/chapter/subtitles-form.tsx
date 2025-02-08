@@ -7,6 +7,7 @@ import { Chapter } from "@prisma/client";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { CircleCheck } from "lucide-react";
+import { deleteFile } from "@/lib/actions/delete-files";
 
 export default function SubtitlesUploader({
   initialData,
@@ -15,7 +16,7 @@ export default function SubtitlesUploader({
 }) {
   const [isUploading, setIsUploading] = useState(false);
   const [showUploadBtn, setShowUploadBtn] = useState<boolean>(
-    !initialData.videoUrl
+    !initialData.subtitles
   );
   const [progress, setProgress] = useState(0);
   useEffect(() => {
@@ -55,16 +56,23 @@ export default function SubtitlesUploader({
     return files;
   };
 
+  async function handleSubtitlesChange() {
+    setShowUploadBtn(!showUploadBtn);
+    if (initialData.subtitles) {
+      toast.success("Deleting current video...");
+      await deleteFile(initialData.subtitles, initialData.id);
+    }
+  }
   return (
     <section className="py-2">
       <h2 className="font-semibold flex items-center gap-2 my-2">
-        Subtitles <span>(optional)</span>
+        Video Subtitles <span>(optional)</span>
       </h2>
       <div className="border bg-card rounded-md p-4 my-2 transition-[height] animate-accordion-down ease-in-out shadow dark:shadow-indigo-500 relative ">
         <div className="grid grid-cols-1  md:group-has-[[data-collapsible=icon]]/sidebar-wrapper:grid-cols-2 lg:grid-cols-2  gap-6">
           <FileUploader
             endpoint="fileUploader"
-            title={initialData.title}
+            title={`${initialData.title} video subtitles`}
             handleBeforeUploadBegin={handleBeforeUploadBegin}
             className="border-2 bg-card dark:bg-secondary text-muted-foreground  rounded-lg "
             onChange={(url) => {
@@ -97,7 +105,7 @@ export default function SubtitlesUploader({
                   </Button>
                   <Button
                     type="button"
-                    onClick={() => setShowUploadBtn(!showUploadBtn)}
+                    onClick={handleSubtitlesChange}
                     className="hover:bg-destructive hover:text-white"
                     title="This will delete the existing video file!">
                     Change
