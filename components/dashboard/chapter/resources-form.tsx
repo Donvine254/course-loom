@@ -19,12 +19,12 @@ import { CustomOverlay } from "@/components/custom/overlay";
 import { Loader2, File } from "lucide-react";
 import { FileUploader } from "@/components/custom/file-upload";
 import { createChapterAttachment } from "@/lib/actions/chapters";
+import { ReloadWindow } from "@/lib/utils";
 // declare a schema
 export const uploadSchema = z.object({
   name: z.string().min(1, "Filename is required"),
   resourceType: z.enum(["url", "file"]),
-  url: z.string().optional(),
-  file: z.any().optional(),
+  url: z.string(),
 });
 
 export default function FilesUploderForm({ chapterId }: { chapterId: string }) {
@@ -43,6 +43,8 @@ export default function FilesUploderForm({ chapterId }: { chapterId: string }) {
       const res = await createChapterAttachment(chapterId, { name, url });
       if (res.success) {
         toast.success("Attached added successfully");
+        form.reset();
+        ReloadWindow();
       } else {
         toast.error(res.error);
       }
