@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { CircleCheck } from "lucide-react";
 import { deleteFile } from "@/lib/actions/delete-files";
+import { updateChapter } from "@/lib/actions/chapters";
 
 export default function SubtitlesUploader({
   initialData,
@@ -33,8 +34,20 @@ export default function SubtitlesUploader({
   const onSubmit = async (url: string) => {
     setShowUploadBtn(false);
     try {
-      console.log(url);
-      ReloadWindow();
+      const data = {
+        subtitles: url,
+        title: initialData.title,
+        isFree: initialData.isFree,
+      };
+      const res = await updateChapter(data, initialData.id);
+      if (res.success) {
+        toast.success("Video subtitles uploaded successfully");
+        setProgress(0);
+        ReloadWindow();
+      } else {
+        toast.error("Something went wrong");
+        setShowUploadBtn(true);
+      }
     } catch {
       toast.error("Something went wrong");
       setShowUploadBtn(true);
@@ -59,7 +72,7 @@ export default function SubtitlesUploader({
   async function handleSubtitlesChange() {
     setShowUploadBtn(!showUploadBtn);
     if (initialData.subtitles) {
-      toast.success("Deleting current video...");
+      toast.success("Deleting current subtitles file...");
       await deleteFile(initialData.subtitles, initialData.id);
     }
   }

@@ -57,7 +57,6 @@ export default function ChapterVideoUpload({ initialData }: VideoFormProps) {
     setShowUploadBtn(false);
     try {
       const res = await updateChapterVideo(values, initialData.id);
-      console.log(res);
       if (res.success) {
         toast.success("Chapter video uploaded successfully");
         setProgress(0);
@@ -95,8 +94,7 @@ export default function ChapterVideoUpload({ initialData }: VideoFormProps) {
           {data.videoUrl ? (
             <DynamicVideoPlayer
               url={data.videoUrl}
-              subtitles="https://cdn.jsdelivr.net/gh/PolyMeilex/SubtitleTester/test.vtt
-"
+              subtitles={initialData.subtitles || ""}
               className="w-full h-full rounded-md outline outline-indigo-500"
             />
           ) : (

@@ -92,6 +92,7 @@ type UpdateData = {
   title: string;
   description?: string;
   isFree: boolean;
+  subtitles?: string;
 };
 export async function updateChapter(formData: UpdateData, chapterId: string) {
   try {
