@@ -69,13 +69,14 @@ export default function FilesUploaderForm({
       if (res.success) {
         toast.success("Attachment added successfully");
         form.reset();
-        setOpen(false);
         ReloadWindow();
       } else {
         toast.error(res.error);
       }
+      setOpen(false);
     } catch (error) {
       console.log(error);
+      setOpen(false);
       toast.error("An error occurred while creating a new attachment");
     }
   };
