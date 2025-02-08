@@ -1,5 +1,6 @@
 "use client";
 import DeleteButton from "@/components/custom/delete-dialog";
+import PublishButton from "@/components/custom/publish-button";
 import ProgressIndicator from "@/components/dashboard/course/progress-indicator";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -8,10 +9,12 @@ import { Chapter } from "@prisma/client";
 import { InfoIcon, MoveLeft, CircleCheck, AlertTriangle } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { toast } from "sonner";
 // eslint-disable-next-line
 declare const confetti: any;
 export const ChapterHeader = ({ chapter }: { chapter: Chapter }) => {
+  const [isPublishing, setIsPublishing] = useState<boolean>(false);
   const router = useRouter();
   const requiredFields = [chapter.title, chapter.description, chapter.videoUrl];
   const requiredFieldsCount = requiredFields.length;
@@ -21,6 +24,7 @@ export const ChapterHeader = ({ chapter }: { chapter: Chapter }) => {
   const handleDeleteChapter = async (id: string) => {
     try {
       const res = await deleteChapter(id);
+
       if (res.success) {
         toast.success(res.message);
         router.refresh();
@@ -33,21 +37,30 @@ export const ChapterHeader = ({ chapter }: { chapter: Chapter }) => {
       toast.error("Something went wrong");
     }
   };
-  async function handlePublish() {
+  async function handlePublish(isPublished: boolean) {
+    setIsPublishing(true);
     try {
-      const res = await PublishChapter(chapter.id);
+      const res = await PublishChapter(
+        chapter.id,
+        chapter.courseId,
+        isPublished
+      );
+      setIsPublishing(false);
       if (res.success) {
         toast.success(res.message);
-        confetti({
-          particleCount: 4000,
-          spread: 100,
-          origin: { y: 0.3 },
-        });
+        if (res.status === true) {
+          confetti({
+            particleCount: 4000,
+            spread: 100,
+            origin: { y: 0.3 },
+          });
+        }
         router.refresh();
       } else {
         toast.error(res.error);
       }
     } catch (error) {
+      setIsPublishing(false);
       console.log(error);
       toast.error("Something went wrong");
     }
@@ -90,14 +103,13 @@ export const ChapterHeader = ({ chapter }: { chapter: Chapter }) => {
 
         <div className="flex gap-5 items-start">
           {/* TODO: Add publish and delete buttons */}
-          <Button
-            disabled={!isCompleted}
-            variant="ghost"
-            size="sm"
-            title="complete all sections to publish this chapter"
-            onClick={handlePublish}>
-            {chapter.isPublished ? "Unpublish" : "Publish"}
-          </Button>
+          <PublishButton
+            type="chapter"
+            isPublished={chapter.isPublished}
+            handlePublish={handlePublish}
+            isCompleted={isCompleted}
+            isPublishing={isPublishing}
+          />
           <DeleteButton
             onDelete={handleDeleteChapter}
             id={chapter.id}

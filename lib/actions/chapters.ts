@@ -147,22 +147,51 @@ export async function updateChapterVideo(
   }
 }
 
-export async function PublishChapter(chapterId: string) {
-  // TODO: change this to publish and unpublish the chapter
-  // Update to check if the required fields are complete
+export async function PublishChapter(
+  chapterId: string,
+  courseId: string,
+  isPublished: boolean
+) {
   try {
+    if (!isPublished) {
+      const publishedChapters = await prisma.chapter.findMany({
+        where: {
+          courseId,
+          isPublished: true,
+        },
+      });
+      if (
+        publishedChapters.length === 1 &&
+        publishedChapters[0].id === chapterId
+      ) {
+        await prisma.course.update({
+          where: { id: courseId },
+          data: {
+            isPublished: false,
+            status: "DRAFT",
+          },
+        });
+      }
+    }
     await prisma.chapter.update({
-      where: {
-        id: chapterId,
-      },
-      data: {
-        isPublished: true,
-      },
+      where: { id: chapterId },
+      data: { isPublished },
     });
-    return { success: true, message: "Chapter published successfully" };
+
+    return {
+      success: true,
+      status: isPublished,
+      message: isPublished
+        ? "Chapter published successfully"
+        : "Chapter unpublished successfully",
+    };
     // eslint-disable-next-line
   } catch (error: any) {
-    return { success: false, error: error.message || "Something went wrong" };
+    return {
+      success: false,
+      error: error.message || "Something went wrong",
+      status: isPublished,
+    };
   } finally {
     await prisma.$disconnect();
   }

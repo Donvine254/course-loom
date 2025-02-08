@@ -67,15 +67,16 @@ export default function FilesUploaderForm({
       const { name, url } = values;
       const res = await createChapterAttachment(initialData.id, { name, url });
       if (res.success) {
-        toast.success("Attached added successfully");
+        toast.success("Attachment added successfully");
         form.reset();
-        setOpen(false);
         ReloadWindow();
       } else {
         toast.error(res.error);
       }
+      setOpen(false);
     } catch (error) {
       console.log(error);
+      setOpen(false);
       toast.error("An error occurred while creating a new attachment");
     }
   };
@@ -114,9 +115,10 @@ export default function FilesUploaderForm({
           <span className="hidden xsm:block">Resources</span>
         </h2>
         <Button variant="ghost" size="sm" onClick={() => setOpen(true)}>
-          <CirclePlus className="h-4 w-4 sm:mr-2" />{" "}
+          <CirclePlus className="h-4 w-4" />{" "}
           <span>
-            Add<span className="xsm:hidden">Resources</span>
+            Add {""}
+            <span className="xsm:hidden">Resources</span>
           </span>
         </Button>
       </div>
@@ -131,7 +133,7 @@ export default function FilesUploaderForm({
               key={attachment.id}
               className="flex items-center gap-2 w-full my-2 ">
               <div className="flex flex-1 items-center gap-2 p-2 border rounded-lg bg-indigo-100 text-sm">
-                <File className="h-3 w-3 flex-shrink-0 text-indigo-570" />
+                <File className="h-4 w-4 flex-shrink-0 text-indigo-700" />
                 <a
                   href={attachment.url}
                   target="_blank"
@@ -205,7 +207,7 @@ export default function FilesUploaderForm({
                 </div>
               </div>
               {/* space for file uploader */}
-              {resourceType === "url" ? (
+              {resourceType === "url" && (
                 <FormField
                   control={form.control}
                   name="url"
@@ -225,7 +227,8 @@ export default function FilesUploaderForm({
                     </FormItem>
                   )}
                 />
-              ) : (
+              )}
+              <div className={resourceType === "file" ? "block" : "hidden"}>
                 <FormField
                   control={form.control}
                   name="url"
@@ -253,7 +256,7 @@ export default function FilesUploaderForm({
                     </FormItem>
                   )}
                 />
-              )}
+              </div>
               {/* If we upload, we autosubmit the form */}
               <DialogFooter className="flex items-center gap-4">
                 <DialogClose>Cancel</DialogClose>
