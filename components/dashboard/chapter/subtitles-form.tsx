@@ -129,7 +129,7 @@ export default function SubtitlesUploader({
                 <Button
                   type="button"
                   className={cn(
-                    "w-full cursor-default",
+                    "w-full cursor-default border text-primary dark:text-secondary",
                     isUploading && "text-muted-foreground"
                   )}
                   style={{

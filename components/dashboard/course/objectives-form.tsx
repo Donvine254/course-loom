@@ -1,6 +1,5 @@
 "use client";
 import { Course } from "@prisma/client";
-import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import { useForm, useFieldArray, FormProvider } from "react-hook-form";
 import { z } from "zod";
@@ -38,6 +37,7 @@ import {
 } from "@hello-pangea/dnd";
 import { updateCourse } from "@/lib/actions/courses";
 import { CustomOverlay } from "@/components/custom/overlay";
+import { ReloadWindow } from "@/lib/utils";
 
 interface ObjectivesFormProps {
   initialData: Course;
@@ -70,7 +70,6 @@ export const ObjectivesForm = ({
 }: ObjectivesFormProps) => {
   const [isEditing, setIsEditing] = useState(!initialData.objectives);
   const [isMounted, setIsMounted] = useState(false);
-  const router = useRouter();
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -122,7 +121,7 @@ export const ObjectivesForm = ({
       if (res.success) {
         toast.success("Course objectives updated successfully");
         toggleEdit();
-        router.refresh();
+        ReloadWindow();
       } else {
         toast.error(res.error || "Something went wrong");
       }

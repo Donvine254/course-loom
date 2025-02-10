@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { HelpCircle, Loader2, Pencil, PlusCircle } from "lucide-react";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { Course } from "@prisma/client";
 import {
   Form,
@@ -37,7 +36,7 @@ const formSchema = z.object({
 
 export const SummaryForm = ({ initialData, courseId }: SummaryFormProps) => {
   const [isEditing, setIsEditing] = useState(!initialData.summary);
-
+  const [summary, setSummary] = useState<string>(initialData.summary || "");
   const toggleEdit = () => {
     if (isEditing) {
       form.setValue("summary", initialData.summary || "");
@@ -48,14 +47,13 @@ export const SummaryForm = ({ initialData, courseId }: SummaryFormProps) => {
     if (initialData && !initialData.summary) {
       setIsEditing(true);
     }
-  }, [initialData]);
-
-  const router = useRouter();
+    setSummary(initialData.summary || "");
+  }, [initialData, summary]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      summary: initialData?.summary || "",
+      summary: summary,
     },
   });
 
@@ -67,7 +65,7 @@ export const SummaryForm = ({ initialData, courseId }: SummaryFormProps) => {
       if (res.success) {
         toast.success("Course summary updated successfully");
         toggleEdit();
-        router.refresh();
+        setSummary(values.summary);
       } else {
         toast.error(res.error || "Something went wrong");
       }
