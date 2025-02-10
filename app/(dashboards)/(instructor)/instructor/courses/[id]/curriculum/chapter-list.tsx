@@ -118,9 +118,12 @@ export default function ChapterList({
                           <Grip className="h-4 w-4" />
                         </div>
                         <div className="w-[75%] xsm:max-w-[65%] sm:flex-1 inline-flex flex-wrap items-center justify-between rounded-md border bg-gray-100 dark:bg-input  px-3 py-2   md:text-sm">
-                          <p className="truncate xsm:text-xs text-sm">
+                          <Link
+                            prefetch={false}
+                            href={`/instructor/courses/${courseId}/curriculum/${chapter.id}`}
+                            className="truncate xsm:text-xs text-sm">
                             {index + 1}. {chapter.title}
-                          </p>
+                          </Link>
                           <div className=" gap-2 items-center hidden md:group-has-[[data-collapsible=icon]]/sidebar-wrapper:flex lg:flex">
                             {chapter.isFree && (
                               <Badge variant="default">Free</Badge>
