@@ -2,7 +2,6 @@
 import prisma from "@/prisma/prisma";
 import { slugify } from "../utils";
 import { CourseStatus } from "@prisma/client";
-import { unstable_cache } from "next/cache";
 type CourseData = {
   categoryId: string;
   title: string;
@@ -170,13 +169,3 @@ export default async function deleteCourse(courseId: string) {
     await prisma.$disconnect();
   }
 }
-
-// function to return all courses
-export const getAllCourses = unstable_cache(
-  async () => {
-    const courses = await prisma.course.findMany();
-    return courses || [];
-  },
-  ["courses"],
-  { revalidate: 600, tags: ["courses"] }
-);

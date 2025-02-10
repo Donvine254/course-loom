@@ -1,3 +1,4 @@
+
 // file to declare types
 export type sessionUser = {
   id: string;
@@ -17,3 +18,22 @@ declare global {
     };
   }
 }
+
+// type for partial course
+type Course ={
+  imageUrl: string;
+  price: number;
+  description: string;
+  title: string;
+  slug: string;
+  summary:string;
+}
+export type PartialCourse = Course & {
+  category: {
+    id: string;
+    name: string;
+  };
+  _count: {
+    chapters: number;
+  };
+};
