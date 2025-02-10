@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { ImageIcon } from "lucide-react";
+import { ImageIcon} from "lucide-react";
 import { updateCourse } from "@/lib/actions/courses";
 import { Course } from "@prisma/client";
 import { Button } from "@/components/ui/button";
@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { ImageUploadButton } from "@/components/custom/file-upload";
 import Image from "next/image";
 import { deleteCloudinaryImage } from "@/lib/cloudinary";
-import { imageUrlConstructor, ReloadWindow } from "@/lib/utils";
+import { imageUrlConstructor } from "@/lib/utils";
 
 interface ImageFormProps {
   initialData: Course;
@@ -37,7 +37,7 @@ export default function CourseImageUpload({
       if (res.success) {
         toast.success("Course image updated successfully");
         setShowUploadBtn(false);
-        ReloadWindow();
+        
       } else {
         toast.error("Something went wrong");
       }
