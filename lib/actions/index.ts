@@ -18,6 +18,8 @@ export const getAllCourses = unstable_cache(
         description: true,
         summary: true,
         slug: true,
+        createdAt: true,
+        updatedAt: true,
         category: {
           select: {
             name: true,

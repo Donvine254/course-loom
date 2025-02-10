@@ -13,7 +13,7 @@ export default function CourseCard({ course }: { course: PartialCourse }) {
           <Image
             alt={title}
             fill
-            src={imageUrlConstructor(imageUrl) || "/placeholder.jpg"}
+            src={imageUrlConstructor(imageUrl || "")}
             placeholder="blur"
             blurDataURL="/placeholder.jpg"
             className="rounded-t-md object-cover  cursor-pointer"

@@ -7,9 +7,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { sampleCourses } from "@/constants";
+import { PartialCourse } from "@/types";
 import Autoplay from "embla-carousel-autoplay";
-export function CourseShowCase() {
+export function CourseShowCase({ courses }: { courses: PartialCourse[] }) {
   return (
     <section className="w-full py-4 p-2 overflow-x-hidden">
       {/* TODO:fix this to ensure it looks nice in sm devices */}
@@ -25,9 +25,9 @@ export function CourseShowCase() {
           }),
         ]}>
         <CarouselContent className="-ml-2 md:-ml-4">
-          {sampleCourses.map((course, index) => (
+          {courses.map((course, id) => (
             <CarouselItem
-              key={index}
+              key={id}
               className="xsm:w-full md:basis-1/2 lg:basis-1/3 px-2">
               <CourseCard course={course} />
             </CarouselItem>

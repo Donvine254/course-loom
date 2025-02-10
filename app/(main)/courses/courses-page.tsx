@@ -95,9 +95,13 @@ export default function CoursesPage({ courses }: { courses: PartialCourse[] }) {
       case "title-desc":
         return [...courses].sort((a, b) => b.title.localeCompare(a.title));
       case "chapters-asc":
-        return [...courses].sort((a, b) => a._count.chapters - b._count.chapters);
+        return [...courses].sort(
+          (a, b) => a._count.chapters - b._count.chapters
+        );
       case "chapters-desc":
-        return [...courses].sort((a, b) => b._count.chapters - a._count.chapters);
+        return [...courses].sort(
+          (a, b) => b._count.chapters - a._count.chapters
+        );
       default:
         return courses;
     }
