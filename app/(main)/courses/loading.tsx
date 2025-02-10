@@ -134,13 +134,13 @@ export default async function Loading() {
           </div>
           {/* Course Grid */}
           <div className="lg:col-span-3">
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {courses.map((course) => (
-                <CourseCard key={course.id} course={course} />
-              ))}
-            </div>
-
-            {courses.length === 0 && (
+            {courses && courses.length > 0 ? (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {courses.map((course) => (
+                  <CourseCard key={course.id} course={course} />
+                ))}
+              </div>
+            ) : (
               <div className="text-center py-12">
                 <GraduationCap className="mx-auto h-12 w-12 text-gray-400" />
                 <h3 className="mt-4 text-lg font-semibold">No courses found</h3>
