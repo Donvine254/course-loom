@@ -19,11 +19,12 @@ import {
   BookOpen,
   Filter,
 } from "lucide-react";
-import { sampleCourses } from "@/constants";
 import CourseCard from "@/components/custom/course-card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
+import { PartialCourse } from "@/types";
+import { getAllCourses } from "@/lib/actions";
 
 const categories = [
   { name: "All", icon: LayoutGrid, color: "text-gray-500" },
@@ -37,7 +38,8 @@ const categories = [
   { name: "Mobile Development", icon: Smartphone, color: "text-red-500" },
 ];
 
-export default function Loading() {
+export default async function Loading() {
+  const courses = (await getAllCourses()) as PartialCourse[] | [];
   return (
     <section>
       <div className="bg-opacity-20 bg-inherit hidden lg:block border-b">
@@ -153,12 +155,12 @@ export default function Loading() {
           {/* Course Grid */}
           <div className="lg:col-span-3">
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {sampleCourses.map((course, index) => (
-                <CourseCard key={index} course={course} />
+              {courses.map((course) => (
+                <CourseCard key={course.id} course={course} />
               ))}
             </div>
 
-            {sampleCourses.length === 0 && (
+            {courses.length === 0 && (
               <div className="text-center py-12">
                 <GraduationCap className="mx-auto h-12 w-12 text-gray-400" />
                 <h3 className="mt-4 text-lg font-semibold">No courses found</h3>
