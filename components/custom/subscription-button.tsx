@@ -1,7 +1,8 @@
 "use client";
 import { createSubscriptionSession } from "@/lib/stripe";
 import { cn } from "@/lib/utils";
-import React from "react";
+import { Loader2 } from "lucide-react";
+import React, { useState } from "react";
 import { toast } from "sonner";
 
 // TODO: Create a separate subscription and purchase course button
@@ -23,44 +24,51 @@ export const SubscriptionButton = ({
   courseId: string;
 }) => {
   const paymentAmount = Number(amount * 120 * 100);
+  const [isLoading, setIsLoading] = useState(false);
   const name =
     variant === "payment"
-      ? `Payment for ${title} course`
+      ? `${title}`
       : `Subscribe to Courseloom ${plan || "standard"} monthly plan`;
   const handlePayment = async () => {
     if (plan === "Free") {
-      window.location.href = "/courses";
       return;
     }
-
-    const toastId = toast.loading("Processing..", {
-      position: "top-center",
-    });
+    setIsLoading(true);
     try {
       const sessionUrl = await createSubscriptionSession(
         paymentAmount,
         name,
         courseId
       );
+      setIsLoading(false);
       window.location.assign(sessionUrl);
     } catch (error) {
       console.error("Payment error:", error);
+      setIsLoading(false);
       toast.error(
         "There was an error processing your payment. Please try again.",
         {
           position: "top-right",
         }
       );
-    } finally {
-      toast.dismiss(toastId);
     }
   };
   return (
     <button
-      className={cn(className, "w-full py-3 px-6 font-medium")}
+      className={cn(
+        className,
+        "w-full py-3 px-6 font-medium flex items-center justify-center"
+      )}
       title="subscribe"
+      disabled={isLoading}
       onClick={handlePayment}>
-      {text}
+      {isLoading ? (
+        <span className="flex items-center justify-start gap-2">
+          <Loader2 className="h-4 w-4 animate-spin" /> Processing
+        </span>
+      ) : (
+        text
+      )}
     </button>
   );
 };
