@@ -171,10 +171,10 @@ export default function EditChapterForm({ initialData }: Props) {
                 title="submit"
                 disabled={isSubmitting || !hasChanges}>
                 {isSubmitting ? (
-                  <span>
+                  <>
                     {" "}
                     <Loader2 className="h-4 w-4 animate-spin" /> Saving..
-                  </span>
+                  </>
                 ) : (
                   "Save Changes"
                 )}
