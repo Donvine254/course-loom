@@ -37,7 +37,7 @@ const formSchema = z.object({
 
 export const SummaryForm = ({ initialData, courseId }: SummaryFormProps) => {
   const [isEditing, setIsEditing] = useState(!initialData.summary);
-
+  const [summary, setSummary] = useState<string>(initialData.summary || "");
   const toggleEdit = () => {
     if (isEditing) {
       form.setValue("summary", initialData.summary || "");
@@ -48,14 +48,15 @@ export const SummaryForm = ({ initialData, courseId }: SummaryFormProps) => {
     if (initialData && !initialData.summary) {
       setIsEditing(true);
     }
-  }, [initialData]);
+    setSummary(initialData.summary || "");
+  }, [initialData, summary]);
 
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      summary: initialData?.summary || "",
+      summary: summary,
     },
   });
 
