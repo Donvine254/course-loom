@@ -63,7 +63,7 @@ const StudentFeedback = ({ reviews, averageRating }: Props) => {
             </p>
           </div>
           <div className="space-y-2 md:flex-1 w-full xsm:px-2">
-            {Object.entries(ratingBreakdown)
+            {Object.entries(ratingBreakdown())
               .reverse()
               .map(([rating, percentage]) => (
                 <div key={rating} className="flex items-center gap-2">
@@ -151,7 +151,7 @@ const ReviewItems = ({ reviews }: { reviews: CourseReviews }) => {
               className="w-12 h-12 rounded-full object-cover"
             />
             <div className="flex-1">
-              <h4 className="font-semibold capitalize">{`${review.user.firstName} {"} ${review.user.lastName}`}</h4>
+              <h4 className="font-semibold capitalize">{`${review.user.firstName} ${review.user.lastName}`}</h4>
               <span className="text-muted-foreground text-sm">
                 {formatDate(review.createdAt)}
               </span>

@@ -30,11 +30,11 @@ export default function CourseCard({ course }: { course: PartialCourse }) {
             <span className="bg-indigo-50 text-indigo-600 p-1 rounded-full flex items-center justify-center mr-1">
               <BookOpen className="h-4 w-4" />
             </span>
-            <span className="text-sm">{course._count.chapters} chapters</span>
+            <span className="text-sm">
+              {course._count?.chapters ?? 0} chapters
+            </span>
           </div>
         </div>
-        {/* make this take full width without making the card expand */}
-
         <Link
           href={`/courses/${slug}`}
           prefetch={false}
