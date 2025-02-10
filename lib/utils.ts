@@ -58,7 +58,7 @@ export const isValidImageFile = (image: File) => {
 export const imageUrlConstructor = (public_id: string) => {
   if (public_id.startsWith("courseloom")) {
     return `https://res.cloudinary.com/dipkbpinx/image/upload/${public_id}.webp`;
-  } else return public_id;
+  } else return "https://res.cloudinary.com/dipkbpinx/image/upload/courseloom/nnepdutkt44leafzdimr.webp"
 };
 
 export function formatVideoDuration(seconds: number): string {
