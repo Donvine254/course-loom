@@ -102,13 +102,13 @@ model Chapter {
 model Attachment {
   id        String   @id @default(uuid())
   name      String
-  url       String   @unique
+  url       String
   chapterId String
   chapter   Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([chapterId, name])
+  @@unique([chapterId, name, url])
   @@index([chapterId])
 }
 

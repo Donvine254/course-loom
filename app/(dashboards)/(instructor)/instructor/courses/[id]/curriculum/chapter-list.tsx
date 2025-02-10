@@ -80,8 +80,7 @@ export default function ChapterList({
       const res = await deleteChapter(id);
       setIsLoading(false);
       if (res.success) {
-        const updatedChapters = items.filter((item) => item.id !== courseId);
-        setChapters(updatedChapters);
+        setChapters((prev) => prev.filter((chapter) => chapter.id !== id));
         toast.success(res.message);
         router.refresh();
       } else {
