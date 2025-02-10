@@ -24,7 +24,7 @@ type Props = {
   averageRating: number;
 };
 const StudentFeedback = ({ reviews, averageRating }: Props) => {
-  function calculateRatingBreakdown() {
+  const ratingBreakdown = () => {
     const totalReviews = reviews.length;
     if (totalReviews === 0) return { 5: 100, 4: 0, 3: 0, 2: 0, 1: 0 };
     const ratingCounts = [5, 4, 3, 2, 1].map((star) => ({
@@ -46,8 +46,8 @@ const StudentFeedback = ({ reviews, averageRating }: Props) => {
     return Object.fromEntries(
       ratingCounts.map(({ star, percentage }) => [star, percentage])
     );
-  }
-  const ratingBreakdown = calculateRatingBreakdown();
+  };
+
   return (
     <div className="p-2 sm:p-4 bg-card dark:bg-inherit rounded-xl shadow">
       <h2 className="text-2xl font-bold mb-6">Student Feedback</h2>
