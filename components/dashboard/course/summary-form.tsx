@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { HelpCircle, Loader2, Pencil, PlusCircle } from "lucide-react";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { Course } from "@prisma/client";
 import {
   Form,
@@ -51,8 +50,6 @@ export const SummaryForm = ({ initialData, courseId }: SummaryFormProps) => {
     setSummary(initialData.summary || "");
   }, [initialData, summary]);
 
-  const router = useRouter();
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -68,7 +65,7 @@ export const SummaryForm = ({ initialData, courseId }: SummaryFormProps) => {
       if (res.success) {
         toast.success("Course summary updated successfully");
         toggleEdit();
-        router.refresh();
+        setSummary(values.summary);
       } else {
         toast.error(res.error || "Something went wrong");
       }
