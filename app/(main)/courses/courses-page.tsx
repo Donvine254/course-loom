@@ -209,16 +209,15 @@ export default function CoursesPage({ courses }: { courses: PartialCourse[] }) {
               </div>
             </div>
           )}
-
           {/* Course Grid */}
           <div className="lg:col-span-3">
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredCourses.map((course, index) => (
-                <CourseCard key={index} course={course} />
-              ))}
-            </div>
-
-            {filteredCourses.length === 0 && (
+            {filteredCourses && filteredCourses.length > 0 ? (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredCourses.map((course, index) => (
+                  <CourseCard key={index} course={course} />
+                ))}
+              </div>
+            ) : (
               <div className="text-center py-12">
                 <GraduationCap className="mx-auto h-12 w-12 text-gray-400" />
                 <h3 className="mt-4 text-lg font-semibold">No courses found</h3>
