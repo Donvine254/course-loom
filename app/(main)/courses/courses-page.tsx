@@ -111,7 +111,7 @@ export default function CoursesPage({ courses }: { courses: PartialCourse[] }) {
     courses.filter((course) => {
       const matchesSearch =
         course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        course.description.toLowerCase().includes(searchQuery.toLowerCase());
+        course.summary?.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCategory =
         selectedCategories.includes("All") ||
         selectedCategories.includes(course.category.name);
