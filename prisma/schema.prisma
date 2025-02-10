@@ -50,7 +50,7 @@ model Course {
   title         String
   summary       String?
   description   String?
-  price         Float?       @default(19.99)
+  price         Float       @default(19.99)
   imageUrl      String?
   prerequisites String?
   objectives    String?

@@ -38,3 +38,83 @@ export const getAllCourses = unstable_cache(
   ["courses"],
   { revalidate: 600, tags: ["courses"] }
 );
+// Get a single course
+export const getCourseData = unstable_cache(
+  async (slug: string) => {
+    const course = await prisma.course.findUnique({
+      relationLoadStrategy: "join",
+      where: { slug: slug, isPublished: true, status: "PUBLISHED" },
+      include: {
+        category: true,
+        _count: {
+          select: { purchases: true },
+        },
+        chapters: {
+          where: {
+            isPublished: true,
+          },
+          select: {
+            id: true,
+            title: true,
+            position: true,
+            videoUrl: true,
+            subtitles: true,
+            isFree: true,
+            duration: true,
+            _count: {
+              select: {
+                attachments: true,
+              },
+            },
+          },
+          orderBy: {
+            position: "asc",
+          },
+        },
+        instructor: {
+          select: {
+            id: true,
+            username: true,
+            image: true,
+            specialization: true,
+            bio: true,
+            expertise: true,
+            email: true,
+            courses: {
+              where: {
+                isPublished: true,
+                status: "PUBLISHED",
+              },
+              select: {
+                id: true,
+                title: true,
+                slug: true,
+                isPublished: true,
+              },
+            },
+          },
+        },
+        reviews: {
+          select: {
+            id: true,
+            rating: true,
+            comment: true,
+            createdAt: true,
+            user: {
+              select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                profileImage: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return course || null;
+  },
+  [`course`],
+  { revalidate: 600, tags: ["course"] }
+);
