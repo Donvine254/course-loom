@@ -419,6 +419,7 @@ export default function CoursePage({ course }: { course: FullCourse }) {
                 plan="Pro"
                 variant="subscription"
                 amount={24.99}
+                courseId={course.id}
                 text="Try Pro Now"
               />
               <p className="text-xs text-center w-full text-muted-foreground mb-1">
@@ -440,6 +441,7 @@ export default function CoursePage({ course }: { course: FullCourse }) {
                 variant="payment"
                 title={course.title}
                 amount={course.price}
+                courseId={course.id}
                 text="Buy this Course"
               />
               <div className="text-muted-foreground text-xs w-full my-2 inline-flex items-center gap-1 justify-center">

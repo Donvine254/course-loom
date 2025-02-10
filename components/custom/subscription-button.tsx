@@ -4,11 +4,13 @@ import { cn } from "@/lib/utils";
 import React from "react";
 import { toast } from "sonner";
 
+// TODO: Create a separate subscription and purchase course button
 export const SubscriptionButton = ({
   className,
   amount,
   plan,
   text,
+  courseId,
   variant = "subscription",
   title,
 }: {
@@ -18,6 +20,7 @@ export const SubscriptionButton = ({
   text: string;
   variant?: string;
   title?: string;
+  courseId: string;
 }) => {
   const paymentAmount = Number(amount * 120 * 100);
   const name =
@@ -34,8 +37,12 @@ export const SubscriptionButton = ({
       position: "top-center",
     });
     try {
-      const sessionUrl = await createSubscriptionSession(paymentAmount, name);
-      window.location.href = sessionUrl;
+      const sessionUrl = await createSubscriptionSession(
+        paymentAmount,
+        name,
+        courseId
+      );
+      window.location.assign(sessionUrl);
     } catch (error) {
       console.error("Payment error:", error);
       toast.error(

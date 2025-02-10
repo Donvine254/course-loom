@@ -9,7 +9,6 @@ export const metadata: Metadata = {
 
 export default async function Courses() {
   const courses = (await getAllCourses()) as PartialCourse[] | [];
-  console.log(courses);
 
   return (
     <section className="pt-8 md:pt-10 bg-gradient-to-tr from-indigo-200 via-gray-100 to-indigo-200 dark:bg-gradient-to-tr dark:from-indigo-950 dark:via-gray-950 dark:to-indigo-950">

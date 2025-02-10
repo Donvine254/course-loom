@@ -1,7 +1,8 @@
 "use server";
+import prisma from "@/prisma/prisma";
 import Stripe from "stripe";
 import { baseUrl } from "./utils";
-
+import { currentUser } from "@clerk/nextjs/server";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2024-12-18.acacia",
@@ -9,8 +10,23 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function createSubscriptionSession(
   amount: number,
-  name: string
+  name: string,
+  courseId: string
 ) {
+  const user = await currentUser();
+
+  if (!user || !user.id || !user.emailAddresses?.[0]?.emailAddress) {
+    throw new Error("Failed to create checkout session, user not found");
+  }
+  const course = await prisma.course.findUnique({
+    where: {
+      id: courseId,
+      isPublished: true,
+    },
+  });
+  if (!course) {
+    throw new Error("Failed to create checkout session, course not found");
+  }
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card", "link"],
     line_items: [
@@ -19,6 +35,7 @@ export async function createSubscriptionSession(
           currency: "kes",
           product_data: {
             name: name,
+            description: course.summary!,
             images: [
               "https://res.cloudinary.com/dipkbpinx/image/upload/v1737502381/illustrations/undraw_learning-sketchingsh_ogwmxu.svg",
             ],
@@ -32,6 +49,10 @@ export async function createSubscriptionSession(
     mode: "payment",
     success_url: `${baseUrl}/courses`,
     cancel_url: `${baseUrl}/pricing`,
+    metadata: {
+      courseId,
+      userId: user.id,
+    },
   });
   // TODO: redirect to a success page and update client details to the subscription model
   if (!session.url) {
