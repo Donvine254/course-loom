@@ -22,6 +22,7 @@ import DeleteButton from "@/components/custom/delete-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 export default function ChapterList({
   items,
@@ -33,6 +34,7 @@ export default function ChapterList({
   const [isMounted, setIsMounted] = useState(false);
   const [chapters, setChapters] = useState<Chapter[]>(items);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   useEffect(() => {
     setIsMounted(true);
     setChapters(items);
@@ -81,6 +83,9 @@ export default function ChapterList({
         const updatedChapters = items.filter((item) => item.id !== courseId);
         setChapters(updatedChapters);
         toast.success(res.message);
+        router.refresh();
+      } else {
+        toast.error(res.error || "Something went wrong");
       }
     } catch (error) {
       console.log(error);
