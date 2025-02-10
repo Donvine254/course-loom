@@ -1,6 +1,5 @@
 "use client";
 import { Course } from "@prisma/client";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm, useFieldArray, FormProvider } from "react-hook-form";
 import { z } from "zod";
@@ -31,6 +30,7 @@ import {
 } from "@/components/ui/tooltip";
 import { updateCourse } from "@/lib/actions/courses";
 import { CustomOverlay } from "@/components/custom/overlay";
+import { ReloadWindow } from "@/lib/utils";
 
 interface PrerequisitesFormProps {
   initialData: Course;
@@ -65,7 +65,6 @@ export const PrerequisitesForm = ({
   courseId,
 }: PrerequisitesFormProps) => {
   const [isEditing, setIsEditing] = useState(!initialData.prerequisites);
-  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -113,7 +112,7 @@ export const PrerequisitesForm = ({
       if (res.success) {
         toast.success("Course objectives successfully");
         toggleEdit();
-        router.refresh();
+        ReloadWindow();
       } else {
         toast.error(res.error || "Something went wrong");
       }
