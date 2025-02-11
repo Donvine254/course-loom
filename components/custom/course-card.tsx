@@ -7,7 +7,7 @@ import { formatPrice, imageUrlConstructor } from "@/lib/utils";
 export default function CourseCard({ course }: { course: PartialCourse }) {
   const { title, category, imageUrl, price, summary, slug } = course;
   return (
-    <div className="border dark:border-gray-900 shadow bg-card dark:bg-gray-950 dark:text-white rounded-md dark:shadow-indigo-700">
+    <div className="border dark:border-gray-900 shadow bg-card dark:bg-gray-950 dark:text-white rounded-md dark:shadow-indigo-700 flex flex-col">
       <div
         className="aspect-video w-full relative overflow-hidden"
         style={{ position: "relative" }}>
@@ -18,12 +18,12 @@ export default function CourseCard({ course }: { course: PartialCourse }) {
             src={imageUrlConstructor(imageUrl || "")}
             placeholder="blur"
             blurDataURL="/placeholder.jpg"
-            className="rounded-t-md object-cover  cursor-pointer"
+            className="rounded-t-md object-cover cursor-pointer"
             priority
           />
         </Link>
       </div>
-      <div className="py-6 px-3 space-y-2">
+      <div className="py-6 px-3 flex flex-col flex-grow">
         <div className="flex items-center justify-between">
           <span className="text-sm font-medium text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg truncate">
             {category.name}
@@ -40,14 +40,19 @@ export default function CourseCard({ course }: { course: PartialCourse }) {
         <Link
           href={`/courses/${slug}`}
           prefetch={false}
-          className="block md:text-lg font-semibold max-w-full mb-4 hover:text-indigo-600 transition-colors line-clamp-2 cursor-pointer hover:underline ">
+          className="block font-semibold max-w-full my-4 hover:text-indigo-600 transition-colors line-clamp-2 cursor-pointer hover:underline">
           {title}
         </Link>
 
-        <p className="text-sm text-muted-foreground line-clamp-2">{summary}</p>
-        <div className="flex items-center justify-between">
+        <div className="flex-grow">
+          <p className="text-sm text-muted-foreground line-clamp-2">
+            {summary}
+          </p>
+        </div>
+
+        <div className="flex items-center justify-between mt-4">
           <span className="font-medium">
-            {course.isFree? "Free": formatPrice(price)}
+            {course.isFree ? "Free" : formatPrice(price)}
           </span>
           <Link href={`/courses/${slug}`} prefetch={false} passHref>
             <button className="text-indigo-600 hover:text-indigo-700 font-medium flex items-center border dark:border-indigo-600 py-0.5 px-2 rounded-md group">
