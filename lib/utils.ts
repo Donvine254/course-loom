@@ -58,7 +58,8 @@ export const isValidImageFile = (image: File) => {
 export const imageUrlConstructor = (public_id: string) => {
   if (public_id.startsWith("courseloom")) {
     return `https://res.cloudinary.com/dipkbpinx/image/upload/${public_id}.webp`;
-  } else return public_id;
+  } else
+    return "https://res.cloudinary.com/dipkbpinx/image/upload/courseloom/nnepdutkt44leafzdimr.webp";
 };
 
 export function formatVideoDuration(seconds: number): string {
@@ -89,4 +90,20 @@ export function ReloadWindow() {
   if (typeof window !== "undefined" && window) {
     window.location.reload();
   }
+}
+
+export function formatPrice(price: number) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "KSH",
+    maximumFractionDigits: 0,
+  }).format(price * 120);
+}
+
+export function formatDate(date: string | Date) {
+  return new Date(date).toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
 }

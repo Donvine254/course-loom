@@ -11,15 +11,22 @@ import {
   Check,
   BadgeInfo,
   GraduationCap,
+  LockOpen,
+  LockOpenIcon,
 } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
-import { SubscriptionButton } from "@/components/custom/subscription-button";
+import { StripePaymentButton } from "@/components/custom/stripe-payment";
 import { VideoPreviewModal } from "./preview-modal";
-import { slugify } from "@/lib/utils";
-
+import {
+  formatDate,
+  formatPrice,
+  formatVideoDuration,
+  imageUrlConstructor,
+} from "@/lib/utils";
+import parse from "html-react-parser";
 import {
   Accordion,
   AccordionItem,
@@ -28,13 +35,27 @@ import {
 } from "@/components/ui/accordion";
 import StudentFeedback from "./review-items";
 import { renderStars } from "@/lib/render-stars";
-type Props = {
-  // eslint-disable-next-line
-  course: {} | any;
-};
-type Chapter = { title: string; lessons: number; duration: string };
+import { FullCourse } from "@/types";
 
-export default function CoursePage({ course }: Props) {
+export default function CoursePage({ course }: { course: FullCourse }) {
+  const calculateAverageRating = (reviews: { rating: number }[]) => {
+    if (!reviews.length) return 0;
+    const total = reviews.reduce((acc, review) => acc + review.rating, 0);
+    return parseFloat((total / reviews.length).toFixed(1));
+  };
+  const totalDuration = course.chapters.reduce((accumulator, chapter) => {
+    if (chapter && chapter.duration) {
+      return accumulator + chapter.duration;
+    }
+    return accumulator;
+  }, 0);
+  const totalAttachments = course.chapters.reduce((accumulator, chapter) => {
+    if (chapter && chapter._count.attachments) {
+      return accumulator + chapter._count.attachments;
+    }
+    return accumulator;
+  }, 0);
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -47,33 +68,37 @@ export default function CoursePage({ course }: Props) {
                   40% Off
                 </span>
                 <span className="text-sm font-medium truncate">
-                  {course.category}
+                  {course.category.name}
                 </span>
               </div>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 tracking-tight">
                 {course.title}
               </h1>
-              <p className="text-sm text-gray-200 my-2">
-                {course.short_description}
-              </p>
+              <p className="text-sm text-gray-200 my-2">{course.summary}</p>
               <div className="flex items-center flex-wrap gap-4 mb-4 text-sm md:text-base">
                 <div className="flex items-center">
                   <div className="flex mr-2">
-                    {renderStars(Math.floor(course.rating))}
+                    {renderStars(
+                      Math.floor(calculateAverageRating(course.reviews))
+                    )}
                   </div>
-                  <span className="ml-1">{course.rating}</span>
-                  <span className="ml-1">({course.reviews} ratings)</span>
+                  <span className="ml-1">
+                    {calculateAverageRating(course.reviews)}
+                  </span>
+                  <span className="ml-1">
+                    ({course.reviews.length} ratings)
+                  </span>
                 </div>
                 <div className="flex items-center gap-1">
                   <Users className="w-4 h-4" />
                   <span>
-                    {Number(course.students).toLocaleString()} students
+                    {Number(course._count.purchases).toLocaleString()} students
                   </span>
                 </div>
                 <div className="flex items-center flex-wrap gap-4 mb-2 text-sm md:text-base">
                   <div className="flex items-center gap-1">
                     <BadgeInfo className="w-4 h-4 rotate-180" />
-                    <span>Last updated on {course.lastUpdated}</span>
+                    <span>Last updated on {formatDate(course.updatedAt)}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <Globe className="w-4 h-4" />
@@ -86,13 +111,13 @@ export default function CoursePage({ course }: Props) {
                   src={course.instructor.image}
                   height={32}
                   width={32}
-                  alt={course.instructor.name}
+                  alt={course.instructor.username}
                   className="w-8 h-8 rounded-full object-cover"
                 />
                 <div>
-                  <p className="font-medium">{course.instructor.name}</p>
+                  <p className="font-medium">{course.instructor.username}</p>
                   <p className="text-sm text-gray-200">
-                    {course.instructor.role}
+                    {course.instructor.specialization}
                   </p>
                 </div>
               </div>
@@ -104,14 +129,14 @@ export default function CoursePage({ course }: Props) {
                 </Link>
                 <VideoPreviewModal
                   title={course.title}
-                  videoUrl="https://www.youtube.com/embed/FJDVKeh7RJI"
+                  videoUrl={course.chapters[0].videoUrl || ""}
                 />
               </div>
             </div>
             <div className="relative">
               <video
-                src={course.previewVideo}
-                poster={course.coverImage}
+                src={course.chapters[0].videoUrl || ""}
+                poster={imageUrlConstructor(course.imageUrl || "") || ""}
                 className="w-full h-full object-cover rounded-md"
                 controls
               />
@@ -134,14 +159,18 @@ export default function CoursePage({ course }: Props) {
                   <span className="text-sm text-muted-foreground">
                     Duration
                   </span>
-                  <span className="font-semibold">{course.duration}</span>
+                  <span className="font-semibold">
+                    {formatVideoDuration(totalDuration)}
+                  </span>
                 </div>
                 <div className="flex flex-col items-center p-4 bg-card border shadow rounded-lg">
                   <BookOpen className="w-6 h-6 text-indigo-600 mb-2" />
                   <span className="text-sm text-muted-foreground">
                     Chapters
                   </span>
-                  <span className="font-semibold">{course.totalChapters}</span>
+                  <span className="font-semibold">
+                    {course.chapters.length}
+                  </span>
                 </div>
                 <div className="flex flex-col items-center p-4 bg-card border shadow rounded-lg">
                   <Globe className="w-6 h-6 text-indigo-600 mb-2" />
@@ -155,23 +184,36 @@ export default function CoursePage({ course }: Props) {
                   <span className="text-sm text-muted-foreground">
                     Resources
                   </span>
-                  <span className="font-semibold">15 files</span>
+                  <span className="font-semibold">
+                    {totalAttachments || 0} files
+                  </span>
                 </div>
               </div>
-              <p className="text-muted-foreground leading-relaxed mb-8">
-                {course.long_description}
-              </p>
+              {course.description ? (
+                <div className="text-muted-foreground leading-relaxed mb-8">
+                  {parse(course.description || "") ?? course.description}
+                </div>
+              ) : (
+                <p className="text-muted-foreground leading-relaxed mb-8">
+                  No course description provided.
+                </p>
+              )}
+
               <div className="mb-4">
                 <h3 className="text-xl font-semibold mb-4">Prerequisites</h3>
                 <ul className="space-y-2 md:grid md:grid-cols-2">
-                  {course.prerequisites.map((pre: string, index: number) => (
-                    <li
-                      key={index}
-                      className="flex items-center text-muted-foreground">
-                      <Check className="w-5 h-5 text-indigo-600 mr-2" />
-                      {pre}
-                    </li>
-                  ))}
+                  {course.prerequisites
+                    ? course.prerequisites
+                        .split(";")
+                        .map((pre: string, index: number) => (
+                          <li
+                            key={index}
+                            className="flex items-center text-muted-foreground">
+                            <Check className="w-5 h-5 text-indigo-600 mr-2" />
+                            {pre}
+                          </li>
+                        ))
+                    : "This course has no prerequisites"}
                 </ul>
               </div>
               <div>
@@ -179,71 +221,98 @@ export default function CoursePage({ course }: Props) {
                   What You&apos;ll Learn
                 </h3>
                 <ul className="space-y-2 md:grid md:grid-cols-2">
-                  {course.learningObjectives.map(
-                    (objective: string, index: number) => (
-                      <li
-                        key={index}
-                        className="flex items-center text-muted-foreground">
-                        <Check className="w-5 h-5 text-indigo-600 mr-2" />
-                        {objective}
-                      </li>
-                    )
-                  )}
+                  {course.objectives
+                    ? course.objectives
+                        .split(";")
+                        .map((objective: string, index: number) => (
+                          <li
+                            key={index}
+                            className="flex items-center text-muted-foreground">
+                            <Check className="w-5 h-5 text-indigo-600 mr-2" />
+                            {objective}
+                          </li>
+                        ))
+                    : "No Objectives"}
                 </ul>
               </div>
               {/* Course Content */}
               <div className="bg-inherit my-2">
                 <h2 className="text-2xl font-bold mb-4">Course Content</h2>
-                <div className="space-y-4">
-                  {course.chapters
-                    .slice(0, 2)
-                    .map((chapter: Chapter, index: number) => (
-                      <div
-                        key={index}
-                        className="border border-indigo-500 rounded-lg p-4">
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <h3 className="font-semibold">{chapter.title}</h3>
+                {course.chapters && course.chapters.length > 0 ? (
+                  <>
+                    <div className="space-y-4">
+                      {course.chapters &&
+                        course.chapters.slice(0, 2).map((chapter) => (
+                          <div
+                            key={chapter.id}
+                            className="border border-indigo-500 rounded-lg p-4">
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <h3 className="font-semibold">
+                                  {chapter.title}
+                                </h3>
+                              </div>
+                              {chapter.isFree ? (
+                                <LockOpenIcon className="w-4 h-4 text-indigo-600" />
+                              ) : (
+                                <Lock className="w-4 h-4 text-indigo-600" />
+                              )}
+                            </div>
                             <div className="text-sm text-muted-foreground mt-1">
-                              {chapter.lessons} lessons • {chapter.duration}
+                              1 lesson •{" "}
+                              {formatVideoDuration(chapter.duration || 0)}
                             </div>
                           </div>
-                          <Lock className="w-4 h-4 text-indigo-600" />
-                        </div>
-                      </div>
-                    ))}
-                </div>
-                <Accordion type="single" collapsible className="space-y-4">
-                  <AccordionItem value="all-chapters">
-                    <AccordionTrigger className="font-semibold text-indigo-600">
-                      Show all chapters
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <div className="space-y-4">
-                        {course.chapters
-                          .slice(2)
-                          .map((chapter: Chapter, index: number) => (
-                            <div
-                              key={index}
-                              className="border border-indigo-500 rounded-lg p-4">
-                              <div className="flex items-center justify-between">
-                                <div>
-                                  <h3 className="font-semibold">
-                                    {chapter.title}
-                                  </h3>
-                                  <div className="text-sm text-muted-foreground mt-1">
-                                    {chapter.lessons} lessons •{" "}
-                                    {chapter.duration}
+                        ))}
+                    </div>
+                    <Accordion type="single" collapsible className="space-y-4">
+                      <AccordionItem value="all-chapters">
+                        <AccordionTrigger className="font-semibold text-indigo-600">
+                          Show all chapters
+                        </AccordionTrigger>
+                        <AccordionContent>
+                          <div className="space-y-4">
+                            {course.chapters &&
+                              course.chapters.slice(2).map((chapter) => (
+                                <div
+                                  key={chapter.id}
+                                  className="border border-indigo-500 rounded-lg p-4">
+                                  <div className="flex items-center justify-between">
+                                    <div>
+                                      <h3 className="font-semibold">
+                                        {chapter.title}
+                                      </h3>
+                                      <div className="text-sm text-muted-foreground mt-1">
+                                        {/* add chapter duration */}1 lesson •{" "}
+                                        {formatVideoDuration(
+                                          chapter.duration || 0
+                                        )}
+                                      </div>
+                                    </div>
+                                    {chapter.isFree ? (
+                                      <LockOpenIcon className="w-4 h-4 text-indigo-600" />
+                                    ) : (
+                                      <Lock className="w-4 h-4 text-indigo-600" />
+                                    )}
                                   </div>
                                 </div>
-                                <Lock className="w-4 h-4 text-indigo-600" />
-                              </div>
-                            </div>
-                          ))}
+                              ))}
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  </>
+                ) : (
+                  <div className="border border-indigo-500 rounded-lg p-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="font-semibold">No course content yet</h3>
+                        <div className="text-sm text-muted-foreground mt-1"></div>
                       </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
+                      <LockOpen className="w-4 h-4 text-indigo-600" />
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
             <Separator className="my-2 bg-gray-400" />
@@ -255,15 +324,15 @@ export default function CoursePage({ course }: Props) {
                   height={96}
                   width={96}
                   src={course.instructor.image}
-                  alt={course.instructor.name}
+                  alt={course.instructor.username}
                   className="h-24 w-24 rounded-lg object-cover"
                 />
                 <div className="flex-1">
                   <h3 className="text-xl font-semibold capitalize">
-                    {course.instructor.name}
+                    {course.instructor.username}
                   </h3>
                   <p className="text-sm text-indigo-500">
-                    {course.instructor.role}
+                    {course.instructor.specialization}
                   </p>
                   <a
                     href={`mailto:${course.instructor.email}`}
@@ -272,7 +341,7 @@ export default function CoursePage({ course }: Props) {
                     {course.instructor.email}
                   </a>
                   <p className="text-sm text-muted-foreground">
-                    {course.instructor.courses.length + 1} Courses
+                    {course.instructor.courses.length} Courses
                   </p>
                 </div>
               </div>
@@ -283,43 +352,52 @@ export default function CoursePage({ course }: Props) {
               <div className="mt-3">
                 <h4 className="font-semibold mb-3">Areas of Expertise</h4>
                 <div className="flex flex-wrap gap-2 xsm:gap-x-4 xsm:text-xs text-sm">
-                  {course.instructor.expertise.map(
-                    (skill: string, index: number) => (
+                  {course.instructor.expertise
+                    .split(",")
+                    .map((skill: string, index: number) => (
                       <span
                         key={index}
                         className="px-3 py-1 text-indigo-50 bg-indigo-600 dark:bg-indigo-900 dark:text-indigo-300 rounded-full ">
                         {skill}
                       </span>
-                    )
-                  )}
+                    ))}
                 </div>
               </div>
               <div className="mt-6">
                 <h4 className="font-semibold mb-3">
-                  Other Courses by {course.instructor.name}
+                  Other Courses by {course.instructor.username}
                 </h4>
                 <ul className="space-y-2">
-                  {course.instructor.courses.map(
-                    (otherCourse: string, index: number) => (
-                      <li
-                        key={index}
-                        className="flex items-center text-muted-foreground">
-                        <CirclePlay className="w-4 h-4 text-blue-600 mr-2" />
-                        <Link
-                          href={`/courses/${slugify(otherCourse)}`}
-                          className="underline text-blue-500">
-                          {otherCourse}
-                        </Link>
-                      </li>
-                    )
-                  )}
+                  {course.instructor.courses &&
+                    course.instructor.courses.length > 1 &&
+                    course.instructor.courses
+                      .filter((c) => c.id !== course.id)
+                      .map((c) => (
+                        <li
+                          key={c.id}
+                          className="flex items-center text-muted-foreground">
+                          <CirclePlay className="w-4 h-4 text-blue-600 mr-2" />
+                          <Link
+                            href={
+                              c.isPublished
+                                ? `/courses/${c.slug}`
+                                : `/courses/draft/${c.id}`
+                            }
+                            className="underline text-blue-500">
+                            {c.title}
+                          </Link>
+                        </li>
+                      ))}
                 </ul>
               </div>
             </div>
 
             {/* Student Reviews */}
             <Separator className="my-2 bg-gray-400" />
-            <StudentFeedback course={course} />
+            <StudentFeedback
+              reviews={course.reviews}
+              averageRating={calculateAverageRating(course.reviews)}
+            />
           </div>
           {/* Sidebar */}
           <div
@@ -336,13 +414,11 @@ export default function CoursePage({ course }: Props) {
                   Learn More
                 </Link>
               </p>{" "}
-              <SubscriptionButton
-                className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2"
-                plan="Pro"
-                variant="subscription"
-                amount={24.99}
-                text="Try Pro Now"
-              />
+              <Button
+                className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2 w-full"
+                asChild>
+                <Link href="/pricing?plan=pro">Try Pro Now</Link>
+              </Button>
               <p className="text-xs text-center w-full text-muted-foreground mb-1">
                 Starting at KSH 2,999 per month
               </p>
@@ -355,18 +431,11 @@ export default function CoursePage({ course }: Props) {
                 <hr className="border border-gray-200 w-full" />
               </div>
               <div className="text-3xl font-bold mb-4">
-                {new Intl.NumberFormat("en-US", {
-                  style: "currency",
-                  currency: "KSH",
-                  maximumFractionDigits: 0,
-                }).format(course.price * 120)}
+                {formatPrice(course.price)}
               </div>
-              <SubscriptionButton
+              <StripePaymentButton
                 className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2"
-                variant="payment"
-                title={course.title}
-                amount={course.price}
-                text="Buy this Course"
+                courseId={course.id}
               />
               <div className="text-muted-foreground text-xs w-full my-2 inline-flex items-center gap-1 justify-center">
                 <Lock className="h-3 w-3" />{" "}

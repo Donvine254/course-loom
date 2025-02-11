@@ -107,7 +107,7 @@ export default function FilesUploaderForm({
     }
   }
   return (
-    <div className="p-4 md:px-6 mx-auto max-w-4xl w-full ">
+    <div className="">
       <div className="flex items-center justify-between gap-2">
         <h2 className="font-bold xsm:text-sm md:text-lg  flex items-center gap-2">
           <File className="h-4 w-4" />{" "}

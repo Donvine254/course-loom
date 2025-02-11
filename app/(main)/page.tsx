@@ -16,12 +16,15 @@ import { Button } from "@/components/ui/button";
 import { CourseShowCase } from "@/components/custom/course-carousel";
 import { Metadata } from "next";
 import CTA from "@/components/ui/call-to-action";
+import { getAllCourses } from "@/lib/actions";
+import { PartialCourse } from "@/types";
 
 export const metadata: Metadata = {
   title: "Course Loom | Learning begins here!",
   description: "An LMS platform that powers the modern mind!",
 };
 export default async function Page() {
+  const courses = (await getAllCourses()) as PartialCourse[] | [];
   return (
     <section className="bg-gradient-to-tr from-indigo-200 via-gray-100 to-indigo-200 dark:bg-gradient-to-tr dark:from-indigo-950 dark:via-gray-950 dark:to-indigo-950">
       <div className="pt-12 bg-grid-indigo-100 dark:bg-grid-indigo-800 bg-opacity-20  min-h-screen  overflow-hidden md:pt-8 flex items-center justify-center relative">
@@ -227,7 +230,7 @@ export default async function Page() {
             </p>
           </div>
 
-          <CourseShowCase />
+          <CourseShowCase courses={courses} />
           <div className="flex items-center justify-center">
             <Link href="/courses" passHref>
               <Button

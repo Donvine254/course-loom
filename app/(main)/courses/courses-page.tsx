@@ -26,9 +26,9 @@ import {
   Filter,
   FlaskConical,
 } from "lucide-react";
-import { sampleCourses } from "@/constants";
 import CourseCard from "@/components/custom/course-card";
 import { FilterContent } from "@/components/custom/courses-filter";
+import { PartialCourse } from "@/types";
 
 const categories = [
   { name: "All", icon: LayoutGrid, color: "text-gray-500" },
@@ -51,7 +51,7 @@ type SortOption =
   | "chapters-asc"
   | "chapters-desc";
 
-export default function CoursesPage() {
+export default function CoursesPage({ courses }: { courses: PartialCourse[] }) {
   const [searchQuery, setSearchQuery] = useState("");
   const searchParams = useSearchParams();
   const query = searchParams.get("query") || "";
@@ -88,29 +88,33 @@ export default function CoursesPage() {
     });
   };
 
-  const sortCourses = (courses: typeof sampleCourses) => {
+  const sortCourses = (courses: PartialCourse[]) => {
     switch (sortBy) {
       case "title-asc":
         return [...courses].sort((a, b) => a.title.localeCompare(b.title));
       case "title-desc":
         return [...courses].sort((a, b) => b.title.localeCompare(a.title));
       case "chapters-asc":
-        return [...courses].sort((a, b) => a.chapters - b.chapters);
+        return [...courses].sort(
+          (a, b) => a._count.chapters - b._count.chapters
+        );
       case "chapters-desc":
-        return [...courses].sort((a, b) => b.chapters - a.chapters);
+        return [...courses].sort(
+          (a, b) => b._count.chapters - a._count.chapters
+        );
       default:
         return courses;
     }
   };
 
   const filteredCourses = sortCourses(
-    sampleCourses.filter((course) => {
+    courses.filter((course) => {
       const matchesSearch =
         course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        course.description.toLowerCase().includes(searchQuery.toLowerCase());
+        course.summary?.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCategory =
         selectedCategories.includes("All") ||
-        selectedCategories.includes(course.category);
+        selectedCategories.includes(course.category.name);
       const matchesPrice =
         course.price >= priceRange[0] && course.price <= priceRange[1];
 
@@ -205,16 +209,15 @@ export default function CoursesPage() {
               </div>
             </div>
           )}
-
           {/* Course Grid */}
           <div className="lg:col-span-3">
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredCourses.map((course, index) => (
-                <CourseCard key={index} course={course} />
-              ))}
-            </div>
-
-            {filteredCourses.length === 0 && (
+            {filteredCourses && filteredCourses.length > 0 ? (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredCourses.map((course, index) => (
+                  <CourseCard key={index} course={course} />
+                ))}
+              </div>
+            ) : (
               <div className="text-center py-12">
                 <GraduationCap className="mx-auto h-12 w-12 text-gray-400" />
                 <h3 className="mt-4 text-lg font-semibold">No courses found</h3>

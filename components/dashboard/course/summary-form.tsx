@@ -48,7 +48,7 @@ export const SummaryForm = ({ initialData, courseId }: SummaryFormProps) => {
       setIsEditing(true);
     }
     setSummary(initialData.summary || "");
-  }, [initialData, summary]);
+  }, [initialData]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -64,8 +64,8 @@ export const SummaryForm = ({ initialData, courseId }: SummaryFormProps) => {
       const res = await updateCourse(courseId, values);
       if (res.success) {
         toast.success("Course summary updated successfully");
-        toggleEdit();
         setSummary(values.summary);
+        setIsEditing((current) => !current);
       } else {
         toast.error(res.error || "Something went wrong");
       }
