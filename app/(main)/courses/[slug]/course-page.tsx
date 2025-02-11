@@ -4,7 +4,6 @@ import {
   Clock,
   Lock,
   Download,
-  Share2,
   BookmarkPlus,
   Globe,
   CirclePlay,
@@ -37,6 +36,7 @@ import StudentFeedback from "./review-items";
 import { renderStars } from "@/lib/render-stars";
 import { FullCourse } from "@/types";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
+import ShareButton from "@/components/custom/share-button";
 
 export default function CoursePage({ course }: { course: FullCourse }) {
   const calculateAverageRating = (reviews: { rating: number }[]) => {
@@ -466,11 +466,14 @@ export default function CoursePage({ course }: { course: FullCourse }) {
                 Full Lifetime Access & Offline download
               </p>
               <div className="flex gap-2 mt-6">
-                <Button
-                  variant="outline"
-                  className="flex-1 border bg-gray-100 dark:bg-indigo-950 rounded-lg hover:bg-indigo-200 dark:hover:bg-indigo-700 transition-colors">
-                  <Share2 className="w-5 h-5 mx-auto" />
-                </Button>
+                <ShareButton
+                  className="flex-1 border bg-gray-100 dark:bg-indigo-950 rounded-lg hover:bg-indigo-200 dark:hover:bg-indigo-700 transition-colors"
+                  course={{
+                    title: course.title,
+                    slug: course.slug,
+                    summary: course.summary!,
+                  }}
+                />
                 <Button
                   variant="outline"
                   className="flex-1 border bg-gray-100 dark:bg-indigo-950 rounded-lg hover:bg-indigo-200 dark:hover:bg-indigo-700 transition-colors">
