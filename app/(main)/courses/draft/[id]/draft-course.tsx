@@ -477,6 +477,7 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
               <SubscriptionButton
                 className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2"
                 plan="Pro"
+                courseId={course.id}
                 variant="subscription"
                 amount={24.99}
                 text="Try Pro Now"
