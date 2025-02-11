@@ -18,6 +18,7 @@ export const getAllCourses = unstable_cache(
         description: true,
         summary: true,
         slug: true,
+        isFree: true,
         createdAt: true,
         updatedAt: true,
         category: {

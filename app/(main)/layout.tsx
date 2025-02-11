@@ -37,7 +37,7 @@ export default async function RootLayout({
           disableTransitionOnChange>
           {/* TODO: fix why this is misbehaving on system */}
           <ClerkProvider afterSignOutUrl="/">
-            <GoogleOneTap />
+            <GoogleOneTap fedCmSupport />
             <Toaster richColors closeButton />
             <Navbar />
             <main>{children}</main>

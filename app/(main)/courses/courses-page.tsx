@@ -12,35 +12,11 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import {
-  LayoutGrid,
-  Code2,
-  LineChart,
-  Palette,
-  Search,
-  Smartphone,
-  Camera,
-  Briefcase,
-  GraduationCap,
-  DollarSign,
-  Filter,
-  FlaskConical,
-} from "lucide-react";
+import { Search, GraduationCap, Filter } from "lucide-react";
 import CourseCard from "@/components/custom/course-card";
 import { FilterContent } from "@/components/custom/courses-filter";
 import { PartialCourse } from "@/types";
-
-const categories = [
-  { name: "All", icon: LayoutGrid, color: "text-gray-500" },
-  { name: "Web Development", icon: Code2, color: "text-blue-500" },
-  { name: "Data Science", icon: FlaskConical, color: "text-green-500" },
-  { name: "Marketing", icon: LineChart, color: "text-purple-500" },
-  { name: "Design", icon: Palette, color: "text-pink-500" },
-  { name: "Business", icon: Briefcase, color: "text-orange-500" },
-  { name: "Photography", icon: Camera, color: "text-indigo-500" },
-  { name: "Finance", icon: DollarSign, color: "text-yellow-500" },
-  { name: "Mobile Development", icon: Smartphone, color: "text-red-500" },
-];
+import { CategoryFilters } from "@/constants/categories";
 
 type SortOption =
   | "default"
@@ -173,12 +149,12 @@ export default function CoursesPage({ courses }: { courses: PartialCourse[] }) {
         {/* Category Filters */}
         <ScrollArea className="w-full mb-8">
           <div className="flex space-x-2 pb-4">
-            {categories.map((category) => {
+            {CategoryFilters.map((category) => {
               const Icon = category.icon;
               const isSelected = selectedCategories.includes(category.name);
               return (
                 <Button
-                  key={category.name}
+                  key={category.id}
                   variant={isSelected ? "default" : "outline"}
                   className={`flex items-center gap-2 whitespace-nowrap ${
                     isSelected

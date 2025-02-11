@@ -4,7 +4,6 @@ import {
   Clock,
   Lock,
   Download,
-  Share2,
   BookmarkPlus,
   Globe,
   CirclePlay,
@@ -36,6 +35,8 @@ import {
 import StudentFeedback from "./review-items";
 import { renderStars } from "@/lib/render-stars";
 import { FullCourse } from "@/types";
+import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
+import ShareButton from "@/components/custom/share-button";
 
 export default function CoursePage({ course }: { course: FullCourse }) {
   const calculateAverageRating = (reviews: { rating: number }[]) => {
@@ -65,7 +66,7 @@ export default function CoursePage({ course }: { course: FullCourse }) {
             <div>
               <div className="flex items-center gap-2 my-2 lg:mb-4">
                 <span className="text-sm font-medium text-indigo-600 bg-indigo-50 px-3 py-1 rounded-sm  ">
-                  40% Off
+                  {course.isFree ? "Free Course" : "40% Off"}
                 </span>
                 <span className="text-sm font-medium truncate">
                   {course.category.name}
@@ -431,12 +432,34 @@ export default function CoursePage({ course }: { course: FullCourse }) {
                 <hr className="border border-gray-200 w-full" />
               </div>
               <div className="text-3xl font-bold mb-4">
-                {formatPrice(course.price)}
+                {course.isFree ? "Free" : formatPrice(course.price)}
               </div>
-              <StripePaymentButton
-                className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2"
-                courseId={course.id}
-              />
+              <SignedIn>
+                {!course.isFree ? (
+                  <StripePaymentButton
+                    className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2"
+                    courseId={course.id}
+                  />
+                ) : (
+                  <Button
+                    className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2 w-full"
+                    asChild>
+                    <Link href={`/learn/courses/${course.slug}`}>
+                      Learn Now
+                    </Link>
+                  </Button>
+                )}
+              </SignedIn>
+              <SignedOut>
+                <SignInButton>
+                  <button
+                    type="button"
+                    title="Login is required to enroll to this course"
+                    className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2 w-full py-3 px-6  flex items-center justify-center">
+                    Enroll Now
+                  </button>
+                </SignInButton>
+              </SignedOut>
               <div className="text-muted-foreground text-xs w-full my-2 inline-flex items-center gap-1 justify-center">
                 <Lock className="h-3 w-3" />{" "}
                 <span>30-Day Money-Back Guarantee</span>
@@ -445,11 +468,14 @@ export default function CoursePage({ course }: { course: FullCourse }) {
                 Full Lifetime Access & Offline download
               </p>
               <div className="flex gap-2 mt-6">
-                <Button
-                  variant="outline"
-                  className="flex-1 border bg-gray-100 dark:bg-indigo-950 rounded-lg hover:bg-indigo-200 dark:hover:bg-indigo-700 transition-colors">
-                  <Share2 className="w-5 h-5 mx-auto" />
-                </Button>
+                <ShareButton
+                  className="flex-1 border bg-gray-100 dark:bg-indigo-950 rounded-lg hover:bg-indigo-200 dark:hover:bg-indigo-700 transition-colors"
+                  course={{
+                    title: course.title,
+                    slug: course.slug,
+                    summary: course.summary!,
+                  }}
+                />
                 <Button
                   variant="outline"
                   className="flex-1 border bg-gray-100 dark:bg-indigo-950 rounded-lg hover:bg-indigo-200 dark:hover:bg-indigo-700 transition-colors">
