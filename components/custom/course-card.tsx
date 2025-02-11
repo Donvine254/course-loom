@@ -8,7 +8,9 @@ export default function CourseCard({ course }: { course: PartialCourse }) {
   const { title, category, imageUrl, price, summary, slug } = course;
   return (
     <div className="border dark:border-gray-900 shadow bg-card dark:bg-gray-950 dark:text-white rounded-md dark:shadow-indigo-700">
-      <div className="aspect-video w-full relative overflow-hidden">
+      <div
+        className="aspect-video w-full relative overflow-hidden"
+        style={{ position: "relative" }}>
         <Link href={`/courses/${slug}`}>
           <Image
             alt={title}
