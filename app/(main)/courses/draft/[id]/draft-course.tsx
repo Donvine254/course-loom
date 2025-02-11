@@ -23,7 +23,6 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { renderStars } from "@/lib/render-stars";
-import { SubscriptionButton } from "@/components/custom/subscription-button";
 import { Separator } from "@/components/ui/separator";
 import {
   Accordion,
@@ -474,14 +473,11 @@ export default function DraftCourse({ course }: { course: FullCourse }) {
                   Learn More
                 </Link>
               </p>{" "}
-              <SubscriptionButton
-                className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2"
-                plan="Pro"
-                courseId={course.id}
-                variant="subscription"
-                amount={24.99}
-                text="Try Pro Now"
-              />
+              <Button
+                className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2 w-full"
+                asChild>
+                <Link href="/pricing?plan=pro">Try Pro Now</Link>
+              </Button>
               <p className="text-xs text-center w-full text-muted-foreground mb-1">
                 Starting at KSH 2,999 per month
               </p>

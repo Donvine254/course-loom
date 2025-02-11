@@ -18,7 +18,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
-import { SubscriptionButton } from "@/components/custom/subscription-button";
+import { StripePaymentButton } from "@/components/custom/stripe-payment";
 import { VideoPreviewModal } from "./preview-modal";
 import {
   formatDate,
@@ -414,14 +414,11 @@ export default function CoursePage({ course }: { course: FullCourse }) {
                   Learn More
                 </Link>
               </p>{" "}
-              <SubscriptionButton
-                className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2"
-                plan="Pro"
-                variant="subscription"
-                amount={24.99}
-                courseId={course.id}
-                text="Try Pro Now"
-              />
+              <Button
+                className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2 w-full"
+                asChild>
+                <Link href="/pricing?plan=pro">Try Pro Now</Link>
+              </Button>
               <p className="text-xs text-center w-full text-muted-foreground mb-1">
                 Starting at KSH 2,999 per month
               </p>
@@ -436,13 +433,9 @@ export default function CoursePage({ course }: { course: FullCourse }) {
               <div className="text-3xl font-bold mb-4">
                 {formatPrice(course.price)}
               </div>
-              <SubscriptionButton
+              <StripePaymentButton
                 className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2"
-                variant="payment"
-                title={course.title}
-                amount={course.price}
                 courseId={course.id}
-                text="Buy this Course"
               />
               <div className="text-muted-foreground text-xs w-full my-2 inline-flex items-center gap-1 justify-center">
                 <Lock className="h-3 w-3" />{" "}
