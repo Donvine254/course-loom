@@ -13,9 +13,9 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { CategoryFilters } from "@/constants/categories";
+import { SkeletonCourseCard } from "@/components/custom/skeleton-course-card";
 
 export default function Loading() {
- 
   return (
     <section>
       <div className="bg-opacity-20 bg-inherit hidden lg:block border-b">
@@ -130,7 +130,11 @@ export default function Loading() {
           </div>
           {/* Course Grid */}
           <div className="lg:col-span-3">
-            {/* add a skeleton loader for courses */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Array.from({ length: 6 }).map((_, index) => (
+                <SkeletonCourseCard key={index} />
+              ))}
+            </div>
           </div>
         </div>
       </div>
