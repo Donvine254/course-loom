@@ -5,7 +5,7 @@ export const pricingPlans = {
       description: "Access free courses and explore our learning platform",
       price: 0,
       billing: "Always free, no commitment",
-      badge: "😍 No credit card required",
+      badge: "😍 No credit card",
       features: [
         "Access to free courses only",
         "Create learning profile",
@@ -56,7 +56,7 @@ export const pricingPlans = {
       description: "Access free courses and explore our learning platform",
       price: 0,
       billing: "Always free, no commitment",
-      badge: "😍 No credit card required",
+      badge: "😍 No credit card",
       features: [
         "Access to free courses only",
         "Create learning profile",

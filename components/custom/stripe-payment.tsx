@@ -1,57 +1,19 @@
 "use client";
-import { createPaymentSession, createSubscriptionSession } from "@/lib/stripe";
+import { createPaymentSession } from "@/lib/stripe";
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
 // TODO: Create a separate subscription and purchase course button
-export const SubscriptionButton = ({
-  className,
-  amount,
-  plan,
-  text,
-  courseId,
-  variant = "subscription",
-  title,
-}: {
-  className?: string;
-  amount: number;
-  plan?: string;
-  text: string;
-  variant?: string;
-  title?: string;
-  courseId: string;
-}) => {
-  const paymentAmount = Number(amount * 120 * 100);
+export const SubscriptionButton = ({ className }: { className?: string }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const name =
-    variant === "payment"
-      ? `${title}`
-      : `Subscribe to Courseloom ${plan || "standard"} monthly plan`;
-  const handlePayment = async () => {
-    if (plan === "Free") {
-      return;
-    }
+  const handleSubscription = async () => {
     setIsLoading(true);
-    try {
-      const sessionUrl = await createSubscriptionSession(
-        paymentAmount,
-        name,
-        courseId
-      );
+    toast.info("Upcoming feature!");
+    setTimeout(() => {
       setIsLoading(false);
-      window.location.assign(sessionUrl);
-    } catch (error) {
-      console.error("Payment error:", error);
-      setIsLoading(false);
-      toast.error(
-        "There was an error processing your payment. Please try again.",
-        {
-          position: "top-right",
-        }
-      );
-    }
+    }, 1000);
   };
   return (
     <button
@@ -61,13 +23,13 @@ export const SubscriptionButton = ({
       )}
       title="subscribe"
       disabled={isLoading}
-      onClick={handlePayment}>
+      onClick={handleSubscription}>
       {isLoading ? (
         <span className="flex items-center justify-start gap-2">
           <Loader2 className="h-4 w-4 animate-spin" /> Processing
         </span>
       ) : (
-        text
+        "Get Started"
       )}
     </button>
   );

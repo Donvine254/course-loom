@@ -5,6 +5,7 @@ import { pricingPlans } from "@/constants/pricing";
 import { CheckCircle, InfoIcon } from "lucide-react";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 import { SubscriptionButton } from "@/components/custom/stripe-payment";
+import Link from "next/link";
 
 export default function Pricing() {
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">(
@@ -102,28 +103,34 @@ export default function Pricing() {
 
               {/* CTA Button */}
               <SignedIn>
-                <SubscriptionButton
-                  plan={plan.name}
-                  amount={plan.price}
-                  text="Get Started"
-                  className={`font-medium mb-4 rounded-lg ${
-                    plan.badge !== "😍 No credit card required"
-                      ? "bg-indigo-600 hover:bg-indigo-700 text-white"
-                      : "bg-gray-100 hover:bg-gray-200 text-gray-900"
-                  }`}
-                />
+                {plan.name !== "Free" ? (
+                  <SubscriptionButton
+                    className="font-medium mb-4 rounded-lg 
+                    bg-indigo-600 hover:bg-indigo-700 text-white"
+                  />
+                ) : (
+                  <Link
+                    href="/courses"
+                    className="font-medium mb-4 rounded-lg $
+                        bg-secondary text-secondary-foreground w-full py-3 px-6  flex items-center justify-center">
+                    Get Started
+                  </Link>
+                )}
               </SignedIn>
               <SignedOut>
                 <SignInButton>
-                  <button
-                    className={`w-full py-3 px-6 rounded-lg font-medium mb-4
-                    ${
-                      plan.badge !== "😍 No credit card required"
-                        ? "bg-indigo-600 hover:bg-indigo-700 text-white"
-                        : "bg-gray-100 hover:bg-gray-200 text-gray-900"
-                    }`}>
-                    Get Started
-                  </button>
+                  {plan.name !== "Free" ? (
+                    <SubscriptionButton
+                      className="font-medium mb-4 rounded-lg 
+                    bg-indigo-600 hover:bg-indigo-700 text-white"
+                    />
+                  ) : (
+                    <button
+                      className="font-medium mb-4 rounded-lg $
+                        bg-secondary text-secondary-foreground w-full py-3 px-6  flex items-center justify-center">
+                      Get Started
+                    </button>
+                  )}
                 </SignInButton>
               </SignedOut>
               {/* Features */}
