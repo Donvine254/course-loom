@@ -36,6 +36,7 @@ import {
 import StudentFeedback from "./review-items";
 import { renderStars } from "@/lib/render-stars";
 import { FullCourse } from "@/types";
+import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 
 export default function CoursePage({ course }: { course: FullCourse }) {
   const calculateAverageRating = (reviews: { rating: number }[]) => {
@@ -433,10 +434,22 @@ export default function CoursePage({ course }: { course: FullCourse }) {
               <div className="text-3xl font-bold mb-4">
                 {formatPrice(course.price)}
               </div>
-              <StripePaymentButton
-                className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2"
-                courseId={course.id}
-              />
+              <SignedIn>
+                <StripePaymentButton
+                  className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2"
+                  courseId={course.id}
+                />
+              </SignedIn>
+              <SignedOut>
+                <SignInButton>
+                  <button
+                    type="button"
+                    title="Login is required to enroll to this course"
+                    className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2 w-full py-3 px-6  flex items-center justify-center">
+                    Enroll Now
+                  </button>
+                </SignInButton>
+              </SignedOut>
               <div className="text-muted-foreground text-xs w-full my-2 inline-flex items-center gap-1 justify-center">
                 <Lock className="h-3 w-3" />{" "}
                 <span>30-Day Money-Back Guarantee</span>
