@@ -66,7 +66,7 @@ export default function CoursePage({ course }: { course: FullCourse }) {
             <div>
               <div className="flex items-center gap-2 my-2 lg:mb-4">
                 <span className="text-sm font-medium text-indigo-600 bg-indigo-50 px-3 py-1 rounded-sm  ">
-                  40% Off
+                  {course.isFree ? "Free Course" : "40% Off"}
                 </span>
                 <span className="text-sm font-medium truncate">
                   {course.category.name}
@@ -444,7 +444,9 @@ export default function CoursePage({ course }: { course: FullCourse }) {
                   <Button
                     className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2 w-full"
                     asChild>
-                    <Link href={`/learn/${course.slug}`}>Learn Now</Link>
+                    <Link href={`/learn/courses/${course.slug}`}>
+                      Learn Now
+                    </Link>
                   </Button>
                 )}
               </SignedIn>
