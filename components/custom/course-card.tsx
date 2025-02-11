@@ -2,7 +2,7 @@ import Image from "next/image";
 import { ArrowRight, BookOpen } from "lucide-react";
 import Link from "next/link";
 import { PartialCourse } from "@/types";
-import { imageUrlConstructor } from "@/lib/utils";
+import { formatPrice, imageUrlConstructor } from "@/lib/utils";
 
 export default function CourseCard({ course }: { course: PartialCourse }) {
   const { title, category, imageUrl, price, summary, slug } = course;
@@ -47,11 +47,7 @@ export default function CourseCard({ course }: { course: PartialCourse }) {
         <p className="text-sm text-muted-foreground line-clamp-2">{summary}</p>
         <div className="flex items-center justify-between">
           <span className="font-medium">
-            {new Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: "KSH",
-              maximumFractionDigits: 0,
-            }).format(price! * 120)}
+            {course.isFree? "Free": formatPrice(price)}
           </span>
           <Link href={`/courses/${slug}`} prefetch={false} passHref>
             <button className="text-indigo-600 hover:text-indigo-700 font-medium flex items-center border dark:border-indigo-600 py-0.5 px-2 rounded-md group">
