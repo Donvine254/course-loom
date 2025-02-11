@@ -432,13 +432,21 @@ export default function CoursePage({ course }: { course: FullCourse }) {
                 <hr className="border border-gray-200 w-full" />
               </div>
               <div className="text-3xl font-bold mb-4">
-                {formatPrice(course.price)}
+                {course.isFree ? "Free" : formatPrice(course.price)}
               </div>
               <SignedIn>
-                <StripePaymentButton
-                  className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2"
-                  courseId={course.id}
-                />
+                {!course.isFree ? (
+                  <StripePaymentButton
+                    className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2"
+                    courseId={course.id}
+                  />
+                ) : (
+                  <Button
+                    className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2 w-full"
+                    asChild>
+                    <Link href={`/learn/${course.slug}`}>Learn Now</Link>
+                  </Button>
+                )}
               </SignedIn>
               <SignedOut>
                 <SignInButton>

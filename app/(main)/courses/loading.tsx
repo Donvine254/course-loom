@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import {
   Search,
-  GraduationCap,
   FilterX,
   SortAsc,
   SortDesc,
@@ -10,16 +9,13 @@ import {
   BookOpen,
   Filter,
 } from "lucide-react";
-import CourseCard from "@/components/custom/course-card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
-import { PartialCourse } from "@/types";
-import { getAllCourses } from "@/lib/actions";
 import { CategoryFilters } from "@/constants/categories";
 
-export default async function Loading() {
-  const courses = (await getAllCourses()) as PartialCourse[] | [];
+export default function Loading() {
+ 
   return (
     <section>
       <div className="bg-opacity-20 bg-inherit hidden lg:block border-b">
@@ -55,7 +51,7 @@ export default async function Loading() {
 
               return (
                 <Button
-                  key={category.name}
+                  key={category.id}
                   variant="outline"
                   className={`flex items-center gap-2 whitespace-nowrap ${category.color}`}>
                   <Icon className="h-4 w-4" />
@@ -134,21 +130,7 @@ export default async function Loading() {
           </div>
           {/* Course Grid */}
           <div className="lg:col-span-3">
-            {courses && courses.length > 0 ? (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {courses.map((course) => (
-                  <CourseCard key={course.id} course={course} />
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-12">
-                <GraduationCap className="mx-auto h-12 w-12 text-gray-400" />
-                <h3 className="mt-4 text-lg font-semibold">No courses found</h3>
-                <p className="text-muted-foreground">
-                  Try adjusting your search or filter criteria
-                </p>
-              </div>
-            )}
+            {/* add a skeleton loader for courses */}
           </div>
         </div>
       </div>
