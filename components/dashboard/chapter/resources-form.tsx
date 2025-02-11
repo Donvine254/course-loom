@@ -132,13 +132,13 @@ export default function FilesUploaderForm({
             <div
               key={attachment.id}
               className="flex items-center gap-2 w-full my-2 ">
-              <div className="flex flex-1 items-center gap-2 p-2 border rounded-lg bg-indigo-100 text-sm">
+              <div className="flex flex-1 items-center gap-2 p-2 border rounded-lg bg-indigo-100 text-sm overflow-x-hidden">
                 <File className="h-4 w-4 flex-shrink-0 text-indigo-700" />
                 <a
                   href={attachment.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-indigo-700 hover:underline truncate">
+                  className="text-indigo-700 hover:underline block max-w-full truncate">
                   {attachment.name}
                 </a>
               </div>
