@@ -2,11 +2,14 @@
 import CourseCard from "@/components/custom/course-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { deleteWhitelist } from "@/lib/actions/wishlist";
 import { PartialCourse } from "@/types";
 import { Heart, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
+import { toast } from "sonner";
 
 export default function WishListComponent({
   courses,
@@ -15,6 +18,7 @@ export default function WishListComponent({
 }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredCourses, setFilteredCourses] = useState(courses);
+  const router = useRouter();
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);
@@ -34,6 +38,23 @@ export default function WishListComponent({
     );
   };
 
+  async function removeFromWishList(courseId: string) {
+    try {
+      const res = await deleteWhitelist(courseId);
+      if (res.success) {
+        toast.success(res.message);
+        setFilteredCourses((prev) =>
+          prev.filter((course) => course.id !== courseId)
+        );
+        router.refresh();
+      } else {
+        toast.error(res.error);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong!");
+    }
+  }
   return (
     <div className="p-2 sm:p-4 md:px-6 ">
       <div className="flex w-full items-center justify-between gap-2">
@@ -56,12 +77,15 @@ export default function WishListComponent({
       {filteredCourses && filteredCourses.length > 0 ? (
         <div className="py-6">
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredCourses.map((course, index) => (
-              <div className="relative" key={index}>
+            {filteredCourses.map((course) => (
+              <div className="relative" key={course.id}>
                 <CourseCard course={course} />
                 <Button
                   variant="ghost"
                   type="button"
+                  onClick={() => {
+                    removeFromWishList(course.id);
+                  }}
                   title="click to remove course from wishlist"
                   className="absolute top-2 right-2 z-20 rounded-full bg-black/50 hover:bg-black/40 backdrop-blur transition"
                   size="icon">

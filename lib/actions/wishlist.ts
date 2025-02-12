@@ -46,6 +46,9 @@ export async function deleteWhitelist(courseId: string) {
     // eslint-disable-next-line
   } catch (error: any) {
     console.error(error.stack);
+    if (error.code === "P2001") {
+      return { success: false, error: "Record to remove not found" };
+    }
     return { success: false, error: error.message || "Something went wrong" };
   }
 }
@@ -65,6 +68,7 @@ export async function getWishListedCourses() {
       },
     },
     select: {
+      id: true,
       imageUrl: true,
       title: true,
       price: true,
