@@ -9,7 +9,7 @@ import { getInstructorCourses } from "@/lib/actions/instructor";
 import { Metadata } from "next";
 // TODO: add metadata
 export const metadata: Metadata = {
-  title: "Course Loom | Instructor - My Courses",
+  title: "Instructor | Course Loom",
   description: "An LMS platform that powers the modern mind!",
 };
 export default async function Dashboard() {
