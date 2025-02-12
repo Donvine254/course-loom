@@ -3,7 +3,7 @@ import CourseCard from "@/components/custom/course-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PartialCourse } from "@/types";
-import { Search } from "lucide-react";
+import { Heart, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { ChangeEvent, useState } from "react";
@@ -57,7 +57,17 @@ export default function WishListComponent({
         <div className="py-6">
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredCourses.map((course, index) => (
-              <CourseCard key={index} course={course} />
+              <div className="relative" key={index}>
+                <CourseCard course={course} />
+                <Button
+                  variant="ghost"
+                  type="button"
+                  title="click to remove course from wishlist"
+                  className="absolute top-2 right-2 z-20 rounded-full bg-black/50 hover:bg-black/40 backdrop-blur transition"
+                  size="icon">
+                  <Heart className="h-8 w-8 fill-red-500 text-red-500" />
+                </Button>
+              </div>
             ))}
           </div>
         </div>
