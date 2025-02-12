@@ -3,11 +3,31 @@ import CoursePage from "./course-page";
 import { Metadata } from "next";
 import { getCourseData } from "@/lib/actions";
 import { redirect } from "next/navigation";
-
+import prisma from "@/prisma/prisma";
 export const metadata: Metadata = {
   title: "Course Loom | Explore our courses",
   description: "An LMS platform that powers the modern mind!",
 };
+
+export async function generateStaticParams() {
+  try {
+    const slugs = await prisma.course.findMany({
+      where: {
+        status: "PUBLISHED",
+      },
+      select: {
+        slug: true,
+      },
+    });
+    const slugArray = slugs.map((slugObj) => slugObj.slug);
+    return slugArray;
+  } catch (error) {
+    console.error("Error fetching courses data:", error);
+    return [];
+  } finally {
+    await prisma.$disconnect();
+  }
+}
 export default async function Page({
   params,
 }: {
