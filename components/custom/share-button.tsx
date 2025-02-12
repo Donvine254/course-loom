@@ -94,7 +94,10 @@ export default function ShareButton({ course, className }: ShareButtonProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" className={className}>
+        <Button
+          variant="outline"
+          className={className}
+          title="share this course with others">
           <Share2 className="w-5 h-5 mx-auto" />
         </Button>
       </DialogTrigger>

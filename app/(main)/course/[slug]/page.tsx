@@ -3,11 +3,12 @@ import CoursePage from "./course-page";
 import { Metadata } from "next";
 import { getCourseData } from "@/lib/actions";
 import { redirect } from "next/navigation";
-
 export const metadata: Metadata = {
   title: "Course Loom | Explore our courses",
   description: "An LMS platform that powers the modern mind!",
 };
+
+
 export default async function Page({
   params,
 }: {

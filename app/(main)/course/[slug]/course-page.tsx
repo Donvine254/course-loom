@@ -4,7 +4,6 @@ import {
   Clock,
   Lock,
   Download,
-  BookmarkPlus,
   Globe,
   CirclePlay,
   Check,
@@ -37,6 +36,7 @@ import { renderStars } from "@/lib/render-stars";
 import { FullCourse } from "@/types";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 import ShareButton from "@/components/custom/share-button";
+import WhiteListButton from "@/components/custom/whitelist-button";
 
 export default function CoursePage({ course }: { course: FullCourse }) {
   const calculateAverageRating = (reviews: { rating: number }[]) => {
@@ -381,7 +381,7 @@ export default function CoursePage({ course }: { course: FullCourse }) {
                           <Link
                             href={
                               c.isPublished
-                                ? `/courses/${c.slug}`
+                                ? `/course/${c.slug}`
                                 : `/courses/draft/${c.id}`
                             }
                             className="underline text-blue-500">
@@ -444,9 +444,7 @@ export default function CoursePage({ course }: { course: FullCourse }) {
                   <Button
                     className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2 w-full"
                     asChild>
-                    <Link href={`/learn/courses/${course.slug}`}>
-                      Learn Now
-                    </Link>
+                    <Link href={`/learn/course/${course.slug}`}>Learn Now</Link>
                   </Button>
                 )}
               </SignedIn>
@@ -476,11 +474,7 @@ export default function CoursePage({ course }: { course: FullCourse }) {
                     summary: course.summary!,
                   }}
                 />
-                <Button
-                  variant="outline"
-                  className="flex-1 border bg-gray-100 dark:bg-indigo-950 rounded-lg hover:bg-indigo-200 dark:hover:bg-indigo-700 transition-colors">
-                  <BookmarkPlus className="w-5 h-5 mx-auto" />
-                </Button>
+                <WhiteListButton courseId={course.id} />
               </div>
             </div>
           </div>
