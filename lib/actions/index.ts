@@ -12,6 +12,7 @@ export const getAllCourses = unstable_cache(
         status: "PUBLISHED",
       },
       select: {
+        id: true,
         imageUrl: true,
         title: true,
         price: true,

@@ -189,8 +189,8 @@ export default function CoursesPage({ courses }: { courses: PartialCourse[] }) {
           <div className="lg:col-span-3">
             {filteredCourses && filteredCourses.length > 0 ? (
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredCourses.map((course, index) => (
-                  <CourseCard key={index} course={course} />
+                {filteredCourses.map((course) => (
+                  <CourseCard key={course.id} course={course} />
                 ))}
               </div>
             ) : (
