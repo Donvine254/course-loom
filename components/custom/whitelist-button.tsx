@@ -1,10 +1,15 @@
 "use client";
-import { Heart } from "lucide-react";
+import { Heart, Loader2 } from "lucide-react";
 import { Button } from "../ui/button";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 import { useEffect, useState, useTransition } from "react";
-import { isWhiteListed } from "@/lib/actions/whitelist";
+import {
+  deleteWhitelist,
+  isWhiteListed,
+  whitelistCourse,
+} from "@/lib/actions/whitelist";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 export default function WhiteListButton({ courseId }: { courseId: string }) {
   const [isWhitelisted, setIsWhitelisted] = useState<boolean>(true);
@@ -19,6 +24,23 @@ export default function WhiteListButton({ courseId }: { courseId: string }) {
 
   async function toggleWhitelist() {
     setIsWhitelisted((prev) => !prev);
+    startTransition(async () => {
+      if (isWhitelisted) {
+        const res = await deleteWhitelist(courseId);
+        if (res.success) {
+          toast.success(res.message);
+        } else {
+          toast.error(res.error);
+        }
+      } else {
+        const res = await whitelistCourse(courseId);
+        if (res.success) {
+          toast.success(res.message);
+        } else {
+          toast.error(res.error);
+        }
+      }
+    });
   }
   return (
     <>
@@ -39,10 +61,7 @@ export default function WhiteListButton({ courseId }: { courseId: string }) {
         <Button
           variant="outline"
           className={cn(
-            "flex-1 border rounded-lg  transition-colors",
-            isWhitelisted
-              ? "bg-indigo-200 hover:bg-indigo-200"
-              : "bg-gray-100 dark:bg-indigo-950 hover:bg-indigo-200 dark:hover:bg-indigo-700 "
+            "flex-1 border rounded-lg  transition-colors bg-gray-100 dark:bg-indigo-950 hover:bg-indigo-200 dark:hover:bg-indigo-700 "
           )}
           title={
             isWhitelisted
@@ -52,12 +71,16 @@ export default function WhiteListButton({ courseId }: { courseId: string }) {
           type="button"
           disabled={loading}
           onClick={toggleWhitelist}>
-          <Heart
-            className={cn(
-              "w-8 h-8 mx-auto",
-              isWhitelisted && "text-indigo-600 fill-indigo-600"
-            )}
-          />
+          {!loading ? (
+            <Heart
+              className={cn(
+                "w-8 h-8 mx-auto",
+                isWhitelisted && "text-indigo-600 fill-indigo-600"
+              )}
+            />
+          ) : (
+            <Loader2 className="w-8 h-8 mx-auto animate-spin" />
+          )}
         </Button>
       </SignedIn>
     </>
