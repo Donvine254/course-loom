@@ -32,7 +32,7 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 import StudentFeedback from "./review-items";
-import { renderStars } from "@/lib/render-stars";
+import { renderStars } from "@/lib/helpers/render-stars";
 import { FullCourse } from "@/types";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 import ShareButton from "@/components/custom/share-button";

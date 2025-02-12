@@ -1,5 +1,5 @@
 "use client";
-import { createPaymentSession } from "@/lib/stripe";
+import { createPaymentSession } from "@/lib/helpers/stripe";
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import React, { useState } from "react";

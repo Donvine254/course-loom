@@ -1,5 +1,5 @@
 "use client";
-import { getRole } from "@/lib/roles";
+import { getRole } from "@/lib/helpers/roles";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import {

@@ -1,6 +1,6 @@
 "use client";
 import { ourFileRouter } from "@/app/api/uploadthing/core";
-import { UploadDropzone } from "@/lib/upload-thing";
+import { UploadDropzone } from "@/lib/helpers/upload-thing";
 import { toast } from "sonner";
 import { useRef, useState } from "react";
 import { Loader2, X } from "lucide-react";
@@ -9,7 +9,7 @@ import {
   isValidImageFile,
   validateImageSize,
 } from "@/lib/utils";
-import { uploadToCloudinary } from "@/lib/cloudinary";
+import { uploadToCloudinary } from "@/lib/helpers/cloudinary";
 import { Button } from "../ui/button";
 
 interface VideoUploadProps {

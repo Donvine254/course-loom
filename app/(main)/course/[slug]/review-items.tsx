@@ -9,7 +9,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { renderStars } from "@/lib/render-stars";
+import { renderStars } from "@/lib/helpers/render-stars";
 import { User } from "@prisma/client";
 import { formatDate } from "@/lib/utils";
 type CourseReviews = {
