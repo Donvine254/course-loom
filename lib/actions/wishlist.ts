@@ -49,3 +49,44 @@ export async function deleteWhitelist(courseId: string) {
     return { success: false, error: error.message || "Something went wrong" };
   }
 }
+
+export async function getWishListedCourses() {
+  const user = await currentUser();
+  if (!user) {
+    throw new Error("No logged in user found");
+  }
+
+  const wishListedCourses = await prisma.course.findMany({
+    where: {
+      isPublished: true,
+      status: "PUBLISHED",
+      wishlists: {
+        some: { userId: user.id },
+      },
+    },
+    select: {
+      imageUrl: true,
+      title: true,
+      price: true,
+      description: true,
+      summary: true,
+      slug: true,
+      isFree: true,
+      createdAt: true,
+      updatedAt: true,
+      category: {
+        select: {
+          name: true,
+          id: true,
+        },
+      },
+      _count: {
+        select: {
+          chapters: true,
+        },
+      },
+    },
+  });
+
+  return wishListedCourses;
+}
