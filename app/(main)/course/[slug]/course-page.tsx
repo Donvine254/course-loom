@@ -381,7 +381,7 @@ export default function CoursePage({ course }: { course: FullCourse }) {
                           <Link
                             href={
                               c.isPublished
-                                ? `/courses/${c.slug}`
+                                ? `/course/${c.slug}`
                                 : `/courses/draft/${c.id}`
                             }
                             className="underline text-blue-500">
@@ -444,9 +444,7 @@ export default function CoursePage({ course }: { course: FullCourse }) {
                   <Button
                     className="bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 hover:text-white transition-colors my-2 w-full"
                     asChild>
-                    <Link href={`/learn/courses/${course.slug}`}>
-                      Learn Now
-                    </Link>
+                    <Link href={`/learn/course/${course.slug}`}>Learn Now</Link>
                   </Button>
                 )}
               </SignedIn>

@@ -11,7 +11,7 @@ export default function CourseCard({ course }: { course: PartialCourse }) {
       <div
         className="aspect-video w-full relative overflow-hidden"
         style={{ position: "relative" }}>
-        <Link href={`/courses/${slug}`}>
+        <Link href={`/course/${slug}`}>
           <Image
             alt={title}
             fill
@@ -38,7 +38,7 @@ export default function CourseCard({ course }: { course: PartialCourse }) {
           </div>
         </div>
         <Link
-          href={`/courses/${slug}`}
+          href={`/course/${slug}`}
           prefetch={false}
           className="block font-semibold max-w-full my-4 hover:text-indigo-600 transition-colors line-clamp-2 cursor-pointer hover:underline">
           {title}
@@ -54,7 +54,7 @@ export default function CourseCard({ course }: { course: PartialCourse }) {
           <span className="font-medium">
             {course.isFree ? "Free" : formatPrice(price)}
           </span>
-          <Link href={`/courses/${slug}`} prefetch={false} passHref>
+          <Link href={`/course/${slug}`} prefetch={false} passHref>
             <button className="text-indigo-600 hover:text-indigo-700 font-medium flex items-center border dark:border-indigo-600 py-0.5 px-2 rounded-md group">
               Explore
               <ArrowRight className="h-4 w-4 ml-1 group-hover:animate-move-arrow" />
