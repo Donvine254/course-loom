@@ -4,7 +4,6 @@ import {
   Clock,
   Lock,
   Download,
-  BookmarkPlus,
   Globe,
   CirclePlay,
   Check,
@@ -12,6 +11,7 @@ import {
   GraduationCap,
   LockOpen,
   LockOpenIcon,
+  Heart,
 } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -476,8 +476,10 @@ export default function CoursePage({ course }: { course: FullCourse }) {
                 />
                 <Button
                   variant="outline"
-                  className="flex-1 border bg-gray-100 dark:bg-indigo-950 rounded-lg hover:bg-indigo-200 dark:hover:bg-indigo-700 transition-colors">
-                  <BookmarkPlus className="w-5 h-5 mx-auto" />
+                  className="flex-1 border bg-gray-100 dark:bg-indigo-950 rounded-lg hover:bg-indigo-200 dark:hover:bg-indigo-700 transition-colors"
+                  title="Add course to whitelist"
+                  type="button">
+                  <Heart className="w-5 h-5 mx-auto" />
                 </Button>
               </div>
             </div>
