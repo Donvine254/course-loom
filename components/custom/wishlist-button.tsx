@@ -22,7 +22,7 @@ export default function WhiteListButton({ courseId }: { courseId: string }) {
     });
   }, [courseId]);
 
-  async function toggleWhitelist() {
+  function toggleWhitelist() {
     setIsWishlisted((prev) => !prev);
     startTransition(async () => {
       if (isWishlisted) {
