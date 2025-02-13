@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { renderStars } from "@/lib/render-stars";
+import { renderStars } from "@/lib/helpers/render-stars";
 import { Separator } from "@/components/ui/separator";
 import {
   Accordion,

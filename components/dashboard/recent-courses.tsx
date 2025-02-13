@@ -23,6 +23,7 @@ export interface Course {
   title: string;
   status: "DRAFT" | "PUBLISHED" | "ARCHIVED";
   price: number;
+  isPublished: boolean;
 }
 
 interface CourseTableProps {

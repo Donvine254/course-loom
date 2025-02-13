@@ -32,11 +32,11 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 import StudentFeedback from "./review-items";
-import { renderStars } from "@/lib/render-stars";
+import { renderStars } from "@/lib/helpers/render-stars";
 import { FullCourse } from "@/types";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 import ShareButton from "@/components/custom/share-button";
-import WhiteListButton from "@/components/custom/whitelist-button";
+import WhiteListButton from "@/components/custom/wishlist-button";
 
 export default function CoursePage({ course }: { course: FullCourse }) {
   const calculateAverageRating = (reviews: { rating: number }[]) => {

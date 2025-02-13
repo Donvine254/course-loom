@@ -1,39 +1,19 @@
 import React from "react";
 import { BookOpen, Users, DollarSign, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Course, CourseTable } from "@/components/dashboard/recent-courses";
+import { CourseTable } from "@/components/dashboard/recent-courses";
 import { StatsCard } from "@/components/dashboard/stat-card";
 import { EmptyState } from "@/components/dashboard/no-courses";
-import { currentUser } from "@clerk/nextjs/server";
-import prisma from "@/prisma/prisma";
 import Link from "next/link";
+import { getInstructorCourses } from "@/lib/actions/instructor";
+import { Metadata } from "next";
 // TODO: add metadata
+export const metadata: Metadata = {
+  title: "Instructor | Course Loom",
+  description: "An LMS platform that powers the modern mind!",
+};
 export default async function Dashboard() {
-  const user = await currentUser();
-  let userCourses: Course[] | undefined;
-  if (user) {
-    const userData = await prisma.instructor.findUnique({
-      where: {
-        clerkId: user.id,
-      },
-      select: {
-        courses: {
-          select: {
-            id: true,
-            title: true,
-            status: true,
-            price: true,
-          },
-        },
-      },
-    });
-
-    // Ensure price defaults to 0 if undefined
-    userCourses = userData?.courses.map((course) => ({
-      ...course,
-      price: course.price ?? 0,
-    }));
-  }
+  const courses = await getInstructorCourses();
   return (
     <div className="pt-8 md:pt-10 bg-gradient-to-tr from-indigo-100 via-gray-50 to-indigo-100 dark:bg-gradient-to-tr dark:from-indigo-950 dark:via-gray-950 dark:to-indigo-950 min-h-screen p-2">
       <div className="grid gap-4 p-2 sm:p-4 md:p-6 md:group-has-[[data-collapsible=icon]]/sidebar-wrapper:grid-cols-3 lg:grid-cols-3">
@@ -53,8 +33,8 @@ export default async function Dashboard() {
             </Link>
           </Button>
         </div>
-        {userCourses && userCourses.length > 0 ? (
-          <CourseTable courses={userCourses} />
+        {courses && courses.length > 0 ? (
+          <CourseTable courses={courses} />
         ) : (
           <EmptyState />
         )}

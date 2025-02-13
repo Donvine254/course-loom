@@ -4,36 +4,36 @@ import { Button } from "../ui/button";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 import { useEffect, useState, useTransition } from "react";
 import {
-  deleteWhitelist,
-  isWhiteListed,
-  whitelistCourse,
-} from "@/lib/actions/whitelist";
+  deleteWishlist,
+  isWishListed,
+  wishlistCourse,
+} from "@/lib/actions/wishlist";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
 export default function WhiteListButton({ courseId }: { courseId: string }) {
-  const [isWhitelisted, setIsWhitelisted] = useState<boolean>(true);
+  const [isWishlisted, setIsWishlisted] = useState<boolean>(true);
   const [loading, startTransition] = useTransition();
 
   useEffect(() => {
     startTransition(async () => {
-      const result = await isWhiteListed(courseId);
-      setIsWhitelisted(result);
+      const result = await isWishListed(courseId);
+      setIsWishlisted(result);
     });
   }, [courseId]);
 
-  async function toggleWhitelist() {
-    setIsWhitelisted((prev) => !prev);
+  function toggleWhitelist() {
+    setIsWishlisted((prev) => !prev);
     startTransition(async () => {
-      if (isWhitelisted) {
-        const res = await deleteWhitelist(courseId);
+      if (isWishlisted) {
+        const res = await deleteWishlist(courseId);
         if (res.success) {
           toast.success(res.message);
         } else {
           toast.error(res.error);
         }
       } else {
-        const res = await whitelistCourse(courseId);
+        const res = await wishlistCourse(courseId);
         if (res.success) {
           toast.success(res.message);
         } else {
@@ -64,7 +64,7 @@ export default function WhiteListButton({ courseId }: { courseId: string }) {
             "flex-1 border rounded-lg  transition-colors bg-gray-100 dark:bg-indigo-950 hover:bg-indigo-200 dark:hover:bg-indigo-700 "
           )}
           title={
-            isWhitelisted
+            isWishlisted
               ? "Remove course from whitelist"
               : "Add course to whitelist"
           }
@@ -75,7 +75,7 @@ export default function WhiteListButton({ courseId }: { courseId: string }) {
             <Heart
               className={cn(
                 "w-8 h-8 mx-auto",
-                isWhitelisted && "text-indigo-600 fill-indigo-600"
+                isWishlisted && "text-indigo-600 fill-indigo-600"
               )}
             />
           ) : (

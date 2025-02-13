@@ -1,5 +1,5 @@
-import { updateCourse } from "./actions/courses";
-import { baseUrl } from "./utils";
+import { updateCourse } from "../actions/courses";
+import { baseUrl } from "../utils";
 
 export async function uploadToCloudinary(image: File) {
   const newImage = new FormData();

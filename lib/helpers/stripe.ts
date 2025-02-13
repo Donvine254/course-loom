@@ -1,7 +1,7 @@
 "use server";
 import prisma from "@/prisma/prisma";
 import Stripe from "stripe";
-import { baseUrl } from "./utils";
+import { baseUrl } from "../utils";
 import { currentUser } from "@clerk/nextjs/server";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {

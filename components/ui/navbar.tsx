@@ -228,9 +228,17 @@ export default async function Navbar() {
                     <li>
                       <Link
                         prefetch={false}
-                        href="/dashboard/courses"
+                        href="/learn/courses"
                         className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md">
                         My Courses
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        prefetch={false}
+                        href="/learn/wishlist"
+                        className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md">
+                        Wishlist
                       </Link>
                     </li>
                     <li>
