@@ -4,9 +4,9 @@ import { Button } from "../ui/button";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 import { useEffect, useState, useTransition } from "react";
 import {
-  deleteWhitelist,
+  deleteWishlist,
   isWishListed,
-  whitelistCourse,
+  wishlistCourse,
 } from "@/lib/actions/wishlist";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
@@ -26,14 +26,14 @@ export default function WhiteListButton({ courseId }: { courseId: string }) {
     setIsWishlisted((prev) => !prev);
     startTransition(async () => {
       if (isWishlisted) {
-        const res = await deleteWhitelist(courseId);
+        const res = await deleteWishlist(courseId);
         if (res.success) {
           toast.success(res.message);
         } else {
           toast.error(res.error);
         }
       } else {
-        const res = await whitelistCourse(courseId);
+        const res = await wishlistCourse(courseId);
         if (res.success) {
           toast.success(res.message);
         } else {

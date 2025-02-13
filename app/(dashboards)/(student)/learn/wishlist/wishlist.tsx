@@ -2,13 +2,13 @@
 import CourseCard from "@/components/custom/course-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { deleteWhitelist } from "@/lib/actions/wishlist";
+import { deleteWishlist } from "@/lib/actions/wishlist";
 import { PartialCourse } from "@/types";
 import { Heart, Loader2, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useState, useTransition } from "react";
+import { ChangeEvent, useState } from "react";
 import { toast } from "sonner";
 
 export default function WishListComponent({
@@ -18,7 +18,7 @@ export default function WishListComponent({
 }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredCourses, setFilteredCourses] = useState(courses);
-  const [loading, startTransition] = useTransition();
+  const [loading, setLoading] = useState<string | null>(null); //use course id to track which course is being removed from wishlist;
   const router = useRouter();
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value.toLowerCase();
@@ -39,24 +39,26 @@ export default function WishListComponent({
     );
   };
 
-  function removeFromWishList(courseId: string) {
-    startTransition(async () => {
-      try {
-        const res = await deleteWhitelist(courseId);
-        if (res.success) {
-          toast.success(res.message);
-          setFilteredCourses((prev) =>
-            prev.filter((course) => course.id !== courseId)
-          );
-          router.refresh();
-        } else {
-          toast.error(res.error);
-        }
-      } catch (error) {
-        console.log(error);
-        toast.error("Something went wrong!");
+  async function removeFromWishList(courseId: string) {
+    setLoading(courseId);
+
+    try {
+      const res = await deleteWishlist(courseId);
+      setLoading(null);
+      if (res.success) {
+        toast.success(res.message);
+        setFilteredCourses((prev) =>
+          prev.filter((course) => course.id !== courseId)
+        );
+        router.refresh();
+      } else {
+        toast.error(res.error);
       }
-    });
+    } catch (error) {
+      setLoading(null);
+      console.log(error);
+      toast.error("Something went wrong!");
+    }
   }
   return (
     <div className="p-2 sm:p-4 md:px-6 ">
@@ -89,11 +91,11 @@ export default function WishListComponent({
                   onClick={() => {
                     removeFromWishList(course.id);
                   }}
-                  disabled={loading}
+                  disabled={loading === course.id}
                   title="click to remove course from wishlist"
                   className="absolute top-2 right-2 z-20 rounded-full bg-black/50 hover:bg-black/40 backdrop-blur transition"
                   size="icon">
-                  {loading ? (
+                  {loading === course.id ? (
                     <Loader2 className="h-8 w-8 animate-spin" />
                   ) : (
                     <Heart className="h-8 w-8 fill-red-500 text-red-500" />

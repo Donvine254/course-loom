@@ -14,7 +14,7 @@ export async function isWishListed(courseId: string) {
   return !!exists;
 }
 
-export async function whitelistCourse(courseId: string) {
+export async function wishlistCourse(courseId: string) {
   const user = await currentUser();
   if (!user) {
     return { success: false, error: "No logged in user found" };
@@ -26,14 +26,14 @@ export async function whitelistCourse(courseId: string) {
         courseId,
       },
     });
-    return { success: true, message: "Course added to whitelist" };
+    return { success: true, message: "Course added to wishlist" };
     // eslint-disable-next-line
   } catch (error: any) {
     console.error(error.stack);
     return { success: false, error: error.message || "Something went wrong" };
   }
 }
-export async function deleteWhitelist(courseId: string) {
+export async function deleteWishlist(courseId: string) {
   const user = await currentUser();
   if (!user) {
     return { success: false, error: "No logged in user found" };
@@ -42,7 +42,7 @@ export async function deleteWhitelist(courseId: string) {
     await prisma.courseWishlist.delete({
       where: { userId_courseId: { userId: user.id, courseId } },
     });
-    return { success: true, message: "Course removed from whitelist" };
+    return { success: true, message: "Course removed from wishlist" };
     // eslint-disable-next-line
   } catch (error: any) {
     console.error(error.stack);
