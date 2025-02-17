@@ -14,6 +14,7 @@ import {
   LayoutDashboard,
   GraduationCap,
   Users,
+  HeartIcon,
 } from "lucide-react";
 
 import {
@@ -143,6 +144,12 @@ const sidebarData = {
       url: "/courses",
       title: "browse available courses",
       icon: CompassIcon,
+    },
+    {
+      name: "Wishlist",
+      url: "/learn/wishlist",
+      title: "Wishlisted courses",
+      icon: HeartIcon,
     },
     {
       name: "Performance",
