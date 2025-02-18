@@ -9,7 +9,8 @@ import {
   SignOutButton,
 } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
-import { Search } from "lucide-react";
+import { HeartIcon, Search } from "lucide-react";
+import { Button } from "./button";
 
 export default async function Navbar() {
   const user = await currentUser();
@@ -163,6 +164,27 @@ export default async function Navbar() {
                 </ul>
               </div>
             </li>
+            <SignedIn>
+              {" "}
+              <li className="md:hidden">
+                <Link
+                  prefetch={false}
+                  href="/learn/wishlist"
+                  className=" hover:bg-gray-50 dark:hover:bg-gray-900 border-b border-input dark:border-gray-800 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 dark:xsm:hover:bg-indigo-900 xsm:px-2 xsm:rounded-md">
+                  Wishlist
+                </Link>
+              </li>
+              <li className="hidden md:block">
+                <Link prefetch={false} href="/learn/wishlist" passHref>
+                  <Button
+                    variant="ghost"
+                    title="wishlist"
+                    className="hover:bg-indigo-200 hover:text-indigo-800 dark:hover:bg-indigo-600 dark:hover:text-indigo-100">
+                    <HeartIcon className="h-4 w-4" />
+                  </Button>
+                </Link>
+              </li>
+            </SignedIn>
             <li className="md:hidden">
               <SignedOut>
                 <SignInButton>
@@ -200,7 +222,19 @@ export default async function Navbar() {
                     title="open menu"
                     className="w-8 h-8 rounded-full focus:outline-none focus-within:outline-none ring-offset-2 ring-2 ring-blue-600 ring-offset-white hidden md:block"
                   />
-                  <p className="md:hidden">My Account</p>
+                  <span className="md:hidden inline-flex items-center justify-between w-full">
+                    <span> My Account</span>{" "}
+                    <svg
+                      className="w-4 h-4 ml-1"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        fillRule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clipRule="evenodd"></path>
+                    </svg>
+                  </span>
                 </button>
                 {/* Dropdown menu */}
                 <div
@@ -209,20 +243,12 @@ export default async function Navbar() {
                   <ul
                     className="py-1 px-2"
                     aria-labelledby="dropdownLargeButton">
-                    <li className="md:hidden">
-                      <Link
-                        prefetch={false}
-                        href="/dashboard"
-                        className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md">
-                        Dashboard
-                      </Link>
-                    </li>
                     <li>
                       <Link
                         prefetch={false}
                         href="/profile"
                         className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md">
-                        My Account
+                        My Profile
                       </Link>
                     </li>
                     <li>
@@ -231,14 +257,6 @@ export default async function Navbar() {
                         href="/learn/courses"
                         className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md">
                         My Courses
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        prefetch={false}
-                        href="/learn/wishlist"
-                        className="text-sm hover:bg-indigo-100 text-gray-700 block px-4 py-2 rounded-md">
-                        Wishlist
                       </Link>
                     </li>
                     <li>
