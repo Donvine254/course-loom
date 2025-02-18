@@ -9,7 +9,8 @@ import {
   SignOutButton,
 } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
-import { Search } from "lucide-react";
+import { HeartIcon, Search } from "lucide-react";
+import { Button } from "./button";
 
 export default async function Navbar() {
   const user = await currentUser();
@@ -92,14 +93,6 @@ export default async function Navbar() {
                   Dashboard
                 </Link>
               </li>
-              <li className="md:hidden">
-                <Link
-                  prefetch={false}
-                  href="/learn/wishlist"
-                  className=" hover:bg-gray-50 dark:hover:bg-gray-900 border-b border-input dark:border-gray-800 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 dark:xsm:hover:bg-indigo-900 xsm:px-2 xsm:rounded-md">
-                  Wishlist
-                </Link>
-              </li>
             </SignedIn>
 
             <li>
@@ -171,7 +164,27 @@ export default async function Navbar() {
                 </ul>
               </div>
             </li>
-
+            <SignedIn>
+              {" "}
+              <li className="md:hidden">
+                <Link
+                  prefetch={false}
+                  href="/learn/wishlist"
+                  className=" hover:bg-gray-50 dark:hover:bg-gray-900 border-b border-input dark:border-gray-800 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 hover:underline underline-offset-2 md:p-0 xsm:hover:bg-indigo-100 dark:xsm:hover:bg-indigo-900 xsm:px-2 xsm:rounded-md">
+                  Wishlist
+                </Link>
+              </li>
+              <li className="hidden md:block">
+                <Link prefetch={false} href="/learn/wishlist" passHref>
+                  <Button
+                    variant="ghost"
+                    title="wishlist"
+                    className="hover:bg-indigo-200 hover:text-indigo-800 dark:hover:bg-indigo-600 dark:hover:text-indigo-100">
+                    <HeartIcon className="h-4 w-4" />
+                  </Button>
+                </Link>
+              </li>
+            </SignedIn>
             <li className="md:hidden">
               <SignedOut>
                 <SignInButton>
