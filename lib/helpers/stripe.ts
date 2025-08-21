@@ -7,7 +7,7 @@ import { currentUser } from "@clerk/nextjs/server";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2024-12-18.acacia",
 });
-
+// TODO: Migrate to polar since STRIPE does not support payments in my country
 export async function createPaymentSession(courseId: string) {
   const user = await currentUser();
 
